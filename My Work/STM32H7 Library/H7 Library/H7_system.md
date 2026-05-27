@@ -30,6 +30,7 @@ The `H7_system.c` file includes the platform MPU setup used by H7Lib1.0. This in
 - The MPU is configured before the main application starts.
 - It ensures the Cortex-M7 can safely access instruction memory, data memory, and the DMA memory region.
 - Proper MPU configuration is critical for stable DMA transfers and cache coherence on STM32H7.
+- RAM_D2 is reserved for DMA operations.
 
 The MPU setup is part of the system initialization sequence and helps protect the memory map while enabling high-performance access for the library.
 
@@ -83,60 +84,71 @@ The `H7_state_e` enum defines shared status and error values used by multiple mo
 
 ```c
 typedef enum{
-/**************** System states ****************/
-H7_STATE_NULL,
-H7_OK,
-H7_PERIPH_OK,
-/**************** GPIO states ****************/
-H7_GPIO_PORT_INV,
-/**************** UART states ****************/
-H7_UART_NULL_PTR,
-H7_UART_PORT_INV,
-H7_UART_INIT_ERR,
-H7_UART_DMA_INIT_ERR,
-/**************** Timer states ****************/
-H7_PWM_CHANNEL_OK,
-H7_TIM_NULL_PTR,
-H7_TIM_INVALID_TIMER,
-H7_TIM_INIT_ERR,
-H7_TIM_PWM_INIT_ERR,
-H7_TIM_TIMEOUT_ERR,
-// Configuration Errors
-H7_TIM_MASTER_CONF_ERR,
-H7_TIM_CLKSOURCE_CONF_ERR,
-H7_PWM_CONFIG_CHANNEL_ERR,
-H7_TIM_START_Failed,
-H7_TIM_START_IT_Failed,
-H7_PWM_START_FAILED,
-/**************** FDCAN states ****************/
-H7_FDCAN_FILTER_OK,
-H7_FDCAN_NULL_PTR,
-H7_FDCAN_INVALID_PORT,
-H7_FDCAN_INIT_ERR,
-H7_FDCAN_START_ERR,
-H7_FDCAN_FIFO_ACTICATE_ERR,
-H7_FDCAN_TIMEOUT_ERR,
-H7_FDCAN_FILTER_INIT_ERR,
-H7_FDCAN_MEM_RAM_OVERSIZE,
-H7_FDCAN_MSGSEND_ERR,
-H7_FDCAN_TX_FIFO_FULL,
-/**************** I2C states ****************/
-H7_I2C_NULL_PTR,
-H7_I2C_INVALID_PORT,
-H7_I2C_INVALID_SPEED,
-H7_I2C_INIT_ERR,
-H7_I2C_DMA_INIT_ERR,
-H7_I2C_TIMEOUT_ERR,
-// Configuration Errors
-H7_I2C_AN_FILTER_CONFIG_ERR,
-H7_I2C_DG_FILTER_CONFIG_ERR,
-H7_I2C_START_IT_Failed,
-/**************** QEI states ****************/
-H7_QEI_INVALID_PORT,
-H7_QEI_INIT_ERR,
-/**************** EXTI states ****************/
-H7_EXTI_NULL_PTR,
-H7_EXTI_INVALID_PIN
+	/**************** System states ****************/
+	H7_STATE_NULL,
+	H7_OK,		// for system and other things
+	H7_PERIPH_OK, // For Peripherals
+	H7_INV_PORT,
+	H7_INV_MODE,
+	/**************** GPIO states ****************/
+	H7_GPIO_PORT_INV,
+
+	/**************** UART states ****************/
+	H7_UART_NULL_PTR,
+	H7_UART_PORT_INV,
+	H7_UART_INIT_ERR,
+	H7_UART_DMA_INIT_ERR,
+
+	/**************** Timer states ****************/
+	H7_PWM_CHANNEL_OK,
+	H7_TIM_NULL_PTR,
+	H7_TIM_INVALID_TIMER,
+	H7_TIM_INIT_ERR,
+	H7_TIM_PWM_INIT_ERR,
+	H7_TIM_TIMEOUT_ERR,
+
+	// Configuration Errors
+	H7_TIM_MASTER_CONF_ERR,
+	H7_TIM_CLKSOURCE_CONF_ERR,
+	H7_PWM_CONFIG_CHANNEL_ERR,
+	H7_TIM_START_Failed,
+	H7_TIM_START_IT_Failed,
+	H7_PWM_START_FAILED,
+
+	/**************** FDCAN states ****************/
+	H7_FDCAN_FILTER_OK,
+	H7_FDCAN_NULL_PTR,
+	H7_FDCAN_INVALID_PORT,
+	H7_FDCAN_INIT_ERR,
+	H7_FDCAN_INVALID_MODE,
+	H7_FDCAN_START_ERR,
+	H7_FDCAN_FIFO_ACTICATE_ERR,
+	H7_FDCAN_TIMEOUT_ERR,
+	H7_FDCAN_FILTER_INIT_ERR,
+	H7_FDCAN_MEM_RAM_OVERSIZE,
+	H7_FDCAN_MSGSEND_ERR,
+	H7_FDCAN_TX_FIFO_FULL,
+
+	/**************** I2C states ****************/
+	H7_I2C_NULL_PTR,
+	H7_I2C_INVALID_PORT,
+	H7_I2C_INVALID_SPEED,
+	H7_I2C_INVALID_ADRESSMODE,
+	H7_I2C_INIT_ERR,
+	H7_I2C_DMA_INIT_ERR,
+	H7_I2C_TIMEOUT_ERR,
+
+	// Configuration Errors
+	H7_I2C_AN_FILTER_CONFIG_ERR, // Analog filter
+	H7_I2C_DG_FILTER_CONFIG_ERR, // Digital filter
+	H7_I2C_START_IT_Failed,
+
+	/**************** QEI states ****************/
+	H7_QEI_INVALID_PORT,
+	H7_QEI_INIT_ERR,
+	/**************** EXTI states ****************/
+	H7_EXTI_NULL_PTR,
+	H7_EXTI_INVALID_PIN
 } H7_state_e;
 ```
 

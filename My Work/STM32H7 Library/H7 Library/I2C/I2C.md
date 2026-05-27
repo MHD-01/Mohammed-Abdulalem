@@ -85,8 +85,8 @@ The I2C initialization should be called during the adapter module initialization
 - The library supports DMA for both Tx and Rx. Use `DMA_BUFFER` for DMA-accessible arrays, or point the handler's DMA pointers to `DMA_BUFFER` regions.
 
 ```c
-H7_state_e H7_i2cx_DMA_RX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAddress, u32 addressingMode, H7_i2c_speed clockSpeed);
-H7_state_e H7_i2cx_DMA_TX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAddress, u32 addressingMode, H7_i2c_speed clockSpeed);
+H7_state_e H7_i2cx_DMA_RX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAdress, u32 addressingMode, H7_i2c_speed clockSpeed);
+H7_state_e H7_i2cx_DMA_TX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAdress, u32 addressingMode, H7_i2c_speed clockSpeed);
 ```
 
 
