@@ -1,0 +1,8 @@
+Change Component Footprint: Designator=D1 Old Footprint=TH_Diode New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=D2 Old Footprint=TH_Diode New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=D3 Old Footprint=TH_Diode New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=D4 Old Footprint=TH_Diode New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=R1 Old Footprint=TH_resistor New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=R2 Old Footprint=TH_resistor New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=R3 Old Footprint=TH_resistor New Footprint=TH_resistor - duplicate
+Change Component Footprint: Designator=R4 Old Footprint=TH_resistor New Footprint=TH_resistor - duplicate

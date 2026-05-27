@@ -1,0 +1,144 @@
+Added Component: Designator=1k_R1(1k_resistor)
+Added Component: Designator=1k_R2(1k_resistor)
+Added Component: Designator=1k_R3(1k_resistor)
+Added Component: Designator=4.7K_R2(4.7k_resistor)
+Added Component: Designator=4.7k_R3(4.7k_resistor)
+Added Component: Designator=4.7k_R(4.7k_resistor)
+Added Component: Designator=330_R1(330_resistor)
+Added Component: Designator=330_R2(330_resistor)
+Added Component: Designator=330_R3(330_resistor)
+Added Component: Designator=330_R4(330_resistor)
+Added Component: Designator=330_R5(330_resistor)
+Added Component: Designator=330_R(330_resistor)
+Added Component: Designator=D1(Diode)
+Added Component: Designator=D2(Diode)
+Added Component: Designator=D3(Diode)
+Added Component: Designator=Dean1(Dean_connector)
+Added Component: Designator=Dean2(Dean_connector)
+Added Component: Designator=Dean3(Dean_connector)
+Added Component: Designator=H1(2_pinHeader)
+Added Component: Designator=H2(2_pinHeader)
+Added Component: Designator=H3(2_pinHeader)
+Added Component: Designator=H4(2_pinHeader)
+Added Component: Designator=H5(2_pinHeader)
+Added Component: Designator=H6(2_pinHeader)
+Added Component: Designator=LED1(LED)
+Added Component: Designator=LED2(LED)
+Added Component: Designator=LED3(LED)
+Added Component: Designator=MOSFET1(MOSFET_IR540N)
+Added Component: Designator=MOSFET2(MOSFET_IR540N)
+Added Component: Designator=MOSFET3(MOSFET_IR540N)
+Added Component: Designator=OPT1(optocoupler)
+Added Component: Designator=OPT2(optocoupler)
+Added Component: Designator=OPT3(optocoupler)
+Added Component: Designator=PB1(push_button)
+Added Component: Designator=PB2(push_button)
+Added Component: Designator=PB3(push_button)
+Added Pin To Net: NetName=Net1k_R1_1 Pin=1k_R1-1
+Added Pin To Net: NetName=Net1k_R1_1 Pin=LED1-2
+Added Net: Name=Net1k_R1_1
+Added Pin To Net: NetName=Net1k_R1_2 Pin=1k_R1-2
+Added Pin To Net: NetName=Net1k_R1_2 Pin=D1-2
+Added Pin To Net: NetName=Net1k_R1_2 Pin=Dean1-2
+Added Pin To Net: NetName=Net1k_R1_2 Pin=H4-1
+Added Pin To Net: NetName=Net1k_R1_2 Pin=OPT1-4
+Added Net: Name=Net1k_R1_2
+Added Pin To Net: NetName=Net1k_R2_1 Pin=1k_R2-1
+Added Pin To Net: NetName=Net1k_R2_1 Pin=LED2-2
+Added Net: Name=Net1k_R2_1
+Added Pin To Net: NetName=Net1k_R2_2 Pin=1k_R2-2
+Added Pin To Net: NetName=Net1k_R2_2 Pin=D2-2
+Added Pin To Net: NetName=Net1k_R2_2 Pin=Dean2-2
+Added Pin To Net: NetName=Net1k_R2_2 Pin=H5-1
+Added Pin To Net: NetName=Net1k_R2_2 Pin=OPT2-4
+Added Net: Name=Net1k_R2_2
+Added Pin To Net: NetName=Net1k_R3_1 Pin=1k_R3-1
+Added Pin To Net: NetName=Net1k_R3_1 Pin=LED3-2
+Added Net: Name=Net1k_R3_1
+Added Pin To Net: NetName=Net1k_R3_2 Pin=1k_R3-2
+Added Pin To Net: NetName=Net1k_R3_2 Pin=D3-2
+Added Pin To Net: NetName=Net1k_R3_2 Pin=Dean3-2
+Added Pin To Net: NetName=Net1k_R3_2 Pin=H6-1
+Added Pin To Net: NetName=Net1k_R3_2 Pin=OPT3-4
+Added Net: Name=Net1k_R3_2
+Added Pin To Net: NetName=Net4.7K_R2_1 Pin=4.7K_R2-1
+Added Pin To Net: NetName=Net4.7K_R2_1 Pin=330_R3-1
+Added Pin To Net: NetName=Net4.7K_R2_1 Pin=OPT2-3
+Added Net: Name=Net4.7K_R2_1
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=4.7k_R-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=4.7K_R2-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=4.7k_R3-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=Dean1-1
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=Dean2-1
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=Dean3-1
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=H1-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=H2-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=H3-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=MOSFET1-3
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=MOSFET2-3
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=MOSFET3-3
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=OPT1-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=OPT2-2
+Added Pin To Net: NetName=Net4.7K_R2_2 Pin=OPT3-2
+Added Net: Name=Net4.7K_R2_2
+Added Pin To Net: NetName=Net4.7k_R3_1 Pin=4.7k_R3-1
+Added Pin To Net: NetName=Net4.7k_R3_1 Pin=330_R4-1
+Added Pin To Net: NetName=Net4.7k_R3_1 Pin=OPT3-3
+Added Net: Name=Net4.7k_R3_1
+Added Pin To Net: NetName=Net4.7k_R_1 Pin=4.7k_R-1
+Added Pin To Net: NetName=Net4.7k_R_1 Pin=330_R1-1
+Added Pin To Net: NetName=Net4.7k_R_1 Pin=OPT1-3
+Added Net: Name=Net4.7k_R_1
+Added Pin To Net: NetName=Net330_R1_2 Pin=330_R1-2
+Added Pin To Net: NetName=Net330_R1_2 Pin=MOSFET1-1
+Added Net: Name=Net330_R1_2
+Added Pin To Net: NetName=Net330_R2_1 Pin=330_R2-1
+Added Pin To Net: NetName=Net330_R2_1 Pin=PB2-2
+Added Net: Name=Net330_R2_1
+Added Pin To Net: NetName=Net330_R2_2 Pin=330_R2-2
+Added Pin To Net: NetName=Net330_R2_2 Pin=OPT2-1
+Added Net: Name=Net330_R2_2
+Added Pin To Net: NetName=Net330_R3_2 Pin=330_R3-2
+Added Pin To Net: NetName=Net330_R3_2 Pin=MOSFET2-1
+Added Net: Name=Net330_R3_2
+Added Pin To Net: NetName=Net330_R4_2 Pin=330_R4-2
+Added Pin To Net: NetName=Net330_R4_2 Pin=MOSFET3-1
+Added Net: Name=Net330_R4_2
+Added Pin To Net: NetName=Net330_R5_1 Pin=330_R5-1
+Added Pin To Net: NetName=Net330_R5_1 Pin=PB3-2
+Added Net: Name=Net330_R5_1
+Added Pin To Net: NetName=Net330_R5_2 Pin=330_R5-2
+Added Pin To Net: NetName=Net330_R5_2 Pin=OPT3-1
+Added Net: Name=Net330_R5_2
+Added Pin To Net: NetName=Net330_R_1 Pin=330_R-1
+Added Pin To Net: NetName=Net330_R_1 Pin=PB1-2
+Added Net: Name=Net330_R_1
+Added Pin To Net: NetName=Net330_R_2 Pin=330_R-2
+Added Pin To Net: NetName=Net330_R_2 Pin=OPT1-1
+Added Net: Name=Net330_R_2
+Added Pin To Net: NetName=NetD1_1 Pin=D1-1
+Added Pin To Net: NetName=NetD1_1 Pin=H4-2
+Added Pin To Net: NetName=NetD1_1 Pin=LED1-1
+Added Pin To Net: NetName=NetD1_1 Pin=MOSFET1-2
+Added Net: Name=NetD1_1
+Added Pin To Net: NetName=NetD2_1 Pin=D2-1
+Added Pin To Net: NetName=NetD2_1 Pin=H5-2
+Added Pin To Net: NetName=NetD2_1 Pin=LED2-1
+Added Pin To Net: NetName=NetD2_1 Pin=MOSFET2-2
+Added Net: Name=NetD2_1
+Added Pin To Net: NetName=NetD3_1 Pin=D3-1
+Added Pin To Net: NetName=NetD3_1 Pin=H6-2
+Added Pin To Net: NetName=NetD3_1 Pin=LED3-1
+Added Pin To Net: NetName=NetD3_1 Pin=MOSFET3-2
+Added Net: Name=NetD3_1
+Added Pin To Net: NetName=NetH1_1 Pin=H1-1
+Added Pin To Net: NetName=NetH1_1 Pin=PB1-1
+Added Net: Name=NetH1_1
+Added Pin To Net: NetName=NetH2_1 Pin=H2-1
+Added Pin To Net: NetName=NetH2_1 Pin=PB2-1
+Added Net: Name=NetH2_1
+Added Pin To Net: NetName=NetH3_1 Pin=H3-1
+Added Pin To Net: NetName=NetH3_1 Pin=PB3-1
+Added Net: Name=NetH3_1
+Added Class: Name=Sheet2
+Added Room: Name=Sheet2

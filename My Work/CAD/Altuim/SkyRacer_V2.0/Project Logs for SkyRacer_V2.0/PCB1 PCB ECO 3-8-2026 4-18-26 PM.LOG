@@ -1,0 +1,4 @@
+Removed Pin From Net: NetName=NetC1_1 Pin=MSFT1-1
+Removed Pin From Net: NetName=NetESP1_8 Pin=MSFT1-2
+Added Pin To Net: NetName=NetESP1_8 Pin=MSFT1-1
+Added Pin To Net: NetName=NetC1_1 Pin=MSFT1-2

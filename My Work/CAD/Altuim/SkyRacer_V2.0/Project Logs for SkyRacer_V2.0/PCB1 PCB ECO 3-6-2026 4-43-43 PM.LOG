@@ -1,0 +1,68 @@
+Added Component: Designator=B1(Motor Connector)
+Added Component: Designator=B_C(Boost_5V)
+Added Component: Designator=C1(TH_Capacitor)
+Added Component: Designator=C2(TH_Capacitor)
+Added Component: Designator=C3(TH_Capacitor)
+Added Component: Designator=C4(TH_Capacitor)
+Added Component: Designator=D1(TH_resistor - duplicate)
+Added Component: Designator=D2(TH_resistor - duplicate)
+Added Component: Designator=D3(TH_resistor - duplicate)
+Added Component: Designator=D4(TH_resistor - duplicate)
+Added Component: Designator=ESP1(ESP-S3-Seed-Studio)
+Added Component: Designator=IMU1(MPU-8-pins)
+Added Component: Designator=M1(Motor Connector)
+Added Component: Designator=M2(Motor Connector)
+Added Component: Designator=M3(Motor Connector)
+Added Component: Designator=M4(Motor Connector)
+Added Component: Designator=MSFT1(TH_MOSFET_IRLB8721)
+Added Component: Designator=MSFT2(TH_MOSFET_IRLB8721)
+Added Component: Designator=MSFT3(TH_MOSFET_IRLB8721)
+Added Component: Designator=MSFT4(TH_MOSFET_IRLB8721)
+Added Component: Designator=R1(TH_resistor - duplicate)
+Added Component: Designator=R2(TH_resistor - duplicate)
+Added Component: Designator=R3(TH_resistor - duplicate)
+Added Component: Designator=R4(TH_resistor - duplicate)
+Added Pin To Net: NetName=GND Pin=B1-2
+Added Pin To Net: NetName=NetB_C_1 Pin=B_C-1
+Added Pin To Net: NetName=NetB_C_3 Pin=B_C-3
+Added Pin To Net: NetName=GND Pin=B_C-4
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=NetB_C_1 Pin=C1-2
+Added Pin To Net: NetName=NetC2_1 Pin=C2-1
+Added Pin To Net: NetName=NetB_C_1 Pin=C2-2
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=NetB_C_1 Pin=C3-2
+Added Pin To Net: NetName=NetC4_1 Pin=C4-1
+Added Pin To Net: NetName=NetB_C_1 Pin=C4-2
+Added Pin To Net: NetName=NetB_C_3 Pin=ESP1-1
+Added Pin To Net: NetName=GND Pin=ESP1-2
+Added Pin To Net: NetName=NetESP1_8 Pin=ESP1-8
+Added Pin To Net: NetName=NetESP1_9 Pin=ESP1-9
+Added Pin To Net: NetName=NetESP1_10 Pin=ESP1-10
+Added Pin To Net: NetName=NetESP1_11 Pin=ESP1-11
+Added Pin To Net: NetName=NetESP1_12 Pin=ESP1-12
+Added Pin To Net: NetName=NetESP1_13 Pin=ESP1-13
+Added Pin To Net: NetName=NetB_C_3 Pin=IMU1-1
+Added Pin To Net: NetName=GND Pin=IMU1-2
+Added Pin To Net: NetName=NetESP1_13 Pin=IMU1-3
+Added Pin To Net: NetName=NetESP1_12 Pin=IMU1-4
+Added Pin To Net: NetName=NetB_C_1 Pin=M1-1
+Added Pin To Net: NetName=NetC1_1 Pin=M1-2
+Added Pin To Net: NetName=NetB_C_1 Pin=M2-1
+Added Pin To Net: NetName=NetC2_1 Pin=M2-2
+Added Pin To Net: NetName=NetB_C_1 Pin=M3-1
+Added Pin To Net: NetName=NetC3_1 Pin=M3-2
+Added Pin To Net: NetName=NetB_C_1 Pin=M4-1
+Added Pin To Net: NetName=NetC4_1 Pin=M4-2
+Added Pin To Net: NetName=NetC1_1 Pin=MSFT1-1
+Added Pin To Net: NetName=NetESP1_8 Pin=MSFT1-2
+Added Pin To Net: NetName=NetMSFT1_3 Pin=MSFT1-3
+Added Pin To Net: NetName=NetC2_1 Pin=MSFT2-1
+Added Pin To Net: NetName=NetESP1_9 Pin=MSFT2-2
+Added Pin To Net: NetName=NetMSFT2_3 Pin=MSFT2-3
+Added Pin To Net: NetName=NetC3_1 Pin=MSFT3-1
+Added Pin To Net: NetName=NetESP1_10 Pin=MSFT3-2
+Added Pin To Net: NetName=NetMSFT3_3 Pin=MSFT3-3
+Added Pin To Net: NetName=NetC4_1 Pin=MSFT4-1
+Added Pin To Net: NetName=NetESP1_11 Pin=MSFT4-2
+Added Pin To Net: NetName=NetMSFT4_3 Pin=MSFT4-3

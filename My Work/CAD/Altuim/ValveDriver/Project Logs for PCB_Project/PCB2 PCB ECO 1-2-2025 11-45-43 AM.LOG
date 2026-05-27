@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=Net1k_RLED_1 Pin=H1-1
+Removed Pin From Net: NetName=Net1k_RLED_1 Pin=PB1-1
+Change Component Designator: OldDesignator=1k NewDesignator=1k_RLED
+Added Component: Designator=SW(Slide_switch)
+Added Pin To Net: NetName=Net1k_RLED_1 Pin=SW-2
+Added Pin To Net: NetName=NetH1_1 Pin=H1-1
+Added Pin To Net: NetName=NetH1_1 Pin=PB1-1
+Added Pin To Net: NetName=NetH1_1 Pin=SW-1
+Added Net: Name=NetH1_1
+Added Member To Class: ClassName=Sheet2 Member=Component SW Slide_Switch
+Added Room: Name=Sheet2

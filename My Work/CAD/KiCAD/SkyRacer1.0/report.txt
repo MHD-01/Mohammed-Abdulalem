@@ -1,0 +1,28 @@
+Info: Processing symbol 'motor1:SkyRacerft:8250_Motor'.
+Info: Total warnings: 0, errors: 0.
+Info: Processing symbol 'U1:SkyRacerft:ESP32 S3'.
+Info: Processing symbol 'R4:SkyRacerft:10K_R'.
+Info: Processing symbol 'R3:SkyRacerft:10K_R'.
+Info: Processing symbol 'R2:SkyRacerft:10K_R'.
+Info: Processing symbol 'R1:SkyRacerft:10K_R'.
+Info: Processing symbol 'PowerConnector1:SkyRacerft:PowerConnector'.
+Info: Processing symbol 'motor4:SkyRacerft:8250_Motor'.
+Info: Processing symbol 'motor3:SkyRacerft:8250_Motor'.
+Info: Processing symbol 'motor2:SkyRacerft:8250_Motor'.
+Info: Processing symbol 'C1:SkyRacerft:100nf_c'.
+Info: Processing symbol 'M4:SkyRacerft:AO3400A'.
+Info: Processing symbol 'M3:SkyRacerft:AO3400A'.
+Info: Processing symbol 'M2:SkyRacerft:AO3400A'.
+Info: Processing symbol 'M1:SkyRacerft:AO3400A'.
+Info: Processing symbol 'D4:SkyRacerft:1N4148WT'.
+Info: Processing symbol 'D3:SkyRacerft:1N4148WT'.
+Info: Processing symbol 'D2:SkyRacerft:1N4148WT'.
+Info: Processing symbol 'D1:SkyRacerft:1N4148WT'.
+Info: Processing symbol 'C4:SkyRacerft:100nf_c'.
+Info: Processing symbol 'C3:SkyRacerft:100nf_c'.
+Info: Processing symbol 'C2:SkyRacerft:100nf_c'.
+
+
+
+
+Info: Total warnings: 0, errors: 0.

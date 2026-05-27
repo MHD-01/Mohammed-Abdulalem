@@ -1,0 +1,8 @@
+Added Component: Designator=MSFT3(TH_MOSFET_IRLB8721)
+Added Component: Designator=MSFT4(TH_MOSFET_IRLB8721)
+Added Pin To Net: NetName=NetC3_1 Pin=MSFT3-1
+Added Pin To Net: NetName=NetESP1_10 Pin=MSFT3-2
+Added Pin To Net: NetName=GND Pin=MSFT3-3
+Added Pin To Net: NetName=NetC4_1 Pin=MSFT4-1
+Added Pin To Net: NetName=NetESP1_11 Pin=MSFT4-2
+Added Pin To Net: NetName=GND Pin=MSFT4-3

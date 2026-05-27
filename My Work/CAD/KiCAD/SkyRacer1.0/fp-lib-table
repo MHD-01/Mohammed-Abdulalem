@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "SkyRacerft")(type "KiCad")(uri "${KIPRJMOD}/SkyRacerft.pretty")(options "")(descr ""))
+)
