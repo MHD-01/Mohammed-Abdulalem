@@ -11,7 +11,7 @@ Initializes the `H7_SPIHandler_s` structure and links it to the HAL SPI handle.
 - `spi`: Pointer to `H7_SPIHandler_s` (declared in the header file)
 - `hspi`: Pointer to HAL `SPI_HandleTypeDef` (declared in the header file)
 
-**Returns:** None
+**Returns:** `H7_state_e` (current SPI state)
 
 ---
 
@@ -67,22 +67,22 @@ Initialize the SPI peripheral for DMA-based transmission.
 
 ## Callback Functions
 - Callback functions are in Platform/callback.c
-### `void H7_SPI_TxCplt_Callback(H7_SPIHandler_s *handler)`
+### `void HAL_SPI_TxCpltCallback(SPI_HandleTypeDef *hspi)`
 Called when SPI transmission is complete. Implement in callbacks module.
 
 ---
 
-### `void H7_SPI_RxCplt_Callback(H7_SPIHandler_s *handler)`
+### `void HAL_SPI_RxCpltCallback(SPI_HandleTypeDef *hspi)`
 Called when SPI reception is complete. Implement in callbacks module.
 
 ---
 
-### `void H7_SPI_TxRxCplt_Callback(H7_SPIHandler_s *handler)`
+### `void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi)`
 Called when SPI full duplex transfer is complete. Implement in callbacks module.
 
 ---
 
-### `void H7_SPI_Error_Callback(H7_SPIHandler_s *handler)`
+### `void HAL_SPI_TxHalfCpltCallback(SPI_HandleTypeDef *hspi)`
 Called on SPI error. Implement in callbacks module.
 
 ---

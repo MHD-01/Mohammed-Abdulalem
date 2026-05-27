@@ -4,173 +4,93 @@ This document describes the main functions available for I2C communication in H7
 
 ## Initialization Functions
 
-### `void H7_I2C_Init(H7_I2CHandler_s *handler, I2C_HandleTypeDef *hi2c)`
-Initializes the I2C handler structure with the provided HAL handle.
+### `H7_state_e H7_i2cx_init_struct(H7_i2cHandler_s *i2c, I2C_HandleTypeDef *hi2c)`
+Initialize the `H7_i2cHandler_s` structure and link it to the HAL handle.
 
 **Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `hi2c`: Pointer to HAL I2C handle
+- `i2c`: Pointer to `H7_i2cHandler_s`
+- `hi2c`: Pointer to HAL `I2C_HandleTypeDef`
 
-**Returns:** None
+**Returns:** `H7_state_e` (current I2C state)
 
 ---
 
-### `void H7_I2C_DeInit(H7_I2CHandler_s *handler)`
-De-initializes the I2C peripheral.
+### `H7_state_e H7_i2cx_init(H7_i2cHandler_s *i2c, u32 ownAdress, u32 addressingMode, H7_i2c_speed clockSpeed)`
+Initialize the I2C peripheral with the specified address, addressing mode, and clock speed.
 
 **Parameters:**
-- `handler`: Pointer to I2C handler structure
+- `i2c`: Pointer to `H7_i2cHandler_s`
+- `ownAddress`: The device address, either 7-bit or 10-bit
+- `addressingMode`: 7-bit or 10-bit addressing mode
+- `clockSpeed`: Communication speed (I2C clock)
 
-**Returns:** None
+**Returns:** `H7_state_e` (current I2C state)
 
 ---
 
-## Data Transmission Functions
+## DMA initialization
 
-### `H7_state_e H7_I2C_Master_Transmit(H7_I2CHandler_s *handler, uint8_t address, uint8_t *data, uint16_t size, uint32_t timeout)`
-Transmits data in polling mode.
+### `H7_state_e H7_i2cx_DMA_RX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAdress, u32 addressingMode, H7_i2c_speed clockSpeed)`
+Initialize the I2C peripheral for DMA-based reception.
 
 **Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address (7-bit or 10-bit)
-- `data`: Pointer to data buffer
-- `size`: Number of bytes to transmit
-- `timeout`: Timeout in milliseconds
+- `i2c`: Pointer to `H7_i2cHandler_s`
+- `DMA_mode`: DMA transfer mode (e.g., `DMA_CIRCULAR` for continuous reception)
+- `ownAddress`: The device address, either 7-bit or 10-bit
+- `addressingMode`: 7-bit or 10-bit addressing mode
+- `clockSpeed`: Communication speed (I2C clock)
 
-**Returns:** H7_OK on success, H7_ERROR on failure
+**Returns:** `H7_state_e` (current I2C state)
+
+[!NOTE] Call `H7_i2cx_init_struct` before using this function.
 
 ---
 
-### `H7_state_e H7_I2C_Master_Transmit_IT(H7_I2CHandler_s *handler, uint8_t address, uint8_t *data, uint16_t size)`
-Transmits data using interrupts.
+### `H7_state_e H7_i2cx_DMA_TX_init(H7_i2cHandler_s *i2c, u32 DMA_mode, u32 ownAdress, u32 addressingMode, H7_i2c_speed clockSpeed)`
+Initialize the I2C peripheral for DMA-based transmission.
 
 **Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-- `data`: Pointer to data buffer
-- `size`: Number of bytes to transmit
+- `i2c`: Pointer to `H7_i2cHandler_s`
+- `DMA_mode`: DMA transfer mode (e.g., `DMA_CIRCULAR` for continuous transmission)
+- `ownAddress`: The device address, either 7-bit or 10-bit
+- `addressingMode`: 7-bit or 10-bit addressing mode
+- `clockSpeed`: Communication speed (I2C clock)
 
-**Returns:** H7_OK on success, H7_ERROR on failure
+**Returns:** `H7_state_e` (current I2C state)
 
----
-
-## Data Reception Functions
-
-### `H7_state_e H7_I2C_Master_Receive(H7_I2CHandler_s *handler, uint8_t address, uint8_t *data, uint16_t size, uint32_t timeout)`
-Receives data in polling mode.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-- `data`: Pointer to receive buffer
-- `size`: Number of bytes to receive
-- `timeout`: Timeout in milliseconds
-
-**Returns:** H7_OK on success, H7_ERROR on failure
-
----
-
-### `H7_state_e H7_I2C_Master_Receive_IT(H7_I2CHandler_s *handler, uint8_t address, uint8_t *data, uint16_t size)`
-Receives data using interrupts.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-- `data`: Pointer to receive buffer
-- `size`: Number of bytes to receive
-
-**Returns:** H7_OK on success, H7_ERROR on failure
-
----
-
-## Combined Transfer Functions
-
-### `H7_state_e H7_I2C_Mem_Write(H7_I2CHandler_s *handler, uint8_t address, uint8_t mem_addr, uint8_t *data, uint16_t size, uint32_t timeout)`
-Writes to memory location in I2C slave device.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-- `mem_addr`: Memory address in slave device
-- `data`: Pointer to data buffer
-- `size`: Number of bytes to write
-- `timeout`: Timeout in milliseconds
-
-**Returns:** H7_OK on success, H7_ERROR on failure
-
----
-
-### `H7_state_e H7_I2C_Mem_Read(H7_I2CHandler_s *handler, uint8_t address, uint8_t mem_addr, uint8_t *data, uint16_t size, uint32_t timeout)`
-Reads from memory location in I2C slave device.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-- `mem_addr`: Memory address in slave device
-- `data`: Pointer to receive buffer
-- `size`: Number of bytes to read
-- `timeout`: Timeout in milliseconds
-
-**Returns:** H7_OK on success, H7_ERROR on failure
-
----
-
-## Status and Configuration Functions
-
-### `H7_state_e H7_I2C_Get_Status(H7_I2CHandler_s *handler)`
-Gets current status of I2C peripheral.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-
-**Returns:** H7_OK, H7_BUSY, or H7_ERROR
-
----
-
-### `void H7_I2C_Set_Address(H7_I2CHandler_s *handler, uint8_t address)`
-Sets the I2C slave address for communication.
-
-**Parameters:**
-- `handler`: Pointer to I2C handler structure
-- `address`: I2C slave address
-
-**Returns:** None
+[!NOTE] Call `H7_i2cx_init_struct` before using this function.
 
 ---
 
 ## Callback Functions
 
-### `void H7_I2C_TxCplt_Callback(H7_I2CHandler_s *handler)`
-Called when I2C transmission is complete. Implement in callbacks module.
+### `void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)`
+Called when a master transmit operation completes. Implement this callback in the callbacks module.
 
 ---
 
-### `void H7_I2C_RxCplt_Callback(H7_I2CHandler_s *handler)`
-Called when I2C reception is complete. Implement in callbacks module.
+### `void HAL_I2C_MasterRxCpltCallback(I2C_HandleTypeDef *hi2c)`
+Called when a master receive operation completes. Implement this callback in the callbacks module.
 
 ---
 
-### `void H7_I2C_Error_Callback(H7_I2CHandler_s *handler)`
-Called on I2C error. Implement in callbacks module.
+### `void HAL_I2C_SlaveTxCpltCallback(I2C_HandleTypeDef *hi2c)`
+Called when a slave transmit operation completes. Implement this callback in the callbacks module.
 
 ---
 
-## Example Usage
+### `void HAL_I2C_MemTxCpltCallback(I2C_HandleTypeDef *hi2c)`
+Called when a memory write operation completes. Implement this callback in the callbacks module.
 
-```c
-// Initialization
-H7_I2CHandler_s i2c_handler;
-H7_I2C_Init(&i2c_handler, &hi2c1);
+---
 
-// Set slave address
-H7_I2C_Set_Address(&i2c_handler, 0x68);  // Example: MPU6050
+### `void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c)`
+Called when a memory read operation completes. Implement this callback in the callbacks module.
 
-// Transmit data
-uint8_t tx_buffer[2] = {0x6B, 0x00};  // Register, Value
-H7_I2C_Master_Transmit(&i2c_handler, 0x68, tx_buffer, 2, 1000);
+---
 
-// Receive data
-uint8_t rx_buffer[6] = {0};
-H7_I2C_Master_Receive(&i2c_handler, 0x68, rx_buffer, 6, 1000);
-```
+### `void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c)`
+Called when an I2C error occurs (timeout, arbitration loss, bus error, etc.). Implement this callback in the callbacks module.
+
+---
 

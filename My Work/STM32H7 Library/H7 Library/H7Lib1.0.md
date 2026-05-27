@@ -101,5 +101,6 @@ It will be included in the next library version.
 
 
 # Future improvements
-- Implementing status structure inside [H7_system_s](H7_system.md).
-- 
+- Developing `H7_System_s` structure inside [H7_system_s](H7_system.md).
+- Implementing Deinitialization for peripherals.
+- Add odemetry objects for `H7_QEIHandler_s`

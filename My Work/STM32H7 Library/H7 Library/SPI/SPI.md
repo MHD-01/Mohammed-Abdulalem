@@ -4,7 +4,7 @@ This document describes the SPI peripheral usage within H7Lib1.0. The library fo
 
 ## Physical Ports
 
-![SPI Physical Ports](../attachment/spi_ports.jpg)
+
 
 - SPI2: PD3 (SCK), PB14 (MISO), PB15 (MOSI), PB9 (NSS)
 
@@ -12,6 +12,8 @@ This document describes the SPI peripheral usage within H7Lib1.0. The library fo
 
 - spi.c
 - spi.h
+
+[!NOTE] H7_SPI library is located at BIOS/COM/.
 
 ## Peripheral Handle Structure
 
@@ -46,7 +48,7 @@ typedef struct{
 - Initialize the handler structure, for example:
 
 ```c
-H7_struct_init(&h7spi2, &spi2);
+H7_SPIx_struct_init(&h7spi2, &spi2);
 ```
 
 - Initialize the peripheral. Example (master/slave mode and data size are configurable):
@@ -126,6 +128,7 @@ typedef enum{
 ## Notes and Warnings
 
 - [!NOTE] Chip select lines must be managed by the user in most cases.
+- [!WARNING] Initialize the `H7_SPI` handler structure before initializing the peripheral.
 - [!WARNING] Mark DMA buffers with `DMA_BUFFER` when using DMA to ensure they are placed in DMA-capable memory.
 - [!WARNING] Avoid heavy processing inside SPI interrupt callbacks; set flags and handle processing in the main loop.
 

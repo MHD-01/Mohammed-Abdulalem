@@ -1,10 +1,10 @@
 # UART (Universal Asynchronous Receiver/Transmitter)
 
-Generally in H7Lib1.0, most peripherals (if not all), have their own ==Peripheral Handle Structure==.
+This document describes the UART peripheral usage within H7Lib1.0. The library follows a common pattern where each peripheral exposes a handler structure and helper functions.
 
 ## Physical Ports
 
-![UART Physical Ports](../attachment/uart_ports.jpg)
+
 
 
 - UART4: PD1 (TX), PD0 (RX), Port UART3
@@ -15,130 +15,93 @@ Generally in H7Lib1.0, most peripherals (if not all), have their own ==Periphera
 
 ## Files
 
-![UART Files Diagram](../attachment/uart.png)
+- uart.c
+- uart.h
+
+[!NOTE] H7_UART library is located at BIOS/COM/.
 
 ## Peripheral Handle Structure
 
 ```c
 typedef struct{
 	UART_HandleTypeDef *huart;
-	u8 txData[256];
-	u8 rxData[256];
-	uint16_t txSize;
-	uint16_t rxSize;
-	uint32_t baudrate;
+
+	DMA_HandleTypeDef uart_dma_rx;
+	DMA_HandleTypeDef uart_dma_tx;
+
+	u8 rxData[UART_RX_BUF_SIZE];
+	u8 txData[UART_TX_BUF_SIZE];
+	// DMA Buffers
+	u8 *rxData_DMA;
+	u8 *txData_DMA;
+
 	H7_state_e status;
 } H7_UARTHandler_s;
 ```
 
-- The user is recommended to use the handler for any use of the UART peripheral, to ensure smooth functionality.
-- *txData/rxData*: Transmit and receive data buffers
-- *txSize/rxSize*: Size of data to be transmitted or received
-- *baudrate*: Configured baud rate for serial communication
-- [!warning] These variables should be used for debugging purposes only and should not be modified directly.
+- Use the handler for all UART operations to ensure consistent behavior and traceability.
+- `txData` / `rxData`: CPU-accessible transmit/receive buffers.
+- `txData_DMA` / `rxData_DMA`: pointers to DMA-accessible buffers (must point into `DMA_BUFFER` memory).
+- `UART_RX_BUF_SIZE` / `UART_TX_BUF_SIZE`: Macros that define buffer sizes.
+- [!NOTE] DMA buffers referenced from `H7_UARTHandler_s` should point into global `DMA_BUFFER` regions.
+- [!WARNING] When using DMA, mark buffers with the `DMA_BUFFER` attribute before defining them; this ensures they are placed in RAM_D2 (32 KB reserved for DMA).
+
 
 ## How to Use UART
 
-### Enable the UART Port
+### Initialization
 
-- First thing is to define the UART port we are going to use.
-- This can be done in UART.h, by uncommenting the macro.
-
-```c
-#define UART_PORT 1  // or 2, 3, 4, 5, 6, 7, 8
-```
-
-### UART Initialization in adapter.c
-
-- The initialization function should be called during the adapter module initialization phase.
-- Ensure that UART clock is enabled and GPIO pins are configured for TX and RX.
-
-### UART Communication
-
-#### Polling Mode
-```c
-// Transmit
-HAL_UART_Transmit(&huart, txData, size, timeout);
-
-// Receive
-HAL_UART_Receive(&huart, rxData, size, timeout);
-```
-
-#### Interrupt Mode
-```c
-// Transmit with interrupts
-HAL_UART_Transmit_IT(&huart, txData, size);
-
-// Receive with interrupts (single character)
-HAL_UART_Receive_IT(&huart, &rxData, 1);
-
-// Start idle line detection for frame reception
-__HAL_UART_ENABLE_IT(&huart, UART_IT_IDLE);
-```
-
-#### DMA Mode
-
-- If using DMA with UART, declare your buffers with the *DMA_BUFFER* macro from [H7_system] header file.
-- This ensures DMA has access to RAM_D2 for proper data transfer.
+- Initialize the handler structure, for example:
 
 ```c
-DMA_BUFFER u8 uartTxBuffer[256];
-DMA_BUFFER u8 uartRxBuffer[256];
+H7_UARTx_init_struct(&h7uart5, &huart5);
 ```
 
-## Common UART Configurations
+- Initialize the peripheral. Example (Baud Rate is configurable):
+
+```c
+H7_UARTx_init(&h7uart5, 115200);
+```
+
+The UART initialization should be called during the adapter module initialization phase (see `adapter.c`).
+
+### Characteristics of `H7_UARTx_init`
+
+- Interrupts are enabled by default.
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| Baud Rate | 9600 | Standard speed |
-| Baud Rate | 115200 | High-speed communication |
-| Data Width | 8 bits | Standard configuration |
-| Stop Bits | 1 | Most common |
-| Parity | None | Standard for robotic applications |
-| Flow Control | None | For simple applications |
-| Flow Control | CTS/RTS | For reliable communication |
+| WordLength | UART_WORDLENGTH_8B | 8-bit |
+| StopBits | UART_STOPBITS_1 | 1-bit |
+| Parity | UART_PARITY_NONE | No parity bit |
+| Mode | UART_MODE_TX_RX | Full-duplex |
+| Baud Rate | Configurable | Common values(115200 or 9600) |
+
+### UART with DMA
+
+- The library supports DMA for both Tx and Rx. Use `DMA_BUFFER` for DMA-accessible arrays, or point the handler's DMA pointers to `DMA_BUFFER` regions.
+
+```c
+H7_state_e H7_UARTx_DMA_RX_Init(H7_UARTHandler_s *h7uart, u32 DMA_mode, u32 BaudRate);
+H7_state_e H7_UARTx_DMA_TX_Init(H7_UARTHandler_s *h7uart, u32 DMA_mode, u32 BaudRate);
+```
+
 
 ## Common Use Cases
 
 ### Serial Terminal Communication
 - Used for debugging and monitoring
-- Typical baud rate: 115200
+- Typical baud rate: 115200, 9600
 - No flow control required
-
-### Communication with External Modules (GPS, IMU, etc.)
-- Configure matching baud rate with device
-- May require specific data format
-- Consider using DMA for continuous reception
-
-### Wireless Communication (Bluetooth, RF modules)
-- Configure according to module specifications
-- Often requires RTS/CTS flow control
-
-## Interrupt Callback Handling
-
-- Implement UART callbacks in the callbacks module:
-
-```c
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-	// Transmission complete - set completion flag
-	uart_tx_complete = 1;
-}
-
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	// Reception complete - process received data
-	uart_rx_complete = 1;
-}
-```
 
 ## Notes and Warnings
 
-- [!note] Use DMA mode for continuous or high-frequency data reception
-- [!note] Implement idle line detection for variable-length frame reception
-- [!warning] Do not perform complex processing in UART interrupt callbacks
-- [!warning] Ensure proper baud rate configuration to match connected device
-- [!warning] Add pull-up resistors if communicating over longer distances
+- [!NOTE] Use DMA mode for continuous or high-frequency data reception.
+- [!NOTE] Implement idle line detection for variable-length frame reception.
+- [!WARNING] Do not perform complex processing in UART interrupt callbacks; set flags instead.
+- [!WARNING] Initialize the `H7_UARTHandler_s` structure before initializing the peripheral.
+- [!WARNING] Ensure baud rate configuration matches the connected device exactly.
+- [!WARNING] Add pull-up resistors when communicating over longer distances.
 
 ## Common Issues and Solutions
 
@@ -148,9 +111,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 - Ensure stable power supply to UART transceiver
 
 ### No Data Reception
-- Verify RX pin is properly connected
-- Check UART peripheral is enabled
-- Ensure receive interrupts or DMA are properly configured
+- Verify RX pin is properly connected.
+- Ensure the `H7_UARTHandler_s` structure is initialized before the peripheral is initialized.
+- When using DMA, ensure buffers are marked with the `DMA_BUFFER` attribute for correct data communication.
 
 ### Overflow Errors
 - Switch to DMA mode for continuous reception
