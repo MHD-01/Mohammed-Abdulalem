@@ -2,9 +2,16 @@
 
 This document describes the SPI peripheral usage within H7Lib1.0. The library follows a common pattern where each peripheral exposes a handler structure and helper functions.
 
+
+## Features
+
+- Handler-based SPI API with DMA support
+- Master/slave full-duplex transfer support
+- Configurable speed, data size
+- DMA Tx/Rx support using `DMA_BUFFER`
+- Manual chip-select (CS) control by user
+
 ## Physical Ports
-
-
 
 - SPI2: PD3 (SCK), PB14 (MISO), PB15 (MOSI), PB9 (NSS)
 

@@ -23,6 +23,16 @@ The `H7_system` module uses `Platform/H7_system.c` and `Platform/H7_system.h`.
 
 `H7_system` initializes low-level platform settings and provides a shared foundation for the rest of the library.
 
+## MPU Initialization
+
+The `H7_system.c` file includes the platform MPU setup used by H7Lib1.0. This initialization configures the memory protection regions and access attributes required for DMA buffers, code execution, and peripheral memory access.
+
+- The MPU is configured before the main application starts.
+- It ensures the Cortex-M7 can safely access instruction memory, data memory, and the DMA memory region.
+- Proper MPU configuration is critical for stable DMA transfers and cache coherence on STM32H7.
+
+The MPU setup is part of the system initialization sequence and helps protect the memory map while enabling high-performance access for the library.
+
 ## Special Types
 
 The module defines compact signed and unsigned aliases to simplify code and improve consistency.

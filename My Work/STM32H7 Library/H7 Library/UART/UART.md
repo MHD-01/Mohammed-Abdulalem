@@ -2,10 +2,15 @@
 
 This document describes the UART peripheral usage within H7Lib1.0. The library follows a common pattern where each peripheral exposes a handler structure and helper functions.
 
+## Features
+
+- Handler-based UART API with DMA support
+- Supports UART4, UART5, UART7, UART9
+- Configurable baud rate and standard UART settings
+- Full-duplex TX/RX operation
+- DMA Tx/Rx support using `DMA_BUFFER`
+
 ## Physical Ports
-
-
-
 
 - UART4: PD1 (TX), PD0 (RX), Port UART3
 - UART5: PC12 (TX), PD2 (RX), Port UART1

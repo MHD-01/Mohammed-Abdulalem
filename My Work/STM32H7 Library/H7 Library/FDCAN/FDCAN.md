@@ -1,16 +1,26 @@
 Generally in H7Lib1.0, most peripherals (if not all), have there own ==Peripheral Handle Structure== .
 
-## Physical ports
+## Features
 
-![FDCAN Physical Ports](../attachment/fdcanports.jpg)
+- Handler-based FDCAN API with message RAM management
+- Supports FDCAN1, FDCAN2, FDCAN3 with board-specific port mapping
+- Supports both FDCAN and Classic CAN
+- Filter configuration and Tx/Rx buffer handling
+- FDCAN message RAM size calculation and allocation guidance
+- Works with standard and extended CAN frames
+- Use of a single handler structure for consistent peripheral state
+
+## Physical ports
 
 - [!Note] that in first version of the board:
 	- CAN1 -> FDCAN2 in software.
 	- CAN2 -> FDCAN1.
 	- CAN3 -> FDCAN3.
+
 ## Files
 
-![FDCAN Files Diagram](../attachment/fdcan.png)
+- FDCAN.c
+- FDCAN.h
 
 
 ## Peripheral Handle Structure
