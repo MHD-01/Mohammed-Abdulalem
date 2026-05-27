@@ -4,7 +4,7 @@ This document describes the main functions available for Quadrature Encoder Inte
 
 ## Initialization Functions
 
-### `voiH7_state_e H7_QEI_init(H7_QEIHandler_s *h7qei, TIM_HandleTypeDef *htim)`
+### `H7_state_e H7_QEI_init(H7_QEIHandler_s *h7qei, TIM_HandleTypeDef *htim)`
 Initializes the QEI handler structure and the peripheral.
 
 **Parameters:**
@@ -29,7 +29,7 @@ Read the counter values.
 Resets the counter to 0.
 
 **Parameters:**
-- `h7qei`: Pointer to H7_QEI handler structure
+- `h7qei`: Pointer to `H7_QEIHandler_s`
 
 **Returns:** None
 

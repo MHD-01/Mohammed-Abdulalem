@@ -127,7 +127,7 @@ typedef enum{
 
 ## Notes and Warnings
 
-- [!NOTE] Chip select lines must be managed by the user in most cases.
+- [!NOTE] Chip select lines must be managed and initialized as GPIO by the user.
 - [!WARNING] Initialize the `H7_SPI` handler structure before initializing the peripheral.
 - [!WARNING] Mark DMA buffers with `DMA_BUFFER` when using DMA to ensure they are placed in DMA-capable memory.
 - [!WARNING] Avoid heavy processing inside SPI interrupt callbacks; set flags and handle processing in the main loop.

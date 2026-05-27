@@ -1,6 +1,13 @@
 # QEI (Quadrature Encoder Interface)
 
-Generally in H7Lib1.0, most peripherals (if not all), have their own ==Peripheral Handle Structure==.
+This document describes the QEI peripheral usage within H7Lib1.0. The library uses timer-based encoder handling with a dedicated peripheral handler.
+
+## Features
+
+- Supports timer-based quadrature encoder counting
+- Uses callback-driven capture handling for direction-aware counting
+- Provides a simple handler structure for state and count tracking
+- Supports multiple timer inputs for QEI channels
 
 ## Overview
 
@@ -8,8 +15,8 @@ The Quadrature Encoder Interface (QEI) is implemented using Timer peripherals in
 
 ## Physical Ports
 
-- Timer1(QEI1): PA8 (CH1), PA9 (CH2) 
-- Timer8(QEI2): PC6 (CH1), PC7 (CH2) 
+- Timer1 (QEI1): PA8 (CH1), PA9 (CH2)
+- Timer8 (QEI2): PC6 (CH1), PC7 (CH2)
 
 ## Files
 
@@ -30,37 +37,36 @@ typedef struct{
 } H7_QEIHandler_s;
 ```
 
-- The user is recommended to use the handler for any use of the QEI peripheral, to ensure smooth functionality.
-- *count*: Current encoder count value (signed 32-bit)
-- *state*: Holds the current state of qei port
-- [!warning] These variables should be used for debugging purposes only and should not be modified directly.
+- Use the handler for all QEI operations to ensure consistent functionality.
+- `count`: Current encoder count value (signed 32-bit).
+- `state`: Current state of the QEI port.
+- [!WARNING] These variables should be used for debugging purposes only and should not be modified directly.
 
 ## How to Use QEI
 
-#### Initialization
+### Initialization
 
 ```c
 H7_QEI_init(&QEI1, &htim1);
 ```
 
-The UART initialization should be called during the adapter module initialization phase (see `adapter.c`).
+The QEI initialization should be called during the adapter module initialization phase (see `adapter.c`).
 
 ### QEI Position Tracking
 
-#### Get Current ticks
+#### Get Current Ticks
 ```c
 uint32_t current_count = QEI1.count;
 ```
 
 #### Reset Position
 ```c
-void H7_QEI_reset(&QEI1);
+H7_QEI_reset(&QEI1);
 ```
-
 
 ## Interrupt Handling
 
-- The library uses IC interrupt to increment or decrement `count` variable inside `H7_QEIHandler_s`
+- The library uses timer input capture callbacks to increment or decrement the `count` variable inside `H7_QEIHandler_s`.
 
 ```c
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
@@ -91,21 +97,21 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| Counting Mode | TIM_COUNTERMODE_UP | Use for incremmental encoders |
-| Polarity | Signle edge | Capture capture only rising |
+| Counting Mode | TIM_COUNTERMODE_UP | Use for incremental encoders |
+| Polarity | Single edge | Capture only the rising edge |
 | Prescaler | 0 | No prescaling for encoders |
 | Auto-reload | 0xFFFF | Full 16-bit range |
 
 ## Notes and Warnings
 
-- [!note] Ensure proper grounding of encoder cable shield to reduce noise
-- [!note] Place encoder close to microcontroller or use twisted pair cables for longer distances
-- [!warning] Do not configure the QEI timer for any other purpose
+- [!NOTE] Ensure proper grounding of the encoder cable shield to reduce noise.
+- [!NOTE] Place the encoder close to the microcontroller or use twisted pair cables for longer distances.
+- [!WARNING] Do not configure the QEI timer for any other purpose.
 
 
 ## Common Issues and Solutions
 
 ### Counter Not Incrementing
-- Verify you are initialzing the port
-- Check encoder wiring and connections
+- Verify the QEI port has been initialized.
+- Check encoder wiring and connections.
 
