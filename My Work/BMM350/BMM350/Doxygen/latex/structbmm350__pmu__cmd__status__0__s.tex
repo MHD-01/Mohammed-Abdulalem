@@ -1,0 +1,91 @@
+\doxysection{bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s Struct Reference}
+\hypertarget{structbmm350__pmu__cmd__status__0__s}{}\label{structbmm350__pmu__cmd__status__0__s}\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+
+
+bmm350 structure that holds the contents of register 0x07  
+
+
+
+
+{\ttfamily \#include $<$BMM350.\+h$>$}
+
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_ad28e65074fd141aab61b3cd2e587cec7}{pmu\+\_\+cmd\+\_\+busy}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_af8edaec0347c7dc8b92e1a3bf3ec359a}{odr\+\_\+ovwr}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a49b8ec87975604a4cbfa87e5aa10aaa9}{avr\+\_\+ovwr}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e}{pwr\+\_\+mode\+\_\+is\+\_\+normal}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a01929700dca093932e8284d8d2ea459a}{cmd\+\_\+is\+\_\+illegal}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}{pmu\+\_\+cmd\+\_\+value}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+bmm350 structure that holds the contents of register 0x07 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_a49b8ec87975604a4cbfa87e5aa10aaa9}\label{structbmm350__pmu__cmd__status__0__s_a49b8ec87975604a4cbfa87e5aa10aaa9} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!avr\_ovwr@{avr\_ovwr}}
+\index{avr\_ovwr@{avr\_ovwr}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{avr\_ovwr}{avr\_ovwr}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::avr\+\_\+ovwr}
+
+The previous PMU\+\_\+\+CMD\+\_\+\+AGGR\+\_\+\+SET.\+avg has been overwritten \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_a01929700dca093932e8284d8d2ea459a}\label{structbmm350__pmu__cmd__status__0__s_a01929700dca093932e8284d8d2ea459a} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!cmd\_is\_illegal@{cmd\_is\_illegal}}
+\index{cmd\_is\_illegal@{cmd\_is\_illegal}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{cmd\_is\_illegal}{cmd\_is\_illegal}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::cmd\+\_\+is\+\_\+illegal}
+
+CMD value is not allowed \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_af8edaec0347c7dc8b92e1a3bf3ec359a}\label{structbmm350__pmu__cmd__status__0__s_af8edaec0347c7dc8b92e1a3bf3ec359a} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!odr\_ovwr@{odr\_ovwr}}
+\index{odr\_ovwr@{odr\_ovwr}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{odr\_ovwr}{odr\_ovwr}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::odr\+\_\+ovwr}
+
+The previous PMU\+\_\+\+CMD\+\_\+\+AGGR\+\_\+\+SET.\+odr has been overwritten \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_ad28e65074fd141aab61b3cd2e587cec7}\label{structbmm350__pmu__cmd__status__0__s_ad28e65074fd141aab61b3cd2e587cec7} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!pmu\_cmd\_busy@{pmu\_cmd\_busy}}
+\index{pmu\_cmd\_busy@{pmu\_cmd\_busy}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{pmu\_cmd\_busy}{pmu\_cmd\_busy}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::pmu\+\_\+cmd\+\_\+busy}
+
+The previous PMU CMD is still in processing \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}\label{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!pmu\_cmd\_value@{pmu\_cmd\_value}}
+\index{pmu\_cmd\_value@{pmu\_cmd\_value}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{pmu\_cmd\_value}{pmu\_cmd\_value}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::pmu\+\_\+cmd\+\_\+value}
+
+Stores the latest PMU\+\_\+\+CMD code processed \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e}\label{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e} 
+\index{bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}!pwr\_mode\_is\_normal@{pwr\_mode\_is\_normal}}
+\index{pwr\_mode\_is\_normal@{pwr\_mode\_is\_normal}!bmm350\_pmu\_cmd\_status\_0\_s@{bmm350\_pmu\_cmd\_status\_0\_s}}
+\doxysubsubsection{\texorpdfstring{pwr\_mode\_is\_normal}{pwr\_mode\_is\_normal}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+0\+\_\+s\+::pwr\+\_\+mode\+\_\+is\+\_\+normal}
+
+The chip is in normal power mode \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+BMM350.\+h\end{DoxyCompactItemize}

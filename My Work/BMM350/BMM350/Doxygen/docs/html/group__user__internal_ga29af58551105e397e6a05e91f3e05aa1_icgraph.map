@@ -1,0 +1,8 @@
+<map id="bmm350_set_powermode" name="bmm350_set_powermode">
+<area shape="rect" id="Node000001" title="This function is used to set the power mode of the sensor." alt="" coords="397,5,588,31"/>
+<area shape="rect" id="Node000002" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="383,17,349,17,161,17,114,18,113,13,161,11,349,11,384,12"/>
+<area shape="rect" id="Node000003" href="$group__user.html#gad144c7b4fcd5e9f22b261b1d3ee9b1fa" title="Performs a magnetic reset of the BMM350 sensor. This is necessary when: The sensor may have been expo..." alt="" coords="161,26,349,66"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="384,33,350,38,349,32,384,28"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="148,33,113,28,114,23,148,28"/>
+</map>

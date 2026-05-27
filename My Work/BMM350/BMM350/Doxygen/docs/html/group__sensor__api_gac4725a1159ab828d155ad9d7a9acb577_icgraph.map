@@ -1,0 +1,11 @@
+<map id="read_otp_word" name="read_otp_word">
+<area shape="rect" id="Node000001" title="This internal function is used to read OTP word." alt="" coords="603,5,721,31"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#ga2cf75153d40498769db298ba34a15d0e" title=": This internal function is used to read OTP data after boot in user mode." alt="" coords="395,5,555,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="589,21,555,21,555,15,589,15"/>
+<area shape="rect" id="Node000003" href="$group__sensor__api.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="239,5,347,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="381,21,347,21,347,15,381,15"/>
+<area shape="rect" id="Node000004" href="$main_8c.html#a282fee6b81618368a41e8ba4e575f62e" title=" " alt="" coords="108,5,191,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="225,21,191,21,191,15,225,15"/>
+<area shape="rect" id="Node000005" href="$main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>

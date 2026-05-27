@@ -1,0 +1,13 @@
+<map id="bmm350_mag_compensate_s" name="bmm350_mag_compensate_s">
+<area shape="rect" id="Node000001" title="bmm350 compensation parameters for calculation" alt="" coords="363,104,580,129"/>
+<area shape="rect" id="Node000002" href="$structbmm350__dut__offset__coef__s.html" title="bmm350 magnetometer offset compensation coefficients for the magnetic axes (X, Y, Z)" alt="" coords="6,5,207,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="207,30,273,44,339,61,396,81,444,101,442,106,394,86,338,66,271,49,206,36"/>
+<area shape="rect" id="Node000003" href="$structbmm350__dut__sensit__coef__s.html" title="bmm350 magnetometer sensitivity coefficient structure" alt="" coords="5,55,208,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="222,79,339,94,389,101,388,107,338,99,222,84"/>
+<area shape="rect" id="Node000004" href="$structbmm350__dut__tco__s.html" title="bmm350 temperature coefficient of offset (TCO). Magnetic offset error changes with temperature...." alt="" coords="32,104,181,129"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="195,114,362,114,362,119,195,119"/>
+<area shape="rect" id="Node000005" href="$structbmm350__dut__tcs__s.html" title="bmm350 temperature coefficient of sensitivity (TCS). the sensitivity also drifts with temperature...." alt="" coords="33,153,181,179"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="194,153,338,134,388,127,389,132,339,139,195,158"/>
+<area shape="rect" id="Node000006" href="$structbmm350__cross__axis__s.html" title="bmm350 cross&#45;axis sensitivity correction factors. Magnetic sensors are not perfectly aligned to ortho..." alt="" coords="22,203,191,228"/>
+<area shape="poly" id="edge5_Node000001_Node000006" title=" " alt="" coords="204,199,271,186,338,169,395,148,443,127,445,132,397,153,339,174,272,191,205,204"/>
+</map>

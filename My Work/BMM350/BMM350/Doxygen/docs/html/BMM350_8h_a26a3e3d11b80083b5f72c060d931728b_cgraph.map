@@ -1,0 +1,5 @@
+<map id="set_powermode" name="set_powermode">
+<area shape="rect" id="Node000001" title="This function is used to switch from suspend mode to normal mode or forced mode." alt="" coords="5,5,132,31"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#a3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="180,5,296,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="132,15,166,15,166,21,132,21"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="interrupt_config" name="interrupt_config">
+<area shape="rect" id="Node000001" title="This function initialize the device structure and configures the INT_CTRL register (0x2E)" alt="" coords="161,5,285,31"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#adc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="147,21,114,21,114,15,147,15"/>
+</map>

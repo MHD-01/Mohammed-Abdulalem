@@ -1,0 +1,7 @@
+<map id="bmm350_pmu_cmd_status_s" name="bmm350_pmu_cmd_status_s">
+<area shape="rect" id="Node000001" title="bmm350 structure that holds the contents of register 0x08" alt="" coords="138,93,350,119"/>
+<area shape="rect" id="Node000002" href="$structbmm350__pmu__cmd__status__0__s.html" title="bmm350 structure that holds the contents of register 0x07" alt="" coords="5,5,232,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,36,228,91,225,95,145,41"/>
+<area shape="rect" id="Node000003" href="$structbmm350__pmu__cmd__status__1__s.html" title="bmm350 structure that holds the contents of register 0x07" alt="" coords="256,5,483,31"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="343,41,263,95,260,91,340,36"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="bmm350_init_struct" name="bmm350_init_struct">
+<area shape="rect" id="Node000001" title="This function initialize the BMM350 device structure and the adaptive filter." alt="" coords="5,56,157,81"/>
+<area shape="rect" id="Node000002" href="$group__user__internal.html#ga72d6f07d31b60e050c8aa62086737aab" title="This function is used to read a register from the BMM350 sensor." alt="" coords="207,5,351,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="131,53,215,31,217,37,133,58"/>
+<area shape="rect" id="Node000003" href="$group__internal.html#ga3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="401,56,517,81"/>
+<area shape="poly" id="edge5_Node000001_Node000003" title=" " alt="" coords="158,66,387,66,387,71,158,71"/>
+<area shape="rect" id="Node000004" href="$group__user__internal.html#ga1de7d1421454a2345f94c9c05846496c" title="This function is used to write data to a register in the BMM350 sensor." alt="" coords="205,107,353,132"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="133,79,217,101,215,106,131,84"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="326,28,401,50,399,55,325,33"/>
+<area shape="poly" id="edge4_Node000004_Node000003" title=" " alt="" coords="325,104,399,83,401,88,326,109"/>
+</map>

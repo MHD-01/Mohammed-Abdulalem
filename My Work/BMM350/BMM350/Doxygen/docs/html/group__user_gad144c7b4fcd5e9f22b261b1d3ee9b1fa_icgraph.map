@@ -1,0 +1,5 @@
+<map id="bmm350_magnetic_reset_and_wait" name="bmm350_magnetic_reset_and_wait">
+<area shape="rect" id="Node000001" title="Performs a magnetic reset of the BMM350 sensor. This is necessary when: The sensor may have been expo..." alt="" coords="161,5,349,45"/>
+<area shape="rect" id="Node000002" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,13,113,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,28,114,28,114,23,148,23"/>
+</map>

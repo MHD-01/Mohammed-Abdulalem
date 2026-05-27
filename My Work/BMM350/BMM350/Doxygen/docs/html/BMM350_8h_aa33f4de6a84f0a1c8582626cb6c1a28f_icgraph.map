@@ -1,0 +1,19 @@
+<map id="fix_sign" name="fix_sign">
+<area shape="rect" id="Node000001" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="1013,42,1085,67"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#a90f5ad40d27ae8036b2475fe285901a1" title="This function is used to read (ADC) mag and temperature data." alt="" coords="791,5,965,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="999,49,965,43,966,38,1000,44"/>
+<area shape="rect" id="Node000007" href="$BMM350_8c.html#a9e55a3f509c447e659b6f1c0b1b3a367" title="This internal frunction is used to update magnetometer offset and sensitivity data." alt="" coords="796,70,960,95"/>
+<area shape="poly" id="edge6_Node000001_Node000007" title=" " alt="" coords="1000,65,956,73,956,67,999,60"/>
+<area shape="rect" id="Node000003" href="$BMM350_8c.html#a91a3a98a720e9061b94ed3fb0f75a05b" title="This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperatu..." alt="" coords="589,13,736,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="777,28,736,28,736,23,777,23"/>
+<area shape="rect" id="Node000004" href="$BMM350_8c.html#a072f77061f2d28f8b93181aac9890a87" title="This internal function is used to perform compensation calculations for raw magnetometer and temperat..." alt="" coords="332,5,535,45"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="575,28,535,28,535,23,575,23"/>
+<area shape="rect" id="Node000005" href="$BMM350_8c.html#ae42e76e9e743d998bbdb637a03352b7d" title="this function checks the drdy_data_reg (0x30) data ready interrupt then returns the status of the reg..." alt="" coords="204,13,284,38"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="318,28,284,28,284,23,318,23"/>
+<area shape="rect" id="Node000006" href="$BMM350_8c.html#ae1c1a63d4a6fe6c7804473250ac24eee" title="This function is used to get yaw value." alt="" coords="5,13,156,38"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="190,28,156,28,156,23,190,23"/>
+<area shape="rect" id="Node000008" href="$BMM350_8c.html#a2cf75153d40498769db298ba34a15d0e" title=": This internal function is used to read OTP data after boot in user mode." alt="" coords="583,70,743,95"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="782,85,743,85,743,80,782,80"/>
+<area shape="rect" id="Node000009" href="$BMM350_8c.html#adc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="379,70,487,95"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="569,85,488,85,488,80,569,80"/>
+</map>

@@ -1,0 +1,5 @@
+<map id="check_device" name="check_device">
+<area shape="rect" id="Node000001" title="This function checks I2C communication status." alt="" coords="161,5,272,31"/>
+<area shape="rect" id="Node000002" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,21,113,21,113,15,148,15"/>
+</map>

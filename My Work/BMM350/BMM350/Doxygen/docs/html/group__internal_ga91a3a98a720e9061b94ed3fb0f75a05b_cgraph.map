@@ -1,0 +1,9 @@
+<map id="read_out_raw_data" name="read_out_raw_data">
+<area shape="rect" id="Node000001" title="This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperatu..." alt="" coords="5,42,152,67"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#ga90f5ad40d27ae8036b2475fe285901a1" title="This function is used to read (ADC) mag and temperature data." alt="" coords="213,5,388,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="152,42,200,36,200,41,153,48"/>
+<area shape="rect" id="Node000004" href="$group__internal.html#ga805428fdfd31395afb20fced06b8d680" title="This internal function is used to update uncompensated lsb data to uT and degC." alt="" coords="200,70,401,95"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="153,61,187,66,186,71,152,67"/>
+<area shape="rect" id="Node000003" href="$group__internal.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="449,13,521,38"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="388,23,436,23,436,28,388,28"/>
+</map>

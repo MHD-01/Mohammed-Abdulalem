@@ -1,0 +1,11 @@
+<map id="bmm350_get_compensated_mag_xyz_temp_data" name="bmm350_get_compensated_mag_xyz_temp_data">
+<area shape="rect" id="Node000001" title="This internal function is used to perform compensation calculations for raw magnetometer and temperat..." alt="" coords="5,35,208,75"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#ga91a3a98a720e9061b94ed3fb0f75a05b" title="This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperatu..." alt="" coords="256,42,403,67"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,52,242,52,242,57,208,57"/>
+<area shape="rect" id="Node000003" href="$group__internal.html#ga90f5ad40d27ae8036b2475fe285901a1" title="This function is used to read (ADC) mag and temperature data." alt="" coords="464,5,639,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="403,42,450,36,451,41,403,48"/>
+<area shape="rect" id="Node000005" href="$group__internal.html#ga805428fdfd31395afb20fced06b8d680" title="This internal function is used to update uncompensated lsb data to uT and degC." alt="" coords="451,70,652,95"/>
+<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="403,61,437,66,437,71,403,67"/>
+<area shape="rect" id="Node000004" href="$group__internal.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="700,13,772,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="639,23,686,23,686,28,639,28"/>
+</map>

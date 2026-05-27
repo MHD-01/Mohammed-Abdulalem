@@ -1,0 +1,20 @@
+\doxysection{check\+\_\+device}
+\hypertarget{check_device-example}{}\label{check_device-example}\+: this function checks I2C communication status
+
+\+: this function checks I2C communication status@type\+: internal \& user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: -\/rslt\+: the status of the function BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} Ready to communicate Bmm350\+\_\+\+DEV\+\_\+\+NOT\+\_\+\+READY -\/\texorpdfstring{$>$}{>} As the enum says "{}\+Not ready"{}
+\end{DoxyReturn}
+(\&BMM350);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

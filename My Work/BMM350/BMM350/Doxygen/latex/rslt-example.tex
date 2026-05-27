@@ -1,0 +1,20 @@
+\doxysection{rslt}
+\hypertarget{rslt-example}{}\label{rslt-example}\+: this function checks the drdy\+\_\+data\+\_\+reg (0x30) {\itshape data ready interrupt} then returns the status of the register, if interrupt is triggered it will the magnetic and temperature data to \doxylink{structbmm350__mag__temp__data__s}{bmm350\+\_\+mag\+\_\+temp\+\_\+data\+\_\+s} structure
+
+\+: this function checks the drdy\+\_\+data\+\_\+reg (0x30) {\itshape data ready interrupt} then returns the status of the register, if interrupt is triggered it will the magnetic and temperature data to \doxylink{structbmm350__mag__temp__data__s}{bmm350\+\_\+mag\+\_\+temp\+\_\+data\+\_\+s} structure@type\+: user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure -\/output\+\_\+data\+: structure pointer to the magnetic field and temperature data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: -\/rslt\+: the status of the function from bmm350\+\_\+status\+\_\+e enum BMM350\+\_\+\+INT\+\_\+\+DATA\+\_\+\+READY -\/\texorpdfstring{$>$}{>} data is ready to be read BMM350\+\_\+\+INT\+\_\+\+DATA\+\_\+\+NOT\+\_\+\+READY -\/\texorpdfstring{$>$}{>} data is not ready to be read
+\end{DoxyReturn}
+= read\+\_\+intr(\&BMM350, \&BMM350.\+data);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

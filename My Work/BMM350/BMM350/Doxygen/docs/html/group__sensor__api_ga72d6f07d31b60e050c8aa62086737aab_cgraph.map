@@ -1,0 +1,5 @@
+<map id="bmm350_I2C_read" name="bmm350_I2C_read">
+<area shape="rect" id="Node000001" title="This function is used to read a register from the BMM350 sensor." alt="" coords="5,5,149,31"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#ga3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="197,5,313,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="149,15,184,15,184,21,149,21"/>
+</map>

@@ -1,0 +1,20 @@
+\doxysection{bmm350\+\_\+magnetic\+\_\+reset\+\_\+and\+\_\+wait}
+\hypertarget{bmm350_magnetic_reset_and_wait-example}{}\label{bmm350_magnetic_reset_and_wait-example}\+: This function is used to perform the magnetic reset of the sensor which is necessary after a field shock (400mT field applied to sensor). It sends flux guide or bit reset to the device in suspend mode.
+
+\+: This function is used to perform the magnetic reset of the sensor which is necessary after a field shock (400mT field applied to sensor). It sends flux guide or bit reset to the device in suspend mode.@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+PMU\+\_\+\+CMD\+\_\+\+VALUE -\/\texorpdfstring{$>$}{>} PMU\+\_\+\+CMD register 0x6 does not hold the configured values
+\end{DoxyReturn}
+(\&BMM350);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

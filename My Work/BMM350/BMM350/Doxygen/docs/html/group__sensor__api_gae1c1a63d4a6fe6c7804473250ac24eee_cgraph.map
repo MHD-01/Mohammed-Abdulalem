@@ -1,0 +1,21 @@
+<map id="bmm350_read_yaw" name="bmm350_read_yaw">
+<area shape="rect" id="Node000001" title="This function is used to get yaw value." alt="" coords="5,84,156,109"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#ga349bf3c57fbed6694ac73f4cbebcf990" title="This function filters the data of angle got from magnetic readings." alt="" coords="204,55,320,80"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="156,82,190,76,191,81,157,87"/>
+<area shape="rect" id="Node000005" href="$group__sensor__api.html#gae42e76e9e743d998bbdb637a03352b7d" title="this function checks the drdy_data_reg (0x30) data ready interrupt then returns the status of the reg..." alt="" coords="222,108,302,133"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="157,104,208,111,208,116,156,109"/>
+<area shape="rect" id="Node000003" href="$group__sensor__api.html#gab4be8745d812ca6e741eb455f64f3bb7" title="This function smooths the operation of interpolation between angles specially for jumps from 0 to 360..." alt="" coords="413,5,526,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="315,52,367,39,401,31,403,36,369,45,317,57"/>
+<area shape="rect" id="Node000004" href="$group__sensor__api.html#ga9a1cd3e3a0329e310eba39d7df534c55" title="This function wrapes the angle input to make sure it is between 0 and 360 degrees." alt="" coords="427,55,512,80"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="320,65,413,65,413,70,320,70"/>
+<area shape="rect" id="Node000006" href="$group__sensor__api.html#ga072f77061f2d28f8b93181aac9890a87" title="This internal function is used to perform compensation calculations for raw magnetometer and temperat..." alt="" coords="368,105,571,145"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="302,119,354,120,354,125,302,124"/>
+<area shape="rect" id="Node000007" href="$group__sensor__api.html#ga91a3a98a720e9061b94ed3fb0f75a05b" title="This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperatu..." alt="" coords="619,112,765,137"/>
+<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="571,122,604,122,604,127,571,127"/>
+<area shape="rect" id="Node000008" href="$group__sensor__api.html#ga90f5ad40d27ae8036b2475fe285901a1" title="This function is used to read (ADC) mag and temperature data." alt="" coords="827,75,1001,115"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="765,112,813,106,814,111,766,118"/>
+<area shape="rect" id="Node000010" href="$group__sensor__api.html#ga805428fdfd31395afb20fced06b8d680" title="This internal function is used to update uncompensated lsb data to uT and degC." alt="" coords="813,140,1015,165"/>
+<area shape="poly" id="edge9_Node000007_Node000010" title=" " alt="" coords="766,131,800,136,799,141,765,137"/>
+<area shape="rect" id="Node000009" href="$group__sensor__api.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="1063,83,1135,108"/>
+<area shape="poly" id="edge8_Node000008_Node000009" title=" " alt="" coords="1002,93,1049,93,1049,98,1002,98"/>
+</map>

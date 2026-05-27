@@ -1,0 +1,20 @@
+\doxysection{bmm350\+\_\+odr\+\_\+avg\+\_\+config}
+\hypertarget{bmm350_odr_avg_config-example}{}\label{bmm350_odr_avg_config-example}\+: This internal function configures the odr (Output Data Rate) and avg (Measurements Averages) in register 0x04.
+
+\+: This internal function configures the odr (Output Data Rate) and avg (Measurements Averages) in register 0x04.@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/odr \& avg \+: values can be got from macros AVG and ODR, this indicates the values that will be written for odr and avg.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+INV\+\_\+\+ODR\+\_\+\+AVG -\/\texorpdfstring{$>$}{>} odr and or avg value is wrong.
+\end{DoxyReturn}
+(\&BMM350, BMM350\+\_\+\+ODR\+\_\+400\+HZ, BMM350\+\_\+\+AVG\+\_\+\+NO\+\_\+\+AVG);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

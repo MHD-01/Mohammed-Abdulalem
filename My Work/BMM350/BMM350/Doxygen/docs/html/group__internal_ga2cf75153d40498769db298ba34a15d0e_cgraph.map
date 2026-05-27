@@ -1,0 +1,11 @@
+<map id="otp_dump_after_boot" name="otp_dump_after_boot">
+<area shape="rect" id="Node000001" title=": This internal function is used to read OTP data after boot in user mode." alt="" coords="5,31,165,56"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#gac4725a1159ab828d155ad9d7a9acb577" title="This internal function is used to read OTP word." alt="" coords="236,5,355,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="165,31,222,24,223,29,166,36"/>
+<area shape="rect" id="Node000004" href="$group__internal.html#ga9e55a3f509c447e659b6f1c0b1b3a367" title="This internal function is used to update magnetometer offset and sensitivity data." alt="" coords="213,55,377,80"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="166,50,200,54,200,59,165,55"/>
+<area shape="rect" id="Node000003" href="$group__internal.html#ga20057caad23a28a66e09535ad5fdf9de" title=": This function handles errors when reading OTP register." alt="" coords="425,5,544,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="355,15,412,15,412,21,355,21"/>
+<area shape="rect" id="Node000005" href="$group__internal.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="449,55,521,80"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="377,65,435,65,435,70,377,70"/>
+</map>

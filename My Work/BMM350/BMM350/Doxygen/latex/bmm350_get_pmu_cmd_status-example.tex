@@ -1,0 +1,20 @@
+\doxysection{bmm350\+\_\+get\+\_\+pmu\+\_\+cmd\+\_\+status}
+\hypertarget{bmm350_get_pmu_cmd_status-example}{}\label{bmm350_get_pmu_cmd_status-example}\+: This function gets the PMU command status 0 register (0x07) and PMU command status 1 register (0x08) values
+
+\+: This function gets the PMU command status 0 register (0x07) and PMU command status 1 register (0x08) values@type\+: internal \& user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/pmu\+\_\+cmd\+\_\+stat\+: structure pointer that holds the registers\textquotesingle{}s structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+PMU\+\_\+\+CMD\+\_\+\+S\+\_\+\+NULL\+\_\+\+PTR -\/\texorpdfstring{$>$}{>} pmu\+\_\+cmd\+\_\+stat is NULL, maybe because not initialized
+\end{DoxyReturn}
+(\&BMM350, \&pmu\+\_\+cmd\+\_\+stat);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

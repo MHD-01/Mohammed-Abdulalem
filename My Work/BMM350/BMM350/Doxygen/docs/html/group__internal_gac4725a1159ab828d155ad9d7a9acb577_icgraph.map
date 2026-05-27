@@ -1,0 +1,7 @@
+<map id="read_otp_word" name="read_otp_word">
+<area shape="rect" id="Node000001" title="This internal function is used to read OTP word." alt="" coords="369,5,488,31"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#ga2cf75153d40498769db298ba34a15d0e" title=": This internal function is used to read OTP data after boot in user mode." alt="" coords="161,5,321,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="355,21,322,21,322,15,355,15"/>
+<area shape="rect" id="Node000003" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="147,21,114,21,114,15,147,15"/>
+</map>

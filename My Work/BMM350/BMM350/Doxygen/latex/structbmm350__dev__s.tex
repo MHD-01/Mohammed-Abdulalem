@@ -1,0 +1,195 @@
+\doxysection{bmm350\+\_\+dev\+\_\+s Struct Reference}
+\hypertarget{structbmm350__dev__s}{}\label{structbmm350__dev__s}\index{bmm350\_dev\_s@{bmm350\_dev\_s}}
+
+
+bmm350 device main structure  
+
+
+
+
+{\ttfamily \#include $<$BMM350.\+h$>$}
+
+
+
+Collaboration diagram for bmm350\+\_\+dev\+\_\+s\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{structbmm350__dev__s__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+I2\+C\+\_\+\+Handle\+Type\+Def \texorpdfstring{$\ast$}{*} \mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}{chip\+\_\+id}}
+\item 
+BMM350\+\_\+read\+\_\+fptr \mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}
+\item 
+BMM350\+\_\+write\+\_\+fptr \mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}
+\item 
+delay\+\_\+us\+\_\+ \mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\+\_\+us}}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\+\_\+en}}
+\item 
+\mbox{\hyperlink{structbmm350__mag__compensate__s}{bmm350\+\_\+mag\+\_\+compensate\+\_\+s}} \mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\+\_\+comp}}
+\item 
+uint16\+\_\+t \mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\+\_\+data}} \mbox{[}BMM350\+\_\+\+OTP\+\_\+\+DATA\+\_\+\+LENGTH\mbox{]}
+\item 
+uint8\+\_\+t \mbox{\hyperlink{structbmm350__dev__s_ab78ad0f146fc05cb5f48793353ab6607}{var\+\_\+id}}
+\item 
+bmm350\+\_\+status\+\_\+e \mbox{\hyperlink{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}{bmm350\+\_\+err}}
+\item 
+\mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+s}} \mbox{\hyperlink{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}{pmu\+\_\+cmd\+\_\+status}}
+\item 
+\mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\+\_\+mag\+\_\+temp\+\_\+data\+\_\+s}} \mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}
+\item 
+\mbox{\hyperlink{structbmm350__intr__s}{bmm350\+\_\+intr\+\_\+s}} \mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\+\_\+setting}}
+\item 
+\Hypertarget{structbmm350__dev__s_aa36322a8887b50c894c3f324406bee35}\label{structbmm350__dev__s_aa36322a8887b50c894c3f324406bee35} 
+float {\bfseries yaw} \mbox{[}2\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+bmm350 device main structure \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}\label{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!address@{address}}
+\index{address@{address}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{address}{address}}
+{\footnotesize\ttfamily uint16\+\_\+t bmm350\+\_\+dev\+\_\+s\+::address}
+
+I2C Address port \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}\label{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!axis\_en@{axis\_en}}
+\index{axis\_en@{axis\_en}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{axis\_en}{axis\_en}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+dev\+\_\+s\+::axis\+\_\+en}
+
+Variable to store status of axes enabled \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}\label{structbmm350__dev__s_ab9b434037285136484a66e1809944e11} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!bmm350\_err@{bmm350\_err}}
+\index{bmm350\_err@{bmm350\_err}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{bmm350\_err}{bmm350\_err}}
+{\footnotesize\ttfamily bmm350\+\_\+status\+\_\+e bmm350\+\_\+dev\+\_\+s\+::bmm350\+\_\+err}
+
+error buffer \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}\label{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!chip\_id@{chip\_id}}
+\index{chip\_id@{chip\_id}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{chip\_id}{chip\_id}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+dev\+\_\+s\+::chip\+\_\+id}
+
+Chip Id of BMM350 \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}\label{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!data@{data}}
+\index{data@{data}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{data}{data}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\+\_\+mag\+\_\+temp\+\_\+data\+\_\+s}} bmm350\+\_\+dev\+\_\+s\+::data}
+
+structure holds X, Y, Z and Temperature data \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}\label{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!delay\_us@{delay\_us}}
+\index{delay\_us@{delay\_us}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{delay\_us}{delay\_us}}
+{\footnotesize\ttfamily delay\+\_\+us\+\_\+ bmm350\+\_\+dev\+\_\+s\+::delay\+\_\+us}
+
+delay(in us) function pointer \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}\label{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!hi2c@{hi2c}}
+\index{hi2c@{hi2c}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{hi2c}{hi2c}}
+{\footnotesize\ttfamily I2\+C\+\_\+\+Handle\+Type\+Def\texorpdfstring{$\ast$}{*} bmm350\+\_\+dev\+\_\+s\+::hi2c}
+
+hi2c port \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}\label{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!intr\_setting@{intr\_setting}}
+\index{intr\_setting@{intr\_setting}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{intr\_setting}{intr\_setting}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbmm350__intr__s}{bmm350\+\_\+intr\+\_\+s}} bmm350\+\_\+dev\+\_\+s\+::intr\+\_\+setting}
+
+structure holds configuration of interrupts for INT\+\_\+\+STATUS register and INT pin \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}\label{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!mag\_comp@{mag\_comp}}
+\index{mag\_comp@{mag\_comp}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{mag\_comp}{mag\_comp}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbmm350__mag__compensate__s}{bmm350\+\_\+mag\+\_\+compensate\+\_\+s}} bmm350\+\_\+dev\+\_\+s\+::mag\+\_\+comp}
+
+Structure for mag compensate \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}\label{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!otp\_data@{otp\_data}}
+\index{otp\_data@{otp\_data}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{otp\_data}{otp\_data}}
+{\footnotesize\ttfamily uint16\+\_\+t bmm350\+\_\+dev\+\_\+s\+::otp\+\_\+data\mbox{[}BMM350\+\_\+\+OTP\+\_\+\+DATA\+\_\+\+LENGTH\mbox{]}}
+
+Array to store OTP data \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}\label{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!pmu\_cmd\_status@{pmu\_cmd\_status}}
+\index{pmu\_cmd\_status@{pmu\_cmd\_status}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{pmu\_cmd\_status}{pmu\_cmd\_status}}
+{\footnotesize\ttfamily \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\+\_\+pmu\+\_\+cmd\+\_\+status\+\_\+s}} bmm350\+\_\+dev\+\_\+s\+::pmu\+\_\+cmd\+\_\+status}
+
+structure holds both PMU\+\_\+\+CMD\+\_\+\+STATUS\+\_\+1 and PMU\+\_\+\+CMD\+\_\+\+STATUS\+\_\+0 values \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}\label{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!read@{read}}
+\index{read@{read}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{read}{read}}
+{\footnotesize\ttfamily BMM350\+\_\+read\+\_\+fptr bmm350\+\_\+dev\+\_\+s\+::read}
+
+Bus read function pointer \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_ab78ad0f146fc05cb5f48793353ab6607}\label{structbmm350__dev__s_ab78ad0f146fc05cb5f48793353ab6607} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!var\_id@{var\_id}}
+\index{var\_id@{var\_id}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{var\_id}{var\_id}}
+{\footnotesize\ttfamily uint8\+\_\+t bmm350\+\_\+dev\+\_\+s\+::var\+\_\+id}
+
+Variant ID \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+\Hypertarget{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}\label{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273} 
+\index{bmm350\_dev\_s@{bmm350\_dev\_s}!write@{write}}
+\index{write@{write}!bmm350\_dev\_s@{bmm350\_dev\_s}}
+\doxysubsubsection{\texorpdfstring{write}{write}}
+{\footnotesize\ttfamily BMM350\+\_\+write\+\_\+fptr bmm350\+\_\+dev\+\_\+s\+::write}
+
+Bus write function pointer \begin{Desc}
+\item[Examples]\par
+\mbox{\hyperlink{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}}.\end{Desc}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+BMM350.\+h\end{DoxyCompactItemize}

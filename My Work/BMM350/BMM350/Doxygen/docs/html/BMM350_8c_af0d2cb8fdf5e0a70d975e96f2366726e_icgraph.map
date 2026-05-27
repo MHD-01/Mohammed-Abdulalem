@@ -1,0 +1,5 @@
+<map id="bmm350_init_struct" name="bmm350_init_struct">
+<area shape="rect" id="Node000001" title="This function initialize the BMM350 device structure and the adaptive filter." alt="" coords="161,5,313,31"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#adc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="148,21,114,21,114,15,148,15"/>
+</map>

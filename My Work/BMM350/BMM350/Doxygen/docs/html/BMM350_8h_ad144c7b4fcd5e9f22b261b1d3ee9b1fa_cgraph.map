@@ -1,0 +1,13 @@
+<map id="bmm350_magnetic_reset_and_wait" name="bmm350_magnetic_reset_and_wait">
+<area shape="rect" id="Node000001" title="This function is used to perform the magnetic reset of the sensor which is necessary after a field sh..." alt="" coords="5,63,193,103"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#a8b94b8f6dfd15fcb4c38f2ea34c79ae4" title="This function gets the PMU command status 0 register (0x07) and PMU command status 1 register (0x08) ..." alt="" coords="247,5,426,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="182,60,240,46,241,51,183,65"/>
+<area shape="rect" id="Node000003" href="$BMM350_8c.html#a29af58551105e397e6a05e91f3e05aa1" title="This function is used to set the power mode of the sensor." alt="" coords="241,70,432,95"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="193,80,227,80,227,85,193,85"/>
+<area shape="rect" id="Node000004" href="$BMM350_8c.html#a3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="655,70,771,95"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="194,99,242,105,344,114,424,118,504,115,606,105,655,96,656,101,607,111,504,121,424,123,344,119,241,111,193,104"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="399,67,480,56,543,52,607,56,653,64,652,69,606,61,543,57,480,61,400,73"/>
+<area shape="rect" id="Node000005" href="$BMM350_8c.html#a26a3e3d11b80083b5f72c060d931728b" title="This function is used to switch from suspend mode to normal mode or forced mode." alt="" coords="480,70,607,95"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="432,80,466,80,466,85,432,85"/>
+<area shape="poly" id="edge5_Node000005_Node000004" title=" " alt="" coords="607,80,641,80,641,85,607,85"/>
+</map>

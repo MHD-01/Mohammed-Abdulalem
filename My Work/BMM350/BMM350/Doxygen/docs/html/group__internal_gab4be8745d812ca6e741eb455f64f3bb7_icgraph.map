@@ -1,0 +1,7 @@
+<map id="unwrap_angle" name="unwrap_angle">
+<area shape="rect" id="Node000001" title="This function smooths the operation of interpolation between angles specially for jumps from 0 to 360..." alt="" coords="368,5,481,31"/>
+<area shape="rect" id="Node000002" href="$group__user__internal.html#ga349bf3c57fbed6694ac73f4cbebcf990" title="This function filters the data of angle got from magnetic readings." alt="" coords="204,5,320,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="354,21,320,21,320,15,354,15"/>
+<area shape="rect" id="Node000003" href="$group__user.html#gae1c1a63d4a6fe6c7804473250ac24eee" title="This function is used to get yaw value." alt="" coords="5,5,156,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>

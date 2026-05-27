@@ -1,0 +1,5 @@
+<map id="bmm350_read_uncomp_mag_temp_data" name="bmm350_read_uncomp_mag_temp_data">
+<area shape="rect" id="Node000001" title="This function is used to read (ADC) mag and temperature data." alt="" coords="5,5,180,45"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="228,13,300,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="180,23,214,23,214,28,180,28"/>
+</map>

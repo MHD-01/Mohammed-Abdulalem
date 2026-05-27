@@ -1,0 +1,5 @@
+<map id="update_mag_off_sens" name="update_mag_off_sens">
+<area shape="rect" id="Node000001" title="This internal function is used to update magnetometer offset and sensitivity data." alt="" coords="5,5,169,31"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#gaa33f4de6a84f0a1c8582626cb6c1a28f" title=": This function converts the ADC data from the BMM350 data registers to 32&#45;bit signed integer." alt="" coords="217,5,289,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="169,15,204,15,204,21,169,21"/>
+</map>

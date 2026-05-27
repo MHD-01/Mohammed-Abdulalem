@@ -1,0 +1,24 @@
+<map id="null_ptr_check" name="null_ptr_check">
+<area shape="rect" id="Node000001" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="832,157,948,183"/>
+<area shape="rect" id="Node000002" href="$group__user__internal.html#ga72d6f07d31b60e050c8aa62086737aab" title="This function is used to read a register from the BMM350 sensor." alt="" coords="638,5,782,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="870,148,833,100,809,75,782,52,747,33,750,28,786,48,813,71,837,96,875,144"/>
+<area shape="rect" id="Node000003" href="$group__internal.html#gaf0d2cb8fdf5e0a70d975e96f2366726e" title="This function initialize the BMM350 device structure and the adaptive filter." alt="" coords="417,81,569,107"/>
+<area shape="poly" id="edge7_Node000001_Node000003" title=" " alt="" coords="865,150,829,120,807,107,783,97,729,84,672,79,618,80,569,84,568,79,617,75,672,74,729,79,785,91,809,102,832,116,869,146"/>
+<area shape="rect" id="Node000004" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,187,113,212"/>
+<area shape="poly" id="edge6_Node000001_Node000004" title=" " alt="" coords="818,175,161,198,114,200,113,195,161,193,818,170"/>
+<area shape="rect" id="Node000005" href="$group__user__internal.html#ga1de7d1421454a2345f94c9c05846496c" title="This function is used to write data to a register in the BMM350 sensor." alt="" coords="636,107,784,132"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="830,156,755,135,757,130,832,151"/>
+<area shape="rect" id="Node000006" href="$group__user.html#gad144c7b4fcd5e9f22b261b1d3ee9b1fa" title="Performs a magnetic reset of the BMM350 sensor. This is necessary when: The sensor may have been expo..." alt="" coords="161,207,349,247"/>
+<area shape="poly" id="edge8_Node000001_Node000006" title=" " alt="" coords="819,186,784,191,550,214,350,226,349,221,549,209,784,186,818,181"/>
+<area shape="rect" id="Node000007" href="$group__user__internal.html#ga29af58551105e397e6a05e91f3e05aa1" title="This function is used to set the power mode of the sensor." alt="" coords="397,265,588,291"/>
+<area shape="poly" id="edge10_Node000001_Node000007" title=" " alt="" coords="865,194,829,219,785,242,736,257,685,268,588,279,588,273,684,263,734,252,783,237,826,215,862,189"/>
+<area shape="rect" id="Node000008" href="$group__internal.html#ga26a3e3d11b80083b5f72c060d931728b" title="This function is used to switch from suspend mode to normal mode or forced mode." alt="" coords="647,309,773,335"/>
+<area shape="poly" id="edge13_Node000001_Node000008" title=" " alt="" coords="875,196,837,244,813,269,786,292,750,312,747,307,782,288,809,265,833,240,870,192"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="661,38,531,84,529,79,659,33"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="403,105,287,123,224,137,162,154,120,171,84,189,82,184,118,166,160,149,223,132,286,118,403,100"/>
+<area shape="poly" id="edge5_Node000005_Node000003" title=" " alt="" coords="622,112,568,105,569,100,623,107"/>
+<area shape="poly" id="edge9_Node000006_Node000004" title=" " alt="" coords="148,215,113,210,114,204,148,209"/>
+<area shape="poly" id="edge11_Node000007_Node000004" title=" " alt="" coords="383,287,275,283,217,275,160,262,112,240,75,214,78,210,115,235,162,257,218,270,275,278,384,282"/>
+<area shape="poly" id="edge12_Node000007_Node000006" title=" " alt="" coords="418,265,349,250,350,245,419,260"/>
+<area shape="poly" id="edge14_Node000008_Node000007" title=" " alt="" coords="633,309,555,293,556,288,634,304"/>
+</map>

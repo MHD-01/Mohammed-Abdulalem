@@ -1,0 +1,7 @@
+<map id="adaptive_filter" name="adaptive_filter">
+<area shape="rect" id="Node000001" title="This function filters the data of angle got from magnetic readings." alt="" coords="5,31,121,56"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#gab4be8745d812ca6e741eb455f64f3bb7" title="This function smooths the operation of interpolation between angles specially for jumps from 0 to 360..." alt="" coords="169,5,283,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="121,32,155,26,156,32,122,37"/>
+<area shape="rect" id="Node000003" href="$group__sensor__api.html#ga9a1cd3e3a0329e310eba39d7df534c55" title="This function wrapes the angle input to make sure it is between 0 and 360 degrees." alt="" coords="183,55,269,80"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="122,49,170,56,169,62,121,54"/>
+</map>

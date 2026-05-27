@@ -1,0 +1,26 @@
+\doxysection{BMM350\+\_\+init}
+\hypertarget{BMM350_init-example}{}\label{BMM350_init-example}\+: This function to initialize the BMM350 registers and enable Normal Mode Note you must call this function before getting the data
+
+\+: This function to initialize the BMM350 registers and enable Normal Mode Note you must call this function before getting the data!!!!!!!!!!!!!!!!!!!! Important Note !!!!!!!!!!!!!!!!!!!!!!!!! -\/User type function is made for user
+
+-\/Internal \& User type functions are not necessary for user but if he to adjust internal settings of the sensor. \texorpdfstring{$\ast$}{*} user must understand the function first \texorpdfstring{$\ast$}{*}
+
+-\/Internal type functions are not for user, except for library adjustment, fixing errors and developments.
+
+@type\+: user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure -\/hi2c\+: structure pointer to the HAL I2C\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: bmm350\+\_\+status\+\_\+e -\/\texorpdfstring{$>$}{>} enum that holds the status of the initialization process
+\end{DoxyReturn}
+(\&BMM350, \&hi2c2);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

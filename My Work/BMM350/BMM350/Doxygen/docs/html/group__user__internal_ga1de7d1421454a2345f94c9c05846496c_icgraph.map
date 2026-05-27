@@ -1,0 +1,7 @@
+<map id="bmm350_I2C_write" name="bmm350_I2C_write">
+<area shape="rect" id="Node000001" title="This function is used to write data to a register in the BMM350 sensor." alt="" coords="361,5,509,31"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#gaf0d2cb8fdf5e0a70d975e96f2366726e" title="This function initialize the BMM350 device structure and the adaptive filter." alt="" coords="161,5,313,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="348,21,313,21,313,15,348,15"/>
+<area shape="rect" id="Node000003" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,5,113,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="148,21,114,21,114,15,148,15"/>
+</map>

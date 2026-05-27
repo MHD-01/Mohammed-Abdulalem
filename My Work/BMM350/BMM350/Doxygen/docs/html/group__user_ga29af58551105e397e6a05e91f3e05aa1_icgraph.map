@@ -1,0 +1,12 @@
+<map id="bmm350_set_powermode" name="bmm350_set_powermode">
+<area shape="rect" id="Node000001" title="This function is used to set the power mode of the sensor." alt="" coords="631,5,821,31"/>
+<area shape="rect" id="Node000002" href="$group__user.html#gadc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="239,5,347,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="617,17,583,17,395,17,347,18,347,13,395,11,583,11,617,12"/>
+<area shape="rect" id="Node000005" href="$group__internal.html#gad144c7b4fcd5e9f22b261b1d3ee9b1fa" title="This function is used to perform the magnetic reset of the sensor which is necessary after a field sh..." alt="" coords="395,26,583,66"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="618,33,583,38,583,32,617,28"/>
+<area shape="rect" id="Node000003" href="$main_8c.html#a282fee6b81618368a41e8ba4e575f62e" title=" " alt="" coords="108,5,191,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="225,21,191,21,191,15,225,15"/>
+<area shape="rect" id="Node000004" href="$main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+<area shape="poly" id="edge5_Node000005_Node000002" title=" " alt="" coords="381,33,347,28,348,23,382,28"/>
+</map>

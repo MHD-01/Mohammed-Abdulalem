@@ -1,0 +1,20 @@
+\doxysection{set\+\_\+powermode}
+\hypertarget{set_powermode-example}{}\label{set_powermode-example}\+: This function is used to switch from suspend mode to normal mode or forced mode.
+
+\+: This function is used to switch from suspend mode to normal mode or forced mode.@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/powermode\+: enum from bmm350\+\_\+power\+\_\+modes\+\_\+e for indicating the power mode\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+INV\+\_\+\+PWR\+\_\+\+MODE -\/\texorpdfstring{$>$}{>} invalid powermode
+\end{DoxyReturn}
+(\&BMM350, NORMAL\+\_\+\+MODE);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

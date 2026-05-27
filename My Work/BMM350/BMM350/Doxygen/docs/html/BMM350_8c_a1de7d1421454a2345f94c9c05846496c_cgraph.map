@@ -1,0 +1,5 @@
+<map id="bmm350_I2C_write" name="bmm350_I2C_write">
+<area shape="rect" id="Node000001" title="This function is used to write data to a register in the BMM350 sensor." alt="" coords="5,5,153,31"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#a3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="201,5,317,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="154,15,188,15,188,21,154,21"/>
+</map>

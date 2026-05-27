@@ -1,0 +1,11 @@
+<map id="unwrap_angle" name="unwrap_angle">
+<area shape="rect" id="Node000001" title="This function smooths the operation of interpolation between angles specially for jumps from 0 to 360..." alt="" coords="601,5,715,31"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#ga349bf3c57fbed6694ac73f4cbebcf990" title="This function filters the data of angle got from magnetic readings." alt="" coords="437,5,553,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="588,21,554,21,554,15,588,15"/>
+<area shape="rect" id="Node000003" href="$group__sensor__api.html#gae1c1a63d4a6fe6c7804473250ac24eee" title="This function is used to get yaw value." alt="" coords="239,5,389,31"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="424,21,389,21,389,15,424,15"/>
+<area shape="rect" id="Node000004" href="$main_8c.html#a282fee6b81618368a41e8ba4e575f62e" title=" " alt="" coords="108,5,191,31"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="225,21,191,21,191,15,225,15"/>
+<area shape="rect" id="Node000005" href="$main_8c.html#a840291bc02cba5474a4cb46a9b9566fe" title=" " alt="" coords="5,5,60,31"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="94,21,60,21,60,15,94,15"/>
+</map>

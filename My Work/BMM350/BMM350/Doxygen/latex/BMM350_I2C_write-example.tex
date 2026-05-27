@@ -1,0 +1,20 @@
+\doxysection{BMM350\+\_\+\+I2\+C\+\_\+write}
+\hypertarget{BMM350_I2C_write-example}{}\label{BMM350_I2C_write-example}\+: This function is used to write data to a register in the BMM350 sensor.
+
+\+: This function is used to write data to a register in the BMM350 sensor.@type\+: internal \& user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/Mem\+Address\+: the memory address {\itshape you can find all registers addresses in \doxylink{BMM350_8h_source}{BMM350.\+h}}. -\/p\+Data\+: the buffer that will contain the register data. -\/len\+: the length of the data buffer.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+W\+\_\+\+COM\+\_\+\+FAIL -\/\texorpdfstring{$>$}{>} the write process failed BMM350\+\_\+\+E\+\_\+\+NULL\+\_\+\+PTR -\/\texorpdfstring{$>$}{>} dev is NULL, maybe uninitialized.
+\end{DoxyReturn}
+(\&BMM350, BMM350\+\_\+\+REG\+\_\+\+MAG\+\_\+\+X\+\_\+\+XLSB, \&lsb, 1);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

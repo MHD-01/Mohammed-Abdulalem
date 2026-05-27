@@ -1,0 +1,20 @@
+\doxysection{read\+\_\+out\+\_\+raw\+\_\+data}
+\hypertarget{read_out_raw_data-example}{}\label{read_out_raw_data-example}\+: This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperature.
+
+\+: This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperature.@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/out\+\_\+data\+: float pointer to hold uncompensated data of x, y, z, temperature.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+NULL\+\_\+\+PTR -\/\texorpdfstring{$>$}{>} Second argument is NULL
+\end{DoxyReturn}
+(\&BMM350, \&out\+\_\+data);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

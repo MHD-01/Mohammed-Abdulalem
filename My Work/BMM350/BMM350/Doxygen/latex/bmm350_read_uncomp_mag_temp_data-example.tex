@@ -1,0 +1,20 @@
+\doxysection{bmm350\+\_\+read\+\_\+uncomp\+\_\+mag\+\_\+temp\+\_\+data}
+\hypertarget{bmm350_read_uncomp_mag_temp_data-example}{}\label{bmm350_read_uncomp_mag_temp_data-example}\+: This function is used to read (ADC) uncompensated mag and temperature data.
+
+\+: This function is used to read (ADC) uncompensated mag and temperature data.@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure -\/raw\+\_\+data\+: structure pointer to raw ADC data\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: -\/rslt\+: the status of the function BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+NULL\+\_\+\+PTR -\/\texorpdfstring{$>$}{>} Second argument is NULL
+\end{DoxyReturn}
+(\&BMM350, \&raw\+\_\+data);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

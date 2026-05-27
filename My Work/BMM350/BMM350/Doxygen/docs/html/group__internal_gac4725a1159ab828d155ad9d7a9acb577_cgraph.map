@@ -1,0 +1,5 @@
+<map id="read_otp_word" name="read_otp_word">
+<area shape="rect" id="Node000001" title="This internal function is used to read OTP word." alt="" coords="5,5,124,31"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#ga20057caad23a28a66e09535ad5fdf9de" title=": This function handles errors when reading OTP register." alt="" coords="172,5,291,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="124,15,158,15,158,21,124,21"/>
+</map>

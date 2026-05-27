@@ -1,0 +1,1156 @@
+\doxysection{/home/mua/workspace/\+Documentations/sensors/\+BMM350/\+BMM350.\+c}
+\hypertarget{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}{}\label{_2home_2mua_2workspace_2Documentations_2sensors_2BMM350_2BMM350_8c-example}\+: This function configures the INT\+\_\+\+CTRL register (0x2E)
+
+\+: This function configures the INT\+\_\+\+CTRL register (0x2E)@type\+: internal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: -\/rslt\+: the status of the function BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+INTR\+\_\+\+INV -\/\texorpdfstring{$>$}{>} configuration was not successful
+\end{DoxyReturn}
+
+\begin{DoxyCodeInclude}{0}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*********************************\ بسم\ الله\ الرحمن\ الرحيم\ *********************************}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ BMM350.c}}
+\DoxyCodeLine{\textcolor{comment}{\ *}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ \ Created\ on:\ April\ 27,\ 2025}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ \ recreated\ on\ :\ May\ 3,\ 2025}}
+\DoxyCodeLine{\textcolor{comment}{}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ \ \ \ \ \ Author:\ MOAHMMED\ ABDULALEM\ |\ محمد\ عبدالعالم}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ \ \ \ \ \ version:\ 1.00}}
+\DoxyCodeLine{\textcolor{comment}{\ */}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#ifndef\ SRC\_BMM350\_IMU\_BMM350\_C\_}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#define\ SRC\_BMM350\_IMU\_BMM350\_C\_}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ "{}BMM350.h"{}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{\textcolor{comment}{\ *\ *********************\ Functions\ definitions****************}}
+\DoxyCodeLine{\textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/************************\ USER\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_init(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ I2C\_HandleTypeDef\ *hi2c)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ bmm350\_init\_struct(dev,\ hi2c);}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Chip\ ID}}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ chip\_id;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Variable\ to\ store\ the\ command\ to\ power-\/off\ the\ OTP}}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ otp\_cmd\ =\ BMM350\_OTP\_CMD\_PWR\_OFF\_OTP;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Variable\ to\ store\ soft-\/reset\ command\ */}}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ soft\_reset;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ uint8\_t\ data[12];}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ check\_device(dev);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \}}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}{chip\_id}}\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{//\ Enable\ all\ axis}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ =\ 0x07;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_START\_UP\_TIME\_FROM\_POR);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Soft-\/reset\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ soft\_reset\ =\ BMM350\_CMD\_SOFTRESET;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ the\ command\ in\ the\ command\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_CMD,\ \&soft\_reset,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_SOFT\_RESET\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_CHIP\_ID,\ \&chip\_id,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ memcpy(dev-\/>chip\_id,\ chip\_id,\ sizeof(chip\_id));}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>chip\_id\ =\ chip\_id;}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}{chip\_id}}\ =\ chip\_id;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Check\ for\ chip\ id\ validity\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}{chip\_id}}\ ==\ BMM350\_CHIP\_ID))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Download\ OTP\ memory\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ otp\_dump\_after\_boot(dev);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Power\ off\ OTP\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_OTP\_CMD\_REG,\ \&otp\_cmd,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_SOFT\_RESET\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_magnetic\_reset\_and\_wait(dev);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_GOTO\_SUSPEND\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_DEV\_NOT\_FOUND;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ interrupt\_config(dev);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_odr\_avg\_config(dev,\ BMM350\_ODR\_400HZ,\ BMM350\_AVG\_NO\_AVG);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_set\_powermode(dev,\ BMM350\_NORMAL\_MODE);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_get\_pmu\_cmd\_status(dev,\ \&dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}{pmu\_cmd\_status}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ bmm350\_read\_yaw(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_ang\_unt\_rng\_e\ unit,\ bmm350\_ang\_unt\_rng\_e\ range)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ yaw[2]\ =\ \{0.0f\};\ \textcolor{comment}{//\ [0]\ radian,\ [1]\ degree}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keyword}{static}\ \textcolor{keywordtype}{float}\ NUV[2]\ =\ \{0.0f\};\ \textcolor{comment}{//\ Normalized\ unit\ vector\ for,\ [0]\ X,\ [1]\ Y}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ read\_intr(dev,\ \&dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_INT\_DATA\_READY)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ NUV[0]\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}}\ /\ sqrt((pow(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}},\ 2)\ +\ pow(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}},\ 2))));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ NUV[1]\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}}\ /\ sqrt((pow(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}},\ 2)\ +\ pow(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}}.\mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}},\ 2))));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ yaw[0]\ =\ atan2(-\/1\ *\ NUV[1],\ NUV[0]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>yaw[0]\ =\ (yaw[0]\ *\ (180.0\ /\ PI));\ \ \ \ \ \ \textcolor{comment}{//\ Initialize\ the\ raw\ yaw\ in\ the\ structure\ for\ kalman\ filtering}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(dev-\/>yaw[0]\ <\ 0)\ dev-\/>yaw[0]\ +=\ 360.0;\ \ \ \textcolor{comment}{//\ Makes\ sure\ it\ is\ in\ the\ of\ 0\ to\ 360\ for\ better\ filtering}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>yaw[1]\ =\ adaptive\_filter(\&BMM350\_yaw\_f,\ dev-\/>yaw[0]);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ yaw[1]\ =\ dev-\/>yaw[1];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(range\ ==\ FROM\_NEG\_180\_TO\_POS\_180)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ yaw[1]\ -\/=\ (yaw[1]\ >\ 180)?\ 360.0f\ :\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ (unit\ ==\ RADIAN)?\ yaw[0]\ :\ yaw[1];}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ read\_intr(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ *output\_data)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ int\_status;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_INT\_STATUS,\ \&int\_status,\ 1);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ (int\_status\ \&\ 0x04))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_INT\_DATA\_READY;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ bmm350\_get\_compensated\_mag\_xyz\_temp\_data(dev,\ output\_data);}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_INT\_DATA\_NOT\_READY;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/************************\ USER\ \&\ INTERNAL\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ adaptive\_filter(\mbox{\hyperlink{structbmm350__filter}{bmm350\_filter}}\ *filter,\ \textcolor{keywordtype}{float}\ raw\_data)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ unwrapped\ =\ unwrap\_angle(filter-\/>data,\ raw\_data);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ delta\ =\ fabsf(unwrapped\ -\/\ filter-\/>data);}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ filter-\/>alpha\ =\ ((delta\ >\ CHANGE\_THRESHOLD)?\ ALPHA\_MAX\ :\ ALPHA\_MIN\ \ \ \textcolor{comment}{/*+\ (delta\ /\ CHANGE\_THRESHOLD)\ *\ (ALPHA\_MAX\ -\/\ ALPHA\_MIN)*/});}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ filter-\/>data\ =\ filter-\/>alpha\ *\ unwrapped\ +\ (1.0f\ -\/\ filter-\/>alpha)\ *\ filter-\/>data;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ wrap\_360(filter-\/>data);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ check\_device(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(HAL\_I2C\_IsDeviceReady(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}},\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}}\ <<\ 1),\ 3,\ HAL\_MAX\_DELAY)\ ==\ HAL\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ Bmm350\_DEV\_NOT\_READY;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_I2C\_read(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ MemAddress,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ *pData,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ len)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ temp\_len\ =\ len\ +\ BMM350\_DUMMY\_BYTES;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ temp\_buf[BMM350\_READ\_BUFFER\_LENGTH];}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ index\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ (pData\ !=\ NULL))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(HAL\_I2C\_Mem\_Read(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}}\ <<\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemAddress,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I2C\_MEMADD\_SIZE\_8BIT,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\_buf,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\_len,\ HAL\_MAX\_DELAY)\ !=\ HAL\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_R\_COM\_FAIL;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}(index\ <\ len)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pData[index]\ =\ temp\_buf[index\ +\ BMM350\_DUMMY\_BYTES];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ index++;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ if((HAL\_I2C\_GetState(dev-\/>hi2c)\ ==\ HAL\_I2C\_STATE\_READY)\ \&\&\ (pData\ !=\ NULL))\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ if(HAL\_I2C\_Mem\_Read\_IT(dev-\/>hi2c,}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>address\ <<\ 1),}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemAddress,}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I2C\_MEMADD\_SIZE\_8BIT,}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pData,}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Size)\ !=\ HAL\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_R\_COM\_FAIL;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}else\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}else\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_I2C\_write(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ MemAddress,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint8\_t\ *pData,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ uint16\_t\ Size)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ (pData\ !=\ NULL)\ \&\&\ (Size\ !=\ 0))\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((HAL\_I2C\_GetState(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}})\ ==\ HAL\_I2C\_STATE\_READY)\ \ \&\&\ (pData\ !=\ NULL))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(HAL\_I2C\_Mem\_Write(\ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}},}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}}\ <<\ 1),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ MemAddress,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ I2C\_MEMADD\_SIZE\_8BIT,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pData,}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Size,\ HAL\_MAX\_DELAY)\ !=\ HAL\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_R\_COM\_FAIL;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_get\_compensated\_mag\_xyz\_temp\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ *mag\_temp\_data)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ indx;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ out\_data[4]\ =\ \{\ 0.0f\ \};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ dut\_offset\_coef[3],\ dut\_sensit\_coef[3],\ dut\_tco[3],\ dut\_tcs[3];}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ cr\_ax\_comp\_x,\ cr\_ax\_comp\_y,\ cr\_ax\_comp\_z;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(mag\_temp\_data\ !=\ NULL)\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ read\_out\_raw\_data(dev,\ out\_data);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Apply\ compensation\ to\ temperature\ reading\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ (1\ +\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aa78ac801d7f83ccf8d6fe7a42a16ff86}{t\_sens}})\ *\ out\_data[3]\ +\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_a50109cd4fdb6bd1b148a49f640211968}{t\_offs}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Store\ magnetic\ compensation\ structure\ to\ an\ array\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_offset\_coef[0]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_adda0ede17c77be254deee88abcdcdb33}{offset\_x}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_offset\_coef[1]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_ae9bc75a4a8675e1a3c11031bec935ec0}{offset\_y}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_offset\_coef[2]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_ac7f6ed2c6fdf7a9c89f43941fa7f01c0}{offset\_z}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_sensit\_coef[0]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_a83d488f845a0c3ef295f6a51f459bc32}{sens\_x}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_sensit\_coef[1]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_acc251c2423d3da419ca82d5434fef52a}{sens\_y}};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_sensit\_coef[2]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aef169e64a58f2ba74f03308eb42fb862}{sens\_z}};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tco[0]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_x;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tco[1]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_y;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tco[2]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_z;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tcs[0]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_x;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tcs[1]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_y;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dut\_tcs[2]\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_z;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Compensate\ raw\ magnetic\ data\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (indx\ =\ 0;\ indx\ <\ 3;\ indx++)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[indx]\ *=\ 1\ +\ dut\_sensit\_coef[indx];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[indx]\ +=\ dut\_offset\_coef[indx];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[indx]\ +=\ dut\_tco[indx]\ *\ (out\_data[3]\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad89df45d86dc7325cf9dcd29ce34e9e2}{dut\_t0}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[indx]\ /=\ 1\ +\ dut\_tcs[indx]\ *\ (out\_data[3]\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad89df45d86dc7325cf9dcd29ce34e9e2}{dut\_t0}});}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cr\_ax\_comp\_x\ =\ (out\_data[0]\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y\ *\ out\_data[1])\ /}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ *\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cr\_ax\_comp\_y\ =\ (out\_data[1]\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ *\ out\_data[0])\ /}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ *\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ cr\_ax\_comp\_z\ =}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (out\_data[2]\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (out\_data[0]\ *}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ *\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_y\ -\/}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_x)\ -\/\ out\_data[1]\ *}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_y\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y\ *}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_x))\ /}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (1\ -\/\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ *\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[0]\ =\ cr\_ax\_comp\_x;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[1]\ =\ cr\_ax\_comp\_y;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[2]\ =\ cr\_ax\_comp\_z;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rslt\ ==\ BMM350\_OK)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_X\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}}\ =\ out\_data[0];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_Y\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}}\ =\ out\_data[1];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_Z\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_a7d9cdbd354177f1ea5d743017059e9b0}{z}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_a7d9cdbd354177f1ea5d743017059e9b0}{z}}\ =\ out\_data[2];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ mag\_temp\_data-\/>\mbox{\hyperlink{structbmm350__mag__temp__data__s_ab2cfc74389fa346cc44e2306950562c1}{temperature}}\ =\ out\_data[3];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_set\_powermode(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_power\_modes\_e\ powermode)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ last\_pwr\_mode;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_data;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Check\ for\ null\ pointer\ in\ the\ device\ structure\ */}}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&last\_pwr\_mode,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(last\_pwr\_mode\ >\ BMM350\_PMU\_CMD\_BR\_FAST)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INVALID\_CONFIG;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ ((last\_pwr\_mode\ ==\ BMM350\_PMU\_CMD\_NM)\ ||\ (last\_pwr\_mode\ ==\ BMM350\_PMU\_CMD\_UPD\_OAE)))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_PMU\_CMD\_SUS;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ PMU\ command\ configuration\ \ to\ SUSPEND\ mode*/}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&reg\_data,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_GOTO\_SUSPEND\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ set\_powermode(dev,\ powermode);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_get\_pmu\_cmd\_status(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\_pmu\_cmd\_status\_s}}\ *pmu\_cmd\_stat)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ Registros\ pmu\_cmd\_status.\ Offset\ +2.}}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_pmu\_cmd\_status\_0\ =\ BMM350\_REG\_PMU\_CMD\_STATUS\_0;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_pmu\_cmd\_status\_1\ =\ BMM350\_REG\_PMU\_CMD\_STATUS\_1;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_data[12];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (pmu\_cmd\_stat\ !=\ NULL)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ PMU\ command\ status\ 0\ data\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ 0x00,\ reg\_data,\ \textcolor{keyword}{sizeof}(reg\_data));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (rslt\ ==\ BMM350\_OK)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMU\_CMD\_STATUS\_0}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_ad28e65074fd141aab61b3cd2e587cec7}{pmu\_cmd\_busy}}\ =\ BMM350\_GET\_BITS\_POS\_0(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_PMU\_CMD\_BUSY);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_af8edaec0347c7dc8b92e1a3bf3ec359a}{odr\_ovwr}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_ODR\_OVWR);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a49b8ec87975604a4cbfa87e5aa10aaa9}{avr\_ovwr}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_AVG\_OVWR);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e}{pwr\_mode\_is\_normal}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_PWR\_MODE\_IS\_NORMAL);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a01929700dca093932e8284d8d2ea459a}{cmd\_is\_illegal}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_CMD\_IS\_ILLEGAL);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}{pmu\_cmd\_value}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_0],\ BMM350\_PMU\_CMD\_VALUE);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ PMU\_CMD\_STATUS\_1}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a6a95555d99cf5cea774e8bc57c26b511}{status\_1}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s_acb7f34a4b2e56ecc7021074b6aac7af6}{pmu\_odr\_s}}\ =\ BMM350\_GET\_BITS\_POS\_0(reg\_data[reg\_pmu\_cmd\_status\_1],\ BMM350\_PMU\_ODR\_S);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\_stat-\/>\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a6a95555d99cf5cea774e8bc57c26b511}{status\_1}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s_ae1cb4419e7dbe31c1ee4aaee697d2dac}{pmu\_avg\_s}}\ =\ BMM350\_GET\_BITS(reg\_data[reg\_pmu\_cmd\_status\_1],\ BMM350\_PMU\_AVG\_S);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_PMU\_CMD\_S\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{/************************\ INTERNAL\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_init\_struct(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ I2C\_HandleTypeDef\ *hi2c)\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}}\ \ \ \ \ \ \ \ \ \ \ =\ hi2c;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}}\ \ \ \ \ \ \ \ \ =\ BMM350\_I2C\_ADDRESS;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}\ \ \ \ \ \ \ \ \ \ \ =\ bmm350\_I2C\_read;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}\ \ \ \ \ \ \ \ \ \ \ \ \ =\ bmm350\_I2C\_write;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}\ \ \ \ \ \ \ =\ DWT\_delay\_us;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ memset(\&dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}{pmu\_cmd\_status}},\ 0,\ \textcolor{keyword}{sizeof}(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}{pmu\_cmd\_status}}));}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ null\_ptr\_check(dev);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ wrap\_360(\textcolor{keywordtype}{float}\ angle)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (angle\ >=\ 360.0f)\ angle\ -\/=\ 360.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{while}\ (angle\ <\ 0.0f)\ angle\ +=\ 360.0f;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ angle;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{float}\ unwrap\_angle(\textcolor{keywordtype}{float}\ prev,\ \textcolor{keywordtype}{float}\ curr)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ delta\ =\ curr\ -\/\ prev;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(delta\ >\ 180.0f)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ delta\ -\/=\ 360.0f;}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}(delta\ <\ -\/180)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ delta\ +=\ 360.0f;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ (prev\ +\ delta);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ interrupt\_config(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{//\ These\ can\ be\ configured\ if\ needed\ only\ otherwise\ leave\ it}}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.latch\ \ \ \ \ =\ BMM350\_PULSED;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.polarity\ \ =\ BMM350\_ACTIVE\_HIGH;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.drive\ \ \ \ \ =\ BMM350\_INTR\_PUSH\_PULL;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.map\ \ \ \ \ \ \ =\ BMM350\_UNMAP\_FROM\_PIN;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_data\ =\ 0;}
+\DoxyCodeLine{\textcolor{comment}{//\ \ uint8\_t\ reg\_data\_test[4];}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_INT\_CTRL,\ \&reg\_data,\ 1);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_SET\_BITS\_POS\_0(reg\_data,\ BMM350\_INT\_MODE,\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.latch);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_SET\_BITS(reg\_data,\ BMM350\_INT\_POL,\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.polarity);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_SET\_BITS(reg\_data,\ BMM350\_INT\_OD,\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.drive);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_SET\_BITS(reg\_data,\ BMM350\_INT\_OUTPUT\_EN,\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}}.map);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ reg\_data\ =\ BMM350\_SET\_BITS(reg\_data,\ BMM350\_DRDY\_DATA\_REG\_EN,\ BMM350\_ENABLE);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_INT\_CTRL,\ \&reg\_data,\ 1);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_INT\_CTRL,\ \&reg\_data,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(!(reg\_data\ \&\ 0x86))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INTR\_INV;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_read\_uncomp\_mag\_temp\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__raw__mag__data__s}{bmm350\_raw\_mag\_data\_s}}\ *raw\_data)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ mag\_data[12]\ =\ \{\ 0\ \};}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ raw\_mag\_x,\ raw\_mag\_y,\ raw\_mag\_z,\ raw\_temp;}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(raw\_data\ !=\ NULL)\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_MAG\_X\_XLSB,\ mag\_data,\ BMM350\_MAG\_TEMP\_DATA\_LEN);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_x\ =\ mag\_data[0]\ +\ ((uint32\_t)mag\_data[1]\ <<\ 8)\ +\ ((uint32\_t)mag\_data[2]\ <<\ 16);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_y\ =\ mag\_data[3]\ +\ ((uint32\_t)mag\_data[4]\ <<\ 8)\ +\ ((uint32\_t)mag\_data[5]\ <<\ 16);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_z\ =\ mag\_data[6]\ +\ ((uint32\_t)mag\_data[7]\ <<\ 8)\ +\ ((uint32\_t)mag\_data[8]\ <<\ 16);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ raw\_temp\ =\ mag\_data[9]\ +\ ((uint32\_t)mag\_data[10]\ <<\ 8)\ +\ ((uint32\_t)mag\_data[11]\ <<\ 16);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_X\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_ae2206b7892fc94a6fe42b789960726b8}{raw\_xdata}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_ae2206b7892fc94a6fe42b789960726b8}{raw\_xdata}}\ =\ fix\_sign(raw\_mag\_x,\ BMM350\_SIGNED\_24\_BIT);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_Y\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_aaeb754e581a3cd367341534cb7d95260}{raw\_ydata}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_aaeb754e581a3cd367341534cb7d95260}{raw\_ydata}}\ =\ fix\_sign(raw\_mag\_y,\ BMM350\_SIGNED\_24\_BIT);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}}\ \&\ BMM350\_EN\_Z\_MSK)\ ==\ BMM350\_DISABLE)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_a7e492a0c835d4fe7679e15bda3677a58}{raw\_zdata}}\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_a7e492a0c835d4fe7679e15bda3677a58}{raw\_zdata}}\ =\ fix\_sign(raw\_mag\_z,\ BMM350\_SIGNED\_24\_BIT);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ raw\_data-\/>\mbox{\hyperlink{structbmm350__raw__mag__data__s_a0d6b02f40dd2725e8f2a1cf23fd399bc}{raw\_data\_t}}\ =\ fix\_sign(raw\_temp,\ BMM350\_SIGNED\_24\_BIT);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//*******************************************************need\ edit}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ read\_out\_raw\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \textcolor{keywordtype}{float}\ *out\_data)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ temp\ =\ 0.0;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structbmm350__raw__mag__data__s}{bmm350\_raw\_mag\_data\_s}}\ raw\_data\ =\ \{\ 0\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Float\ variable\ to\ convert\ mag\ lsb\ to\ uT\ and\ temp\ lsb\ to\ degC\ */}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ lsb\_to\_ut\_degc[4];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(out\_data\ !=\ NULL)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ bmm350\_read\_uncomp\_mag\_temp\_data(dev,\ \&raw\_data);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Convert\ mag\ lsb\ to\ uT\ and\ temp\ lsb\ to\ degC\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ update\_default\_coefiecents(lsb\_to\_ut\_degc);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[0]\ =\ (float)raw\_data.\mbox{\hyperlink{structbmm350__raw__mag__data__s_ae2206b7892fc94a6fe42b789960726b8}{raw\_xdata}}\ *\ lsb\_to\_ut\_degc[0];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[1]\ =\ (float)raw\_data.\mbox{\hyperlink{structbmm350__raw__mag__data__s_aaeb754e581a3cd367341534cb7d95260}{raw\_ydata}}\ *\ lsb\_to\_ut\_degc[1];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[2]\ =\ (float)raw\_data.\mbox{\hyperlink{structbmm350__raw__mag__data__s_a7e492a0c835d4fe7679e15bda3677a58}{raw\_zdata}}\ *\ lsb\_to\_ut\_degc[2];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ (float)raw\_data.\mbox{\hyperlink{structbmm350__raw__mag__data__s_a0d6b02f40dd2725e8f2a1cf23fd399bc}{raw\_data\_t}}\ *\ lsb\_to\_ut\_degc[3];}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (out\_data[3]\ >\ 0.0)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ (float)(out\_data[3]\ -\/\ (1\ *\ 25.49));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (out\_data[3]\ <\ 0.0)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ (float)(out\_data[3]\ -\/\ (-\/1\ *\ 25.49));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ (float)(out\_data[3]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ temp;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//*******************************************************need\ edit}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ update\_default\_coefiecents(\textcolor{keywordtype}{float}\ *lsb\_to\_ut\_degC)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ bxy\_sens,\ bz\_sens,\ temp\_sens,\ ina\_xy\_gain\_trgt,\ ina\_z\_gain\_trgt,\ adc\_gain,\ lut\_gain;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordtype}{float}\ power;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ bxy\_sens\ =\ 14.55f;}
+\DoxyCodeLine{\ \ \ \ bz\_sens\ =\ 9.0f;}
+\DoxyCodeLine{\ \ \ \ temp\_sens\ =\ 0.00204f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ ina\_xy\_gain\_trgt\ =\ 19.46f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ ina\_z\_gain\_trgt\ =\ 31.0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ adc\_gain\ =\ 1\ /\ 1.5f;}
+\DoxyCodeLine{\ \ \ \ lut\_gain\ =\ 0.714607238769531f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ power\ =\ (float)(1000000.0\ /\ 1048576.0);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ lsb\_to\_ut\_degC[0]\ =\ (power\ /\ (bxy\_sens\ *\ ina\_xy\_gain\_trgt\ *\ adc\_gain\ *\ lut\_gain));}
+\DoxyCodeLine{\ \ \ \ lsb\_to\_ut\_degC[1]\ =\ (power\ /\ (bxy\_sens\ *\ ina\_xy\_gain\_trgt\ *\ adc\_gain\ *\ lut\_gain));}
+\DoxyCodeLine{\ \ \ \ lsb\_to\_ut\_degC[2]\ =\ (power\ /\ (bz\_sens\ *\ ina\_z\_gain\_trgt\ *\ adc\_gain\ *\ lut\_gain));}
+\DoxyCodeLine{\ \ \ \ lsb\_to\_ut\_degC[3]\ =\ 1\ /\ (temp\_sens\ *\ adc\_gain\ *\ lut\_gain\ *\ 1048576);}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_odr\_avg\_config(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ odr,\ uint16\_t\ avg)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ pmu\_cmd\_aggr\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ pmu\_cmd\_upd\_oae\ =\ BMM350\_PMU\_CMD\_UPD\_OAE;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}(odr)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_400HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_200HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_100HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_50HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_25HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_12\_5HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_6\_25HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_3\_125HZ:}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_ODR\_1\_5625HZ:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INV\_ODR\_AVG;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(avg)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_AVG\_NO\_AVG:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_AVG\_2:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_AVG\_4:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_AVG\_8:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INV\_ODR\_AVG;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ pmu\_cmd\_aggr\ =\ (0xFF\ \&\ ((avg\ <<\ 4)\ |\ odr));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&pmu\_cmd\_upd\_oae,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_UPD\_OAE\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD\_AGGR\_SET,\ \&pmu\_cmd\_aggr,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(300);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ bmm350\_magnetic\_reset\_and\_wait(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ pmu\_cmd\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\_pmu\_cmd\_status\_s}}\ pmu\_cmd\_stat\ =\ \{\ 0\ \};}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ restore\_normal\ =\ BMM350\_DISABLE;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ if\ ((rslt\ ==\ BMM350\_OK)\ \&\&\ (dev-\/>mraw\_override)\ \&\&\ (dev-\/>var\_id\ >=\ BMM350\_MIN\_VAR))\{}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>mraw\_override(dev);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}else\{}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Read\ PMU\ CMD\ status\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ bmm350\_get\_pmu\_cmd\_status(dev,\ \&pmu\_cmd\_stat);\ \textcolor{comment}{//\ How\ Normal\ is\ set????}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Check\ the\ powermode\ is\ normal\ before\ performing\ magnetic\ reset\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}((rslt\ ==\ BMM350\_OK)\ \&\&\ (pmu\_cmd\_stat.\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e}{pwr\_mode\_is\_normal}}\ ==\ BMM350\_ENABLE))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ restore\_normal\ =\ BMM350\_ENABLE;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Reset\ can\ only\ can\ be\ triggered\ in\ suspend\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_set\_powermode(dev,\ BMM350\_SUSPEND\_MODE);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ BR\ to\ PMU\_CMD\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\ =\ BMM350\_PMU\_CMD\_BR;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&pmu\_cmd,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_BR\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Verify\ if\ PMU\_CMD\_STATUS\_0\ register\ has\ BR\ set\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_get\_pmu\_cmd\_status(dev,\ \&pmu\_cmd\_stat);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((rslt\ ==\ BMM350\_OK)\ \&\&\ (pmu\_cmd\_stat.\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}{pmu\_cmd\_value}}\ !=\ BMM350\_PMU\_CMD\_STATUS\_0\_BR))}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_PMU\_CMD\_VALUE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ FGR\ to\ PMU\_CMD\ register\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ pmu\_cmd\ =\ BMM350\_PMU\_CMD\_FGR;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&pmu\_cmd,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(BMM350\_FGR\_DELAY);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Verify\ if\ PMU\_CMD\_STATUS\_0\ register\ has\ FGR\ set\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_get\_pmu\_cmd\_status(dev,\ \&pmu\_cmd\_stat);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((rslt\ ==\ BMM350\_OK)\ \&\&\ (pmu\_cmd\_stat.\mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}}.\mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}{pmu\_cmd\_value}}\ !=\ BMM350\_PMU\_CMD\_STATUS\_0\_FGR))}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_PMU\_CMD\_VALUE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((rslt\ ==\ BMM350\_OK)\ \&\&\ (restore\_normal\ ==\ BMM350\_ENABLE))}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ bmm350\_set\_powermode(dev,\ BMM350\_NORMAL\_MODE);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ set\_powermode(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_power\_modes\_e\ powermode)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ reg\_data\ =\ powermode;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ get\_avg;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Array\ to\ store\ suspend\ to\ forced\ mode\ delay\ */}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ sus\_to\_forced\_mode[4]\ =}
+\DoxyCodeLine{\ \ \ \ \{\ BMM350\_SUS\_TO\_FORCEDMODE\_NO\_AVG\_DELAY,\ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_2\_DELAY,\ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_4\_DELAY,}
+\DoxyCodeLine{\ \ \ \ \ \ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_8\_DELAY\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Array\ to\ store\ suspend\ to\ forced\ mode\ fast\ delay\ */}}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ sus\_to\_forced\_mode\_fast[4]\ =}
+\DoxyCodeLine{\ \ \ \ \{\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_NO\_AVG\_DELAY,\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_2\_DELAY,}
+\DoxyCodeLine{\ \ \ \ \ \ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_4\_DELAY,\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_8\_DELAY\ \};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ avg\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ uint32\_t\ delay\_us\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ rslt\ =\ null\_ptr\_check(dev);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ PMU\ command\ configuration\ to\ desired\ power\ mode\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_PMU\_CMD,\ \&reg\_data,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ average\ configuration\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_PMU\_CMD\_AGGR\_SET,\ \&get\_avg,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Mask\ the\ average\ value\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ avg\ =\ ((get\_avg\ \&\ BMM350\_AVG\_MSK)\ >>\ BMM350\_AVG\_POS);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(powermode)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SUSPEND\_MODE:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}{bmm350\_err}}\ =\ BMM350\_E\_SUSPEND\_MODE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_NORMAL\_MODE:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ delay\_us\ =\ BMM350\_SUSPEND\_TO\_NORMAL\_DELAY;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_FORCED\_MODE:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ delay\_us\ =\ sus\_to\_forced\_mode[avg];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_FORCED\_MODE\_FAST:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ delay\_us\ =\ sus\_to\_forced\_mode\_fast[avg];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}{bmm350\_err}}\ =\ BMM350\_E\_INV\_PWR\_MODE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INV\_PWR\_MODE;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Perform\ delay\ based\ on\ power\ mode\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(delay\_us);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ otp\_dump\_after\_boot(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ otp\_word\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{for}(uint8\_t\ i\ =\ 0;\ i\ <\ BMM350\_OTP\_DATA\_LENGTH;\ i++)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ read\_otp\_word(dev,\ i,\ \&otp\_word);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[i]\ =\ otp\_word;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ab78ad0f146fc05cb5f48793353ab6607}{var\_id}}\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[30]\ \&\ 0x7f00)\ >>\ 9;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{comment}{/*\ Update\ magnetometer\ offset\ and\ sensitivity\ data.\ */}}
+\DoxyCodeLine{\ \ \ \ update\_mag\_off\_sens(dev);}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ update\_mag\_off\_sens(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ uint16\_t\ off\_x\_lsb\_msb,\ off\_y\_lsb\_msb,\ off\_z\_lsb\_msb,\ t\_off;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ sens\_x,\ sens\_y,\ sens\_z,\ t\_sens;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ tco\_x,\ tco\_y,\ tco\_z;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ tcs\_x,\ tcs\_y,\ tcs\_z;}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ cross\_x\_y,\ cross\_y\_x,\ cross\_z\_x,\ cross\_z\_y;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ off\_x\_lsb\_msb\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_OFFSET\_X]\ \&\ 0x0FFF;}
+\DoxyCodeLine{\ \ \ \ off\_y\_lsb\_msb\ =\ ((dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_OFFSET\_X]\ \&\ 0xF000)\ >>\ 4)\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_OFFSET\_Y]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ off\_z\_lsb\_msb\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_OFFSET\_Y]\ \&\ 0x0F00)\ +}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_OFFSET\_Z]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ t\_off\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_TEMP\_OFF\_SENS]\ \&\ BMM350\_LSB\_MASK;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_adda0ede17c77be254deee88abcdcdb33}{offset\_x}}\ =\ fix\_sign(off\_x\_lsb\_msb,\ BMM350\_SIGNED\_12\_BIT);}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_ae9bc75a4a8675e1a3c11031bec935ec0}{offset\_y}}\ =\ fix\_sign(off\_y\_lsb\_msb,\ BMM350\_SIGNED\_12\_BIT);}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_ac7f6ed2c6fdf7a9c89f43941fa7f01c0}{offset\_z}}\ =\ fix\_sign(off\_z\_lsb\_msb,\ BMM350\_SIGNED\_12\_BIT);}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}}.\mbox{\hyperlink{structbmm350__dut__offset__coef__s_a50109cd4fdb6bd1b148a49f640211968}{t\_offs}}\ =\ fix\_sign(t\_off,\ BMM350\_SIGNED\_8\_BIT)\ /\ 5.0f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ sens\_x\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_SENS\_X]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{\ \ \ \ sens\_y\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_SENS\_Y]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ sens\_z\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_SENS\_Z]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{\ \ \ \ t\_sens\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_TEMP\_OFF\_SENS]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_a83d488f845a0c3ef295f6a51f459bc32}{sens\_x}}\ =\ fix\_sign(sens\_x,\ BMM350\_SIGNED\_8\_BIT)\ /\ 256.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_acc251c2423d3da419ca82d5434fef52a}{sens\_y}}\ =\ (fix\_sign(sens\_y,\ BMM350\_SIGNED\_8\_BIT)\ /\ 256.0f)\ +\ BMM350\_SENS\_CORR\_Y;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aef169e64a58f2ba74f03308eb42fb862}{sens\_z}}\ =\ fix\_sign(sens\_z,\ BMM350\_SIGNED\_8\_BIT)\ /\ 256.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}}.\mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aa78ac801d7f83ccf8d6fe7a42a16ff86}{t\_sens}}\ =\ fix\_sign(t\_sens,\ BMM350\_SIGNED\_8\_BIT)\ /\ 512.0f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ tco\_x\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCO\_X]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ tco\_y\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCO\_Y]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ tco\_z\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCO\_Z]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_x\ =\ fix\_sign(tco\_x,\ BMM350\_SIGNED\_8\_BIT)\ /\ 32.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_y\ =\ fix\_sign(tco\_y,\ BMM350\_SIGNED\_8\_BIT)\ /\ 32.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}}.tco\_z\ =\ fix\_sign(tco\_z,\ BMM350\_SIGNED\_8\_BIT)\ /\ 32.0f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ tcs\_x\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCS\_X]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{\ \ \ \ tcs\_y\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCS\_Y]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{\ \ \ \ tcs\_z\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_TCS\_Z]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_x\ =\ fix\_sign(tcs\_x,\ BMM350\_SIGNED\_8\_BIT)\ /\ 16384.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_y\ =\ fix\_sign(tcs\_y,\ BMM350\_SIGNED\_8\_BIT)\ /\ 16384.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}}.tcs\_z\ =\ (fix\_sign(tcs\_z,\ BMM350\_SIGNED\_8\_BIT)\ /\ 16384.0f)\ -\/\ BMM350\_TCS\_CORR\_Z;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ad89df45d86dc7325cf9dcd29ce34e9e2}{dut\_t0}}\ =\ (fix\_sign(dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_MAG\_DUT\_T\_0],\ BMM350\_SIGNED\_16\_BIT)\ /\ 512.0f)\ +\ 23.0f;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ cross\_x\_y\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_CROSS\_X\_Y]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ cross\_y\_x\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_CROSS\_Y\_X]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{\ \ \ \ cross\_z\_x\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_CROSS\_Z\_X]\ \&\ BMM350\_LSB\_MASK);}
+\DoxyCodeLine{\ \ \ \ cross\_z\_y\ =\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_CROSS\_Z\_Y]\ \&\ BMM350\_MSB\_MASK)\ >>\ 8;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_x\_y\ =\ fix\_sign(cross\_x\_y,\ BMM350\_SIGNED\_8\_BIT)\ /\ 800.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_y\_x\ =\ fix\_sign(cross\_y\_x,\ BMM350\_SIGNED\_8\_BIT)\ /\ 800.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_x\ =\ fix\_sign(cross\_z\_x,\ BMM350\_SIGNED\_8\_BIT)\ /\ 800.0f;}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}}.\mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}}.cross\_z\_y\ =\ fix\_sign(cross\_z\_y,\ BMM350\_SIGNED\_8\_BIT)\ /\ 800.0f;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ read\_otp\_word(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint8\_t\ addr,\ uint16\_t\ *lsb\_msb)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ uint8\_t\ otp\_cmd,\ otp\_status\ =\ 0,\ otp\_err\ =\ BMM350\_OTP\_STATUS\_NO\_ERROR,\ lsb\ =\ 0,\ msb\ =\ 0;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}(lsb\_msb\ !=\ NULL)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Set\ OTP\ command\ at\ specified\ address\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ otp\_cmd\ =\ BMM350\_OTP\_CMD\_DIR\_READ\ |\ (addr\ \&\ BMM350\_OTP\_WORD\_ADDR\_MSK);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}(dev,\ BMM350\_REG\_OTP\_CMD\_REG,\ \&otp\_cmd,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{do}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}(300);}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//Get\ OTP\ status}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_OTP\_STATUS\_REG,\ \&otp\_status,\ 1);}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>read(dev,\ 0x00,\ data,\ 1);}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ otp\_err\ =\ BMM350\_OTP\_STATUS\_ERROR(otp\_status);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(otp\_err\ !=\ BMM350\_OTP\_STATUS\_NO\_ERROR)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ OTP\_E\_handler(dev,\ otp\_err);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}\textcolor{keywordflow}{while}((!(otp\_status\ \&\ BMM350\_OTP\_STATUS\_CMD\_DONE))\ \&\&\ (rslt\ ==\ BMM350\_OK));}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ OTP\ MSB\ data\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ rslt\ =dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_OTP\_DATA\_MSB\_REG,\ \&msb,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(rslt\ ==\ BMM350\_OK)\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Get\ OTP\ LSB\ data\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}(dev,\ BMM350\_REG\_OTP\_DATA\_LSB\_REG,\ \&lsb,\ 1);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *lsb\_msb\ =\ ((uint16\_t)(msb\ <<\ 8)\ |\ lsb)\ \&\ 0xFFFF;}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>read(dev,\ 0x00,\ data,\ sizeof(data));}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ dev-\/>delay\_us(300);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ *lsb\_msb\ =\ ((uint16\_t)(msb\ <<\ 8)\ |\ lsb)\ \&\ 0xFFFF;}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ null\_ptr\_check(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}((dev\ ==\ NULL)\ ||\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}}\ ==\ NULL)\ ||\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}}\ ==\ NULL)\ ||\ (dev-\/>\mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}}\ ==\ NULL))\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Device\ structure\ pointer\ is\ not\ valid\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}
+\DoxyCodeLine{\ \ \ \ \}\textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{comment}{/*\ Device\ structure\ is\ fine\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_OK;}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{int32\_t\ fix\_sign(uint32\_t\ inval,\ int8\_t\ number\_of\_bits)\{}
+\DoxyCodeLine{\ \ \ \ int32\_t\ power\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ int32\_t\ retval;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}\ (number\_of\_bits)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SIGNED\_8\_BIT:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 128;\ \textcolor{comment}{/*\ 2\string^7\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SIGNED\_12\_BIT:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 2048;\ \textcolor{comment}{/*\ 2\string^11\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SIGNED\_16\_BIT:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 32768;\ \textcolor{comment}{/*\ 2\string^15\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SIGNED\_21\_BIT:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 1048576;\ \textcolor{comment}{/*\ 2\string^20\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_SIGNED\_24\_BIT:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 8388608;\ \textcolor{comment}{/*\ 2\string^23\ */}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ power\ =\ 0;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ retval\ =\ (int32\_t)inval;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{if}\ (retval\ >=\ power)}
+\DoxyCodeLine{\ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ retval\ =\ retval\ -\/\ (power\ *\ 2);}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ retval;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{bmm350\_status\_e\ OTP\_E\_handler(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint8\_t\ otp\_err)\{}
+\DoxyCodeLine{\ \ \ \ bmm350\_status\_e\ rslt;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{switch}(otp\_err)\{}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_OTP\_STATUS\_BOOT\_ERR:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_BOOT;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_OTP\_STATUS\_PAGE\_RD\_ERR:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_PAGE\_RD;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_OTP\_STATUS\_PAGE\_PRG\_ERR:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_PAGE\_PRG;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_OTP\_STATUS\_SIGN\_ERR:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_SIGN;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{case}\ BMM350\_OTP\_STATUS\_INV\_CMD\_ERR:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_INV\_CMD;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_OTP\_UNDEFINED;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ dev-\/>\mbox{\hyperlink{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}{bmm350\_err}}\ =\ rslt;}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ rslt;}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//bmm350\_status\_e\ readout\_data(struct\ bmm350\_dev\_s\ *dev,\ bmm350\_mag\_temp\_data\_s\ *output\_data)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ bmm350\_status\_e\ rslt;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ uint8\_t\ data\_reg\ =\ 0x33;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ uint8\_t\ data\_buffer[64];}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ uint32\_t\ raw\_mag\_x,\ raw\_mag\_y,\ raw\_mag\_z,\ raw\_temp;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ out\_data[4]\ \ \ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ dut\_t0\ \ \ \ \ \ =\ 0.0f;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ sens[4]\ \ \ \ \ \ \ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ cross[4]\ \ \ \ \ \ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ offset[4]\ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ tco[3]\ \ \ \ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ float\ tcs[3]\ \ \ \ \ \ =\ \{\ 0.0f\ \};}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ sens[0]\ \ \ =\ dev-\/>mag\_comp.dut\_sensit\_coef.sens\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ sens[1]\ \ \ =\ dev-\/>mag\_comp.dut\_sensit\_coef.sens\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ sens[2]\ \ \ =\ dev-\/>mag\_comp.dut\_sensit\_coef.sens\_z;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ sens[3]\ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_sensit\_coef.t\_sens;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ cross[0]\ \ =\ dev-\/>mag\_comp.cross\_axis.cross\_x\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ cross[1]\ \ =\ dev-\/>mag\_comp.cross\_axis.cross\_y\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ cross[2]\ \ =\ dev-\/>mag\_comp.cross\_axis.cross\_z\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ cross[3]\ \ =\ dev-\/>mag\_comp.cross\_axis.cross\_z\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ offset[0]\ \ \ \ \ =\ dev-\/>mag\_comp.dut\_offset\_coef.offset\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ offset[1]\ \ \ \ \ =\ dev-\/>mag\_comp.dut\_offset\_coef.offset\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ offset[2]\ \ \ \ \ =\ dev-\/>mag\_comp.dut\_offset\_coef.offset\_z;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ offset[3]\ \ =\ dev-\/>mag\_comp.dut\_offset\_coef.t\_offs;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tco[0]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tco.tco\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tco[1]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tco.tco\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tco[2]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tco.tco\_z;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tcs[0]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tcs.tcs\_x;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tcs[1]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tcs.tcs\_y;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ tcs[2]\ \ \ \ \ \ \ \ =\ dev-\/>mag\_comp.dut\_tcs.tcs\_z;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ if(output\_data\ !=\ NULL)\{}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ dev-\/>read(dev,\ 0x00,\ data\_buffer,\ sizeof(data\_buffer));}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ if((rslt\ ==\ BMM350\_OK)\ /*\&\&\ ((data\_buffer[50]\ \&\ 0x4)\ ==\ 4)*/)\{}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ dev-\/>read(dev,\ data\_reg,\ data\_buffer,\ BMM350\_MAG\_TEMP\_DATA\_LEN);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_x\ =\ ((uint32\_t)\ data\_buffer[2]\ <<\ 16)\ +\ ((uint32\_t)\ data\_buffer[1]\ <<\ 8)\ +\ (uint32\_t)\ data\_buffer[0];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_y\ =\ ((uint32\_t)\ data\_buffer[5]\ <<\ 16)\ +\ ((uint32\_t)\ data\_buffer[4]\ <<\ 8)\ +\ (uint32\_t)\ data\_buffer[3];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_mag\_z\ =\ ((uint32\_t)\ data\_buffer[8]\ <<\ 16)\ +\ ((uint32\_t)\ data\_buffer[7]\ <<\ 8)\ +\ (uint32\_t)\ data\_buffer[6];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ raw\_temp\ =\ ((uint32\_t)\ data\_buffer[11]\ <<\ 16)\ +\ ((uint32\_t)\ data\_buffer[10]\ <<\ 8)\ +\ (uint32\_t)\ data\_buffer[9];}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ Fix\ sign\ and\ apply\ factor}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[0]\ =\ fix\_sign(raw\_mag\_x,\ BMM350\_SIGNED\_24\_BIT)\ *\ mag\_x\_factor;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[1]\ =\ fix\_sign(raw\_mag\_y,\ BMM350\_SIGNED\_24\_BIT)\ *\ mag\_y\_factor;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[2]\ =\ fix\_sign(raw\_mag\_z,\ BMM350\_SIGNED\_24\_BIT)\ *\ mag\_z\_factor;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ fix\_sign(raw\_temp,\ BMM350\_SIGNED\_24\_BIT)\ *\ temp\_factor;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ //\ Fix\ temp}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ if\ (out\_data[3]\ >\ 0.0)\ \{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ out\_data[3]\ -\/\ 25.49;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ else\ if\ (out\_data[3]\ <\ 0.0)\ \{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ out\_data[3]\ +\ 25.49;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ (uint8\_t\ i\ =\ 0;\ i\ <\ 3;\ i++)\ \{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[i]\ *=\ 1\ +\ sens[i];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[i]\ +=\ offset[i];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[i]\ +=\ tco[i]\ *\ (out\_data[3]\ -\/\ dut\_t0);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[i]\ /=\ 1\ +\ tcs[i]\ *\ (out\_data[3]\ -\/\ dut\_t0);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[0]\ =\ (out\_data[0]\ -\/\ cross[0]\ *\ out\_data[1])\ /\ (1\ -\/\ cross[1]\ *\ cross[0]);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[1]\ =\ (out\_data[1]\ -\/\ cross[1]\ *\ out\_data[0])\ /\ (1\ -\/\ cross[1]\ *\ cross[0]);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[2]\ =\ (out\_data[2]\ +\ (out\_data[0]\ *\ (cross[1]\ *\ cross[3]\ -\/\ cross[2])\ -\/\ out\_data[1]\ *\ (cross[3]\ -\/\ cross[0]\ *\ cross[2]))\ /\ (1\ -\/\ cross[1]\ *\ cross[0]));}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ out\_data[3]\ =\ (1\ +\ sens[3])\ *\ out\_data[3]\ +\ offset[3];}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ output\_data-\/>x\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ out\_data[0];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ output\_data-\/>y\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ out\_data[1];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ output\_data-\/>z\ \ \ \ \ \ \ \ \ \ \ \ \ \ =\ out\_data[2];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \ \ \ \ output\_data-\/>temperature\ \ \ \ =\ out\_data[3];}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}else\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INV\_ODR\_AVG;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \}else\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ BMM350\_E\_NULL\_PTR;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ return\ rslt;}}
+\DoxyCodeLine{\textcolor{comment}{//\}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ *\ @brief\ This\ API\ is\ used\ to\ enable\ or\ disable\ the\ data\ ready\ interrupt}}
+\DoxyCodeLine{\textcolor{comment}{//\ */}}
+\DoxyCodeLine{\textcolor{comment}{//bmm350\_status\_e\ bmm350\_enable\_interrupt(struct\ bmm350\_dev\_s\ *dev,\ bmm350\_enable\_state\_e\ status)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ bmm350\_status\_e\ rslt;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ uint8\_t\ intr\_ctrl\ \ \ =\ 0;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ rslt\ =\ dev-\/>read(dev,\ BMM350\_REG\_INT\_CTRL,\ \&intr\_ctrl,\ 1);}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ intr\_ctrl\ =\ /*BMM350\_SET\_BITS(intr\_ctrl,\ BMM350\_DRDY\_DATA\_REG\_EN,\ status)*/\ 0x80;}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ dev-\/>write(dev,\ BMM350\_REG\_INT\_CTRL,\ \&intr\_ctrl,\ 1);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ if(rslt\ ==\ BMM350\_OK)\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ rslt\ =\ dev-\/>read(dev,\ BMM350\_REG\_INT\_CTRL,\ \&intr\_ctrl,\ 1);}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ if(!((rslt\ ==\ BMM350\_OK)\ \&\&\ (intr\_ctrl\ \&\ BMM350\_DRDY\_DATA\_REG\_EN\_MSK)))\{}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \ \ \ \ rslt\ =\ BMM350\_E\_INTR\_INV;}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \ \ \ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ \}}}
+\DoxyCodeLine{\textcolor{comment}{//\ \ return\ rslt;}}
+\DoxyCodeLine{\textcolor{comment}{//\}}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SRC\_BMM350\_IMU\_BMM350\_C\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCodeInclude}
+ 

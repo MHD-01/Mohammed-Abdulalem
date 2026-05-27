@@ -1,0 +1,20 @@
+\doxysection{bmm350\+\_\+get\+\_\+compensated\+\_\+mag\+\_\+xyz\+\_\+temp\+\_\+data}
+\hypertarget{bmm350_get_compensated_mag_xyz_temp_data-example}{}\label{bmm350_get_compensated_mag_xyz_temp_data-example}\+: This internal function is used to perform compensation calculations for raw magnetometer and temperature data, and assign it to structure.
+
+\+: This internal function is used to perform compensation calculations for raw magnetometer and temperature data, and assign it to structure.@type\+: internal \& user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em } & -\/dev\+: structure pointer to device information structure. -\/mag\+\_\+temp\+\_\+data\+: structure pointer to the magnetic field and temperature data x, y, z, temperature.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\+: BMM350\+\_\+\+OK -\/\texorpdfstring{$>$}{>} as it says BMM350\+\_\+\+E\+\_\+\+NULL\+\_\+\+PTR -\/\texorpdfstring{$>$}{>} Second argument is NULL
+\end{DoxyReturn}
+(\&BMM350, \&raw\+\_\+data);
+
+
+\begin{DoxyCodeInclude}{0}
+
+\end{DoxyCodeInclude}
+ 

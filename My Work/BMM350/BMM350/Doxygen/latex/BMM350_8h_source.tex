@@ -1,0 +1,597 @@
+\doxysection{BMM350.\+h}
+\hypertarget{BMM350_8h_source}{}\label{BMM350_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ }
+\DoxyCodeLine{00002\ \textcolor{comment}{/*********************************\ بسم\ الله\ الرحمن\ الرحيم\ *********************************}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ BMM350.h}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ \ Created\ on:\ April\ 27,\ 2025}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *\ \ recreated\ on\ :\ May\ 3,\ 2025}}
+\DoxyCodeLine{00007\ \textcolor{comment}{}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ \ \ \ \ \ Author:\ MOAHMMED\ ABDULALEM\ |\ محمد\ عبدالعالم}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ \ \ \ \ \ version:\ 1.00}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#ifndef\ SRC\_BMM350\_IMU\_BMM350\_H\_}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ SRC\_BMM350\_IMU\_BMM350\_H\_}}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ *********************\ Includes\ ****************************}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ "{}../adapter.h"{}}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *\ *********************\ Macros*******************************}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{comment}{/*\ Macro\ to\ for\ debugging*/}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \textcolor{comment}{/*\ Macro\ to\ SET\ and\ GET\ BITS\ of\ a\ register*/}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ BMM350\_SET\_BITS(reg\_data,\ bitname,\ data)\ \ \ \ \ \ \ \ ((reg\_data\ \&\ \string~(bitname\#\#\_MSK))\ |\ ((data\ <<\ bitname\#\#\_POS)\ \&\ bitname\#\#\_MSK))}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#define\ BMM350\_GET\_BITS(reg\_data,\ bitname)\ \ \ \ \ \ \ \ \ \ \ \ \ \ ((reg\_data\ \&\ (bitname\#\#\_MSK))\ >>\ (bitname\#\#\_POS))}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ BMM350\_GET\_BITS\_POS\_0(reg\_data,\ bitname)\ \ \ \ \ \ \ \ (reg\_data\ \&\ (bitname\#\#\_MSK))}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ BMM350\_SET\_BITS\_POS\_0(reg\_data,\ bitname,\ data)\ \ ((reg\_data\ \&\ \string~(bitname\#\#\_MSK))\ |\ (data\ \&\ bitname\#\#\_MSK))}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ BMM350\_CHIP\_ID\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x33)}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ BMM350\_MIN\_VAR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x10)}}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{comment}{//\#define\ ADSL\_HIGH\ \ //\ Uncomment\ if\ ADSL\ pin\ is\ HIGH}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#ifdef\ ADSL\_HIGH}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\ \ \ \ \#define\ BMM350\_I2C\_ADDRESS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x15)}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\ \ \ \ \#define\ BMM350\_I2C\_ADDRESS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x14)}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#define\ BMM350\_DUMMY\_BYTES\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(2)}}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{comment}{//\ Configure\ alpha\ range\ *\ Don't\ adjust*\ these\ values\ will\ give\ +-\/0.00x\ accurate\ values}}
+\DoxyCodeLine{00057\ \textcolor{preprocessor}{\#define\ ALPHA\_MIN\ \ 0.001f\ \ \ }\textcolor{comment}{//\ smaller\ -\/>\ smoother,\ but\ less\ responsive.}}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ bigger\ -\/>\ less\ smoothness\ but\ faster\ response.}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ **However\ adaptive\_filter()\ solves\ the\ responsivity\ problem}}
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#define\ ALPHA\_MAX\ \ 0.3f\ \ \ \ \ }\textcolor{comment}{//\ bigger-\/>\ high\ responsivity,\ less\ accuracy}}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ smaller-\/>\ lower\ responsivity,\ more\ accurate}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#define\ CHANGE\_THRESHOLD\ 1.0f\ \ }\textcolor{comment}{//\ degrees\ —\ adjust\ sensitivity}}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \textcolor{comment}{/*************************\ Sensor\ delay\ time\ settings\ in\ microseconds\ **************************/}}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#define\ BMM350\_SOFT\_RESET\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(24000)}}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#define\ BMM350\_MAGNETIC\_RESET\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(40000)}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\#define\ BMM350\_START\_UP\_TIME\_FROM\_POR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(3000)}}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#define\ BMM350\_GOTO\_SUSPEND\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(6000)}}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#define\ BMM350\_SUSPEND\_TO\_NORMAL\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT32\_C(38000)}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_NO\_AVG\_DELAY\ \ \ \ \ \ \ UINT32\_C(15000)}}
+\DoxyCodeLine{00073\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_2\_DELAY\ \ \ \ \ \ \ \ UINT32\_C(17000)}}
+\DoxyCodeLine{00074\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_4\_DELAY\ \ \ \ \ \ \ \ UINT32\_C(20000)}}
+\DoxyCodeLine{00075\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_AVG\_8\_DELAY\ \ \ \ \ \ \ \ UINT32\_C(28000)}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_NO\_AVG\_DELAY\ \ UINT32\_C(4000)}}
+\DoxyCodeLine{00078\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_2\_DELAY\ \ \ UINT32\_C(5000)}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_4\_DELAY\ \ \ UINT32\_C(9000)}}
+\DoxyCodeLine{00080\ \textcolor{preprocessor}{\#define\ BMM350\_SUS\_TO\_FORCEDMODE\_FAST\_AVG\_8\_DELAY\ \ \ UINT32\_C(16000)}}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \textcolor{preprocessor}{\#define\ BMM350\_UPD\_OAE\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(1000)}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#define\ BMM350\_BR\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(14000)}}
+\DoxyCodeLine{00085\ \textcolor{preprocessor}{\#define\ BMM350\_FGR\_DELAY\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(18000)}}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{comment}{/************************\ Length\ macros\ ************************/}}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_DATA\_LENGTH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(32)}}
+\DoxyCodeLine{00089\ \textcolor{preprocessor}{\#define\ BMM350\_READ\_BUFFER\_LENGTH\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(127)}}
+\DoxyCodeLine{00090\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TEMP\_DATA\_LEN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(12)}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \textcolor{comment}{/*******************************\ AVG\ **************************/}}
+\DoxyCodeLine{00093\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_NO\_AVG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00094\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00095\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_4\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00096\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_8\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3)}}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \textcolor{comment}{/*******************************\ ODR\ **************************/}}
+\DoxyCodeLine{00099\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_400HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_200HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3)}}
+\DoxyCodeLine{00101\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_100HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00102\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_50HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x5)}}
+\DoxyCodeLine{00103\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_25HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x6)}}
+\DoxyCodeLine{00104\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_12\_5HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x7)}}
+\DoxyCodeLine{00105\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_6\_25HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x8)}}
+\DoxyCodeLine{00106\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_3\_125HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x9)}}
+\DoxyCodeLine{00107\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_1\_5625HZ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xA)}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{comment}{/*********************\ Power\ modes\ *************************/}}
+\DoxyCodeLine{00110\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_SUS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x00)}}
+\DoxyCodeLine{00111\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_NM\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x01)}}
+\DoxyCodeLine{00112\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_UPD\_OAE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x02)}}
+\DoxyCodeLine{00113\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_FM\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x03)}}
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_FM\_FAST\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x04)}}
+\DoxyCodeLine{00115\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_FGR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x05)}}
+\DoxyCodeLine{00116\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_FGR\_FAST\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x06)}}
+\DoxyCodeLine{00117\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_BR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x07)}}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_BR\_FAST\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x08)}}
+\DoxyCodeLine{00119\ }
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#define\ BMM350\_CMD\_SOFTRESET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xB6)}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#define\ BMM350\_SEL\_DTB1X\_PAD\_PAD\_INT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00123\ \textcolor{preprocessor}{\#define\ BMM350\_SEL\_DTB1X\_PAD\_PAD\_BYP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \textcolor{preprocessor}{\#define\ BMM350\_LSB\_MASK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(0x00FF)}}
+\DoxyCodeLine{00126\ \textcolor{preprocessor}{\#define\ BMM350\_MSB\_MASK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT16\_C(0xFF00)}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ }
+\DoxyCodeLine{00130\ \textcolor{comment}{/**********************\ Register\ Addresses\ ************************/}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_CHIP\_ID\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x00)}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_REV\_ID\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x01)}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_ERR\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x02)}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PAD\_CTRL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x03)}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PMU\_CMD\_AGGR\_SET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x04)}}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PMU\_CMD\_AXIS\_EN\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x05)}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PMU\_CMD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x06)}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PMU\_CMD\_STATUS\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x07)}}
+\DoxyCodeLine{00140\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_PMU\_CMD\_STATUS\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x08)}}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_I3C\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x09)}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_I2C\_WDT\_SET\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0A)}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TRSDCR\_REV\_ID\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0D)}}
+\DoxyCodeLine{00144\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_TU\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x21)}}
+\DoxyCodeLine{00145\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_ODR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x22)}}
+\DoxyCodeLine{00146\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_TPH\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x23)}}
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_TPH\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x24)}}
+\DoxyCodeLine{00148\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_DT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x25)}}
+\DoxyCodeLine{00149\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_ST\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x26)}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_ST\_1\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x27)}}
+\DoxyCodeLine{00151\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_ST\_2\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x28)}}
+\DoxyCodeLine{00152\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TC\_SYNC\_STATUS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x29)}}
+\DoxyCodeLine{00153\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_INT\_CTRL\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2E)}}
+\DoxyCodeLine{00154\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_INT\_CTRL\_IBI\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2F)}}
+\DoxyCodeLine{00155\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_INT\_STATUS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x30)}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_X\_XLSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x31)}}
+\DoxyCodeLine{00157\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_X\_LSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x32)}}
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_X\_MSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x33)}}
+\DoxyCodeLine{00159\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Y\_XLSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x34)}}
+\DoxyCodeLine{00160\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Y\_LSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x35)}}
+\DoxyCodeLine{00161\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Y\_MSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x36)}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Z\_XLSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x37)}}
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Z\_LSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x38)}}
+\DoxyCodeLine{00164\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_MAG\_Z\_MSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x39)}}
+\DoxyCodeLine{00165\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TEMP\_XLSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3A)}}
+\DoxyCodeLine{00166\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TEMP\_LSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3B)}}
+\DoxyCodeLine{00167\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TEMP\_MSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3C)}}
+\DoxyCodeLine{00168\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_SENSORTIME\_XLSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3D)}}
+\DoxyCodeLine{00169\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_SENSORTIME\_LSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3E)}}
+\DoxyCodeLine{00170\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_SENSORTIME\_MSB\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3F)}}
+\DoxyCodeLine{00171\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_OTP\_CMD\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x50)}}
+\DoxyCodeLine{00172\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_OTP\_DATA\_MSB\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x52)}}
+\DoxyCodeLine{00173\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_OTP\_DATA\_LSB\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x53)}}
+\DoxyCodeLine{00174\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_OTP\_STATUS\_REG\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x55)}}
+\DoxyCodeLine{00175\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_TMR\_SELFTEST\_USER\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x60)}}
+\DoxyCodeLine{00176\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_CTRL\_USER\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x61)}}
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#define\ BMM350\_REG\_CMD\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x7E)}}
+\DoxyCodeLine{00178\ }
+\DoxyCodeLine{00179\ }
+\DoxyCodeLine{00180\ \textcolor{comment}{/***********************\ Macros\ for\ bit\ masking\ ***************************/}}
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ \textcolor{preprocessor}{\#define\ BMM350\_CHIP\_ID\_OTP\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf)}}
+\DoxyCodeLine{00183\ \textcolor{preprocessor}{\#define\ BMM350\_CHIP\_ID\_OTP\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00184\ \textcolor{preprocessor}{\#define\ BMM350\_CHIP\_ID\_FIXED\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf0)}}
+\DoxyCodeLine{00185\ \textcolor{preprocessor}{\#define\ BMM350\_CHIP\_ID\_FIXED\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00186\ \textcolor{preprocessor}{\#define\ BMM350\_REV\_ID\_MAJOR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf0)}}
+\DoxyCodeLine{00187\ \textcolor{preprocessor}{\#define\ BMM350\_REV\_ID\_MAJOR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00188\ \textcolor{preprocessor}{\#define\ BMM350\_REV\_ID\_MINOR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf)}}
+\DoxyCodeLine{00189\ \textcolor{preprocessor}{\#define\ BMM350\_REV\_ID\_MINOR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00190\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_ERROR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00191\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_ERROR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00192\ \textcolor{preprocessor}{\#define\ BMM350\_BOOT\_UP\_ERROR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00193\ \textcolor{preprocessor}{\#define\ BMM350\_BOOT\_UP\_ERROR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00194\ \textcolor{preprocessor}{\#define\ BMM350\_DRV\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x7)}}
+\DoxyCodeLine{00195\ \textcolor{preprocessor}{\#define\ BMM350\_DRV\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00196\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x30)}}
+\DoxyCodeLine{00197\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00198\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf)}}
+\DoxyCodeLine{00199\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00200\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf)}}
+\DoxyCodeLine{00201\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00202\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_X\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x01)}}
+\DoxyCodeLine{00203\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_X\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00204\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_Y\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x02)}}
+\DoxyCodeLine{00205\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_Y\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00206\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_Z\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x04)}}
+\DoxyCodeLine{00207\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_Z\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00208\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_XYZ\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x7)}}
+\DoxyCodeLine{00209\ \textcolor{preprocessor}{\#define\ BMM350\_EN\_XYZ\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00210\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_BUSY\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00211\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_BUSY\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00212\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_OVWR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00213\ \textcolor{preprocessor}{\#define\ BMM350\_ODR\_OVWR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00214\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_OVWR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00215\ \textcolor{preprocessor}{\#define\ BMM350\_AVG\_OVWR\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00216\ \textcolor{preprocessor}{\#define\ BMM350\_PWR\_MODE\_IS\_NORMAL\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x8)}}
+\DoxyCodeLine{00217\ \textcolor{preprocessor}{\#define\ BMM350\_PWR\_MODE\_IS\_NORMAL\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3)}}
+\DoxyCodeLine{00218\ \textcolor{preprocessor}{\#define\ BMM350\_CMD\_IS\_ILLEGAL\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x10)}}
+\DoxyCodeLine{00219\ \textcolor{preprocessor}{\#define\ BMM350\_CMD\_IS\_ILLEGAL\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00220\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_VALUE\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xE0)}}
+\DoxyCodeLine{00221\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_VALUE\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x5)}}
+\DoxyCodeLine{00222\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_ODR\_S\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xf)}}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_ODR\_S\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_AVG\_S\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x30)}}
+\DoxyCodeLine{00225\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_AVG\_S\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00226\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_MODE\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00227\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_MODE\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0)}}
+\DoxyCodeLine{00228\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_POL\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00229\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_POL\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1)}}
+\DoxyCodeLine{00230\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_OD\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x4)}}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_OD\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x2)}}
+\DoxyCodeLine{00232\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_OUTPUT\_EN\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x8)}}
+\DoxyCodeLine{00233\ \textcolor{preprocessor}{\#define\ BMM350\_INT\_OUTPUT\_EN\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x3)}}
+\DoxyCodeLine{00234\ \textcolor{preprocessor}{\#define\ BMM350\_DRDY\_DATA\_REG\_EN\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x80)}}
+\DoxyCodeLine{00235\ \textcolor{preprocessor}{\#define\ BMM350\_DRDY\_DATA\_REG\_EN\_POS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x7)}}
+\DoxyCodeLine{00236\ }
+\DoxyCodeLine{00237\ }
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ \textcolor{comment}{/******************************\ OTP\ MACROS\ ***************************/}}
+\DoxyCodeLine{00240\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_CMD\_DIR\_READ\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x20)}}
+\DoxyCodeLine{00241\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_CMD\_PWR\_OFF\_OTP\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x80)}}
+\DoxyCodeLine{00242\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_WORD\_ADDR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x1F)}}
+\DoxyCodeLine{00243\ }
+\DoxyCodeLine{00244\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_ERROR\_MSK\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xE0)}}
+\DoxyCodeLine{00245\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_ERROR(val)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (val\ \&\ BMM350\_OTP\_STATUS\_ERROR\_MSK)}}
+\DoxyCodeLine{00246\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_NO\_ERROR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x00)}}
+\DoxyCodeLine{00247\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_BOOT\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x20)}}
+\DoxyCodeLine{00248\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_PAGE\_RD\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x40)}}
+\DoxyCodeLine{00249\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_PAGE\_PRG\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x60)}}
+\DoxyCodeLine{00250\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_SIGN\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x80)}}
+\DoxyCodeLine{00251\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_INV\_CMD\_ERR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0xA0)}}
+\DoxyCodeLine{00252\ \textcolor{preprocessor}{\#define\ BMM350\_OTP\_STATUS\_CMD\_DONE\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x01)}}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \textcolor{comment}{/******************************\ OTP\ indices\ ***************************/}}
+\DoxyCodeLine{00255\ \textcolor{preprocessor}{\#define\ BMM350\_TEMP\_OFF\_SENS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0D)}}
+\DoxyCodeLine{00256\ }
+\DoxyCodeLine{00257\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_OFFSET\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0E)}}
+\DoxyCodeLine{00258\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_OFFSET\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x0F)}}
+\DoxyCodeLine{00259\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_OFFSET\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x10)}}
+\DoxyCodeLine{00260\ }
+\DoxyCodeLine{00261\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_SENS\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x10)}}
+\DoxyCodeLine{00262\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_SENS\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x11)}}
+\DoxyCodeLine{00263\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_SENS\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x11)}}
+\DoxyCodeLine{00264\ }
+\DoxyCodeLine{00265\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCO\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x12)}}
+\DoxyCodeLine{00266\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCO\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x13)}}
+\DoxyCodeLine{00267\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCO\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x14)}}
+\DoxyCodeLine{00268\ }
+\DoxyCodeLine{00269\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCS\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x12)}}
+\DoxyCodeLine{00270\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCS\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x13)}}
+\DoxyCodeLine{00271\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_TCS\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x14)}}
+\DoxyCodeLine{00272\ }
+\DoxyCodeLine{00273\ \textcolor{preprocessor}{\#define\ BMM350\_MAG\_DUT\_T\_0\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x18)}}
+\DoxyCodeLine{00274\ }
+\DoxyCodeLine{00275\ \textcolor{preprocessor}{\#define\ BMM350\_CROSS\_X\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x15)}}
+\DoxyCodeLine{00276\ \textcolor{preprocessor}{\#define\ BMM350\_CROSS\_Y\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x15)}}
+\DoxyCodeLine{00277\ \textcolor{preprocessor}{\#define\ BMM350\_CROSS\_Z\_X\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x16)}}
+\DoxyCodeLine{00278\ \textcolor{preprocessor}{\#define\ BMM350\_CROSS\_Z\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x16)}}
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \textcolor{preprocessor}{\#define\ BMM350\_SENS\_CORR\_Y\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (0.01f)}}
+\DoxyCodeLine{00281\ \textcolor{preprocessor}{\#define\ BMM350\_TCS\_CORR\_Z\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ (0.0001f)}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \textcolor{comment}{/****************************\ Signed\ bit\ macros\ **********************/}}
+\DoxyCodeLine{00284\ \textcolor{preprocessor}{\#define\ BMM350\_SIGNED\_8\_BIT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(8)}}
+\DoxyCodeLine{00285\ \textcolor{preprocessor}{\#define\ BMM350\_SIGNED\_12\_BIT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(12)}}
+\DoxyCodeLine{00286\ \textcolor{preprocessor}{\#define\ BMM350\_SIGNED\_16\_BIT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(16)}}
+\DoxyCodeLine{00287\ \textcolor{preprocessor}{\#define\ BMM350\_SIGNED\_21\_BIT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(21)}}
+\DoxyCodeLine{00288\ \textcolor{preprocessor}{\#define\ BMM350\_SIGNED\_24\_BIT\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(24)}}
+\DoxyCodeLine{00289\ }
+\DoxyCodeLine{00290\ }
+\DoxyCodeLine{00291\ \textcolor{comment}{/****************************\ PMU\ command\ status\ 0\ macros\ **********************/}}
+\DoxyCodeLine{00292\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_SUS\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x00)}}
+\DoxyCodeLine{00293\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_NM\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x01)}}
+\DoxyCodeLine{00294\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_UPD\_OAE\ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x02)}}
+\DoxyCodeLine{00295\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_FM\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x03)}}
+\DoxyCodeLine{00296\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_FM\_FAST\ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x04)}}
+\DoxyCodeLine{00297\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_FGR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x05)}}
+\DoxyCodeLine{00298\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_FGR\_FAST\ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x06)}}
+\DoxyCodeLine{00299\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_BR\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x07)}}
+\DoxyCodeLine{00300\ \textcolor{preprocessor}{\#define\ BMM350\_PMU\_CMD\_STATUS\_0\_BR\_FAST\ \ \ \ \ \ \ \ \ \ \ \ \ UINT8\_C(0x07)}}
+\DoxyCodeLine{00301\ }
+\DoxyCodeLine{00302\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}};}
+\DoxyCodeLine{00303\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00304\ \textcolor{comment}{\ *\ *********************\ Enumerations*******************************}}
+\DoxyCodeLine{00305\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00306\ }
+\DoxyCodeLine{00307\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00308\ \ \ \ \ BMM35\_E\_NULL,}
+\DoxyCodeLine{00309\ \ \ \ \ BMM350\_OK,}
+\DoxyCodeLine{00310\ \ \ \ \ BMM350\_E\_NULL\_PTR,}
+\DoxyCodeLine{00311\ \ \ \ \ BMM350\_E\_PMU\_CMD\_S\_NULL\_PTR,}
+\DoxyCodeLine{00312\ \ \ \ \ Bmm350\_DEV\_NOT\_READY,}
+\DoxyCodeLine{00313\ \ \ \ \ BMM350\_E\_W\_COM\_FAIL,\ \ \textcolor{comment}{//\ Write\ communication\ fail}}
+\DoxyCodeLine{00314\ \ \ \ \ BMM350\_E\_R\_COM\_FAIL,\ \ \textcolor{comment}{//\ Read\ communication\ fail}}
+\DoxyCodeLine{00315\ \ \ \ \ BMM350\_E\_DEV\_NOT\_FOUND,}
+\DoxyCodeLine{00316\ \ \ \ \ BMM350\_E\_INVALID\_CONFIG,\ \textcolor{comment}{//\ If\ user\ didn't\ use\ an\ internal\ function\ then\ there\ is\ a\ bug\ in\ configuration\ error\ *\ refer\ to\ library\ maker\ or\ chip\ documentations\ *}}
+\DoxyCodeLine{00317\ \ \ \ \ BMM350\_E\_BAD\_PAD\_DRIVE,}
+\DoxyCodeLine{00318\ \ \ \ \ BMM350\_E\_RESET\_UNFINISHED,}
+\DoxyCodeLine{00319\ \ \ \ \ BMM350\_E\_INVALID\_INPUT,}
+\DoxyCodeLine{00320\ \ \ \ \ BMM350\_E\_SELF\_TEST\_INVALID\_AXIS,}
+\DoxyCodeLine{00321\ \ \ \ \ BMM350\_E\_OTP\_BOOT,}
+\DoxyCodeLine{00322\ \ \ \ \ BMM350\_E\_OTP\_PAGE\_RD,}
+\DoxyCodeLine{00323\ \ \ \ \ BMM350\_E\_OTP\_PAGE\_PRG,}
+\DoxyCodeLine{00324\ \ \ \ \ BMM350\_E\_OTP\_SIGN,}
+\DoxyCodeLine{00325\ \ \ \ \ BMM350\_E\_OTP\_INV\_CMD,}
+\DoxyCodeLine{00326\ \ \ \ \ BMM350\_E\_OTP\_UNDEFINED,}
+\DoxyCodeLine{00327\ \ \ \ \ BMM350\_E\_ALL\_AXIS\_DISABLED,}
+\DoxyCodeLine{00328\ \ \ \ \ BMM350\_E\_PMU\_CMD\_VALUE,}
+\DoxyCodeLine{00329\ \ \ \ \ BMM350\_E\_INV\_PWR\_MODE,}
+\DoxyCodeLine{00330\ \ \ \ \ BMM350\_E\_INV\_ODR\_AVG,}
+\DoxyCodeLine{00331\ \ \ \ \ BMM350\_E\_SUSPEND\_MODE,}
+\DoxyCodeLine{00332\ \ \ \ \ BMM350\_E\_INTR\_INV,}
+\DoxyCodeLine{00333\ \ \ \ \ BMM350\_INT\_DATA\_READY,}
+\DoxyCodeLine{00334\ \ \ \ \ BMM350\_INT\_DATA\_NOT\_READY}
+\DoxyCodeLine{00335\ }
+\DoxyCodeLine{00336\ \}\ bmm350\_status\_e;}
+\DoxyCodeLine{00337\ }
+\DoxyCodeLine{00338\ }
+\DoxyCodeLine{00339\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00340\ \ \ \ \ BMM350\_DISABLE,}
+\DoxyCodeLine{00341\ \ \ \ \ BMM350\_ENABLE}
+\DoxyCodeLine{00342\ \}\ bmm350\_enable\_state\_e;}
+\DoxyCodeLine{00343\ }
+\DoxyCodeLine{00344\ }
+\DoxyCodeLine{00345\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00346\ \ \ \ \ BMM350\_SUSPEND\_MODE\ =\ BMM350\_PMU\_CMD\_SUS,}
+\DoxyCodeLine{00347\ \ \ \ \ BMM350\_NORMAL\_MODE\ =\ BMM350\_PMU\_CMD\_NM,}
+\DoxyCodeLine{00348\ \ \ \ \ BMM350\_FORCED\_MODE\ =\ BMM350\_PMU\_CMD\_FM,}
+\DoxyCodeLine{00349\ \ \ \ \ BMM350\_FORCED\_MODE\_FAST\ =\ BMM350\_PMU\_CMD\_FM\_FAST}
+\DoxyCodeLine{00350\ \}\ bmm350\_power\_modes\_e;}
+\DoxyCodeLine{00351\ }
+\DoxyCodeLine{00352\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \{}
+\DoxyCodeLine{00353\ \ \ \ \ BMM350\_DATA\_RATE\_400HZ\ \ \ \ =\ BMM350\_ODR\_400HZ,}
+\DoxyCodeLine{00354\ \ \ \ \ BMM350\_DATA\_RATE\_200HZ\ \ \ \ =\ BMM350\_ODR\_200HZ,}
+\DoxyCodeLine{00355\ \ \ \ \ BMM350\_DATA\_RATE\_100HZ\ \ \ \ =\ BMM350\_ODR\_100HZ,}
+\DoxyCodeLine{00356\ \ \ \ \ BMM350\_DATA\_RATE\_50HZ\ \ \ \ \ =\ BMM350\_ODR\_50HZ,}
+\DoxyCodeLine{00357\ \ \ \ \ BMM350\_DATA\_RATE\_25HZ\ \ \ \ \ =\ BMM350\_ODR\_25HZ,}
+\DoxyCodeLine{00358\ \ \ \ \ BMM350\_DATA\_RATE\_12\_5HZ\ \ \ =\ BMM350\_ODR\_12\_5HZ,}
+\DoxyCodeLine{00359\ \ \ \ \ BMM350\_DATA\_RATE\_6\_25HZ\ \ \ =\ BMM350\_ODR\_6\_25HZ,}
+\DoxyCodeLine{00360\ \ \ \ \ BMM350\_DATA\_RATE\_3\_125HZ\ \ =\ BMM350\_ODR\_3\_125HZ,}
+\DoxyCodeLine{00361\ \ \ \ \ BMM350\_DATA\_RATE\_1\_5625HZ\ =\ BMM350\_ODR\_1\_5625HZ}
+\DoxyCodeLine{00362\ \}\ bmm350\_data\_rates\_e;}
+\DoxyCodeLine{00363\ }
+\DoxyCodeLine{00364\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \ \{}
+\DoxyCodeLine{00365\ \ \ \ \ BMM350\_UNMAP\_FROM\_PIN\ =\ BMM350\_DISABLE,}
+\DoxyCodeLine{00366\ \ \ \ \ BMM350\_MAP\_TO\_PIN\ =\ BMM350\_ENABLE}
+\DoxyCodeLine{00367\ \}\ bmm350\_intr\_map;}
+\DoxyCodeLine{00368\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \ \{}
+\DoxyCodeLine{00369\ \ \ \ \ BMM350\_PULSED,}
+\DoxyCodeLine{00370\ \ \ \ \ BMM350\_LATCHED}
+\DoxyCodeLine{00371\ \}\ bmm350\_intr\_latch;}
+\DoxyCodeLine{00372\ }
+\DoxyCodeLine{00373\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \ \{}
+\DoxyCodeLine{00374\ \ \ \ \ BMM350\_ACTIVE\_LOW,}
+\DoxyCodeLine{00375\ \ \ \ \ BMM350\_ACTIVE\_HIGH}
+\DoxyCodeLine{00376\ \}\ bmm350\_intr\_polarity;}
+\DoxyCodeLine{00377\ }
+\DoxyCodeLine{00378\ }
+\DoxyCodeLine{00379\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\ \ \{}
+\DoxyCodeLine{00380\ \ \ \ \ BMM350\_INTR\_OPEN\_DRAIN,}
+\DoxyCodeLine{00381\ \ \ \ \ BMM350\_INTR\_PUSH\_PULL}
+\DoxyCodeLine{00382\ \}\ bmm350\_intr\_drive;}
+\DoxyCodeLine{00383\ }
+\DoxyCodeLine{00387\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{enum}\{}
+\DoxyCodeLine{00388\ \ \ \ \ NON,}
+\DoxyCodeLine{00389\ \ \ \ \ RADIAN,}
+\DoxyCodeLine{00390\ \ \ \ \ DEGREE,}
+\DoxyCodeLine{00391\ \ \ \ \ FROM\_0\_TO\_360,\ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Angle\ range\ in\ degrees}}
+\DoxyCodeLine{00392\ \ \ \ \ FROM\_NEG\_180\_TO\_POS\_180\ \textcolor{comment}{//\ Angle\ range\ in\ degrees}}
+\DoxyCodeLine{00393\ \}\ bmm350\_ang\_unt\_rng\_e;}
+\DoxyCodeLine{00394\ }
+\DoxyCodeLine{00395\ }
+\DoxyCodeLine{00396\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00397\ \textcolor{comment}{\ ***********************\ Function\ Pointers\ *******************}}
+\DoxyCodeLine{00398\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00399\ \textcolor{comment}{/*}}
+\DoxyCodeLine{00400\ \textcolor{comment}{\ *\ Functions\ pointers\ are\ used\ for\ future\ purposes\ in\ the\ of\ using\ a\ non\ HAL\ i2c}}
+\DoxyCodeLine{00401\ \textcolor{comment}{\ *\ functions\ or\ for\ other\ chips}}
+\DoxyCodeLine{00402\ \textcolor{comment}{\ */}}
+\DoxyCodeLine{00403\ }
+\DoxyCodeLine{00404\ \textcolor{keyword}{typedef}\ bmm350\_status\_e\ (*BMM350\_read\_fptr)(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ MemAddress,\ uint8\_t\ *pData,\ uint16\_t\ Size);}
+\DoxyCodeLine{00405\ \textcolor{keyword}{typedef}\ bmm350\_status\_e\ (*BMM350\_write\_fptr)(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ MemAddress,\ uint8\_t\ *pData,\ uint16\_t\ Size);}
+\DoxyCodeLine{00406\ \textcolor{keyword}{typedef}\ void\ (*delay\_us\_)\ (uint32\_t\ us);}
+\DoxyCodeLine{00407\ }
+\DoxyCodeLine{00408\ }
+\DoxyCodeLine{00409\ }
+\DoxyCodeLine{00410\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00411\ \textcolor{comment}{\ *\ *********************\ Structure\ Definitions****************}}
+\DoxyCodeLine{00412\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00413\ }
+\DoxyCodeLine{00417\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00419\ \ \ \ \ int32\_t\ \mbox{\hyperlink{structbmm350__raw__mag__data__s_ae2206b7892fc94a6fe42b789960726b8}{raw\_xdata}};}
+\DoxyCodeLine{00420\ }
+\DoxyCodeLine{00422\ \ \ \ \ int32\_t\ \mbox{\hyperlink{structbmm350__raw__mag__data__s_aaeb754e581a3cd367341534cb7d95260}{raw\_ydata}};}
+\DoxyCodeLine{00423\ }
+\DoxyCodeLine{00425\ \ \ \ \ int32\_t\ \mbox{\hyperlink{structbmm350__raw__mag__data__s_a7e492a0c835d4fe7679e15bda3677a58}{raw\_zdata}};}
+\DoxyCodeLine{00426\ }
+\DoxyCodeLine{00428\ \ \ \ \ int32\_t\ \mbox{\hyperlink{structbmm350__raw__mag__data__s_a0d6b02f40dd2725e8f2a1cf23fd399bc}{raw\_data\_t}};}
+\DoxyCodeLine{00429\ \}\ \mbox{\hyperlink{structbmm350__raw__mag__data__s}{bmm350\_raw\_mag\_data\_s}};}
+\DoxyCodeLine{00430\ }
+\DoxyCodeLine{00431\ }
+\DoxyCodeLine{00435\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00437\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__mag__temp__data__s_abe30898f04b172fa6941bf88ecca0533}{x}};}
+\DoxyCodeLine{00439\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__mag__temp__data__s_a664e2b0dde225a69ac45b7dd70ef168c}{y}};}
+\DoxyCodeLine{00441\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__mag__temp__data__s_a7d9cdbd354177f1ea5d743017059e9b0}{z}};}
+\DoxyCodeLine{00443\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__mag__temp__data__s_ab2cfc74389fa346cc44e2306950562c1}{temperature}};}
+\DoxyCodeLine{00444\ \}\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}};}
+\DoxyCodeLine{00445\ }
+\DoxyCodeLine{00449\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00451\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__offset__coef__s_a50109cd4fdb6bd1b148a49f640211968}{t\_offs}};}
+\DoxyCodeLine{00453\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__offset__coef__s_adda0ede17c77be254deee88abcdcdb33}{offset\_x}};}
+\DoxyCodeLine{00455\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__offset__coef__s_ae9bc75a4a8675e1a3c11031bec935ec0}{offset\_y}};}
+\DoxyCodeLine{00457\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__offset__coef__s_ac7f6ed2c6fdf7a9c89f43941fa7f01c0}{offset\_z}};}
+\DoxyCodeLine{00458\ \}\ \mbox{\hyperlink{structbmm350__dut__offset__coef__s}{bmm350\_dut\_offset\_coef\_s}};}
+\DoxyCodeLine{00459\ }
+\DoxyCodeLine{00463\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00465\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aa78ac801d7f83ccf8d6fe7a42a16ff86}{t\_sens}};}
+\DoxyCodeLine{00467\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s_a83d488f845a0c3ef295f6a51f459bc32}{sens\_x}};}
+\DoxyCodeLine{00469\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s_acc251c2423d3da419ca82d5434fef52a}{sens\_y}};}
+\DoxyCodeLine{00471\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s_aef169e64a58f2ba74f03308eb42fb862}{sens\_z}};}
+\DoxyCodeLine{00472\ \}\ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s}{bmm350\_dut\_sensit\_coef\_s}};}
+\DoxyCodeLine{00473\ }
+\DoxyCodeLine{00479\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00480\ \ \ \ \ \textcolor{keywordtype}{float}\ tco\_x;}
+\DoxyCodeLine{00481\ \ \ \ \ \textcolor{keywordtype}{float}\ tco\_y;}
+\DoxyCodeLine{00482\ \ \ \ \ \textcolor{keywordtype}{float}\ tco\_z;}
+\DoxyCodeLine{00483\ \}\ \mbox{\hyperlink{structbmm350__dut__tco__s}{bmm350\_dut\_tco\_s}};}
+\DoxyCodeLine{00484\ }
+\DoxyCodeLine{00489\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00490\ \ \ \ \ \textcolor{keywordtype}{float}\ tcs\_x;}
+\DoxyCodeLine{00491\ \ \ \ \ \textcolor{keywordtype}{float}\ tcs\_y;}
+\DoxyCodeLine{00492\ \ \ \ \ \textcolor{keywordtype}{float}\ tcs\_z;}
+\DoxyCodeLine{00493\ \}\ \mbox{\hyperlink{structbmm350__dut__tcs__s}{bmm350\_dut\_tcs\_s}};}
+\DoxyCodeLine{00494\ }
+\DoxyCodeLine{00500\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00501\ \ \ \ \ \textcolor{keywordtype}{float}\ cross\_x\_y;}
+\DoxyCodeLine{00502\ \ \ \ \ \textcolor{keywordtype}{float}\ cross\_y\_x;}
+\DoxyCodeLine{00503\ \ \ \ \ \textcolor{keywordtype}{float}\ cross\_z\_x;}
+\DoxyCodeLine{00504\ \ \ \ \ \textcolor{keywordtype}{float}\ cross\_z\_y;}
+\DoxyCodeLine{00505\ \}\ \mbox{\hyperlink{structbmm350__cross__axis__s}{bmm350\_cross\_axis\_s}};}
+\DoxyCodeLine{00506\ }
+\DoxyCodeLine{00510\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00511\ \ \ \ \ bmm350\_intr\_latch\ \ \ \ \ \ \ latch;}
+\DoxyCodeLine{00512\ }
+\DoxyCodeLine{00513\ \ \ \ \ bmm350\_intr\_drive\ \ \ \ \ \ \ drive;}
+\DoxyCodeLine{00514\ }
+\DoxyCodeLine{00515\ \ \ \ \ bmm350\_intr\_map\ \ \ \ \ \ \ \ \ map;}
+\DoxyCodeLine{00516\ }
+\DoxyCodeLine{00517\ \ \ \ \ bmm350\_intr\_polarity\ \ \ \ polarity;}
+\DoxyCodeLine{00518\ }
+\DoxyCodeLine{00519\ \ \ \ \ bmm350\_enable\_state\_e\ \ \ data\_ready\_interrupt;}
+\DoxyCodeLine{00520\ }
+\DoxyCodeLine{00521\ \}\ \mbox{\hyperlink{structbmm350__intr__s}{bmm350\_intr\_s}};}
+\DoxyCodeLine{00522\ }
+\DoxyCodeLine{00523\ }
+\DoxyCodeLine{00527\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00529\ \ \ \ \ \mbox{\hyperlink{structbmm350__dut__offset__coef__s}{bmm350\_dut\_offset\_coef\_s}}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_a64ae89d47b9fea77bbf8d609597a48f6}{dut\_offset\_coef}};}
+\DoxyCodeLine{00531\ \ \ \ \ \mbox{\hyperlink{structbmm350__dut__sensit__coef__s}{bmm350\_dut\_sensit\_coef\_s}}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_a3686d74d1165434175184cbcc8cdb0de}{dut\_sensit\_coef}};}
+\DoxyCodeLine{00533\ \ \ \ \ \mbox{\hyperlink{structbmm350__dut__tco__s}{bmm350\_dut\_tco\_s}}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_ad48e5663a003aa6c88b09e01a46b789f}{dut\_tco}};}
+\DoxyCodeLine{00535\ \ \ \ \ \mbox{\hyperlink{structbmm350__dut__tcs__s}{bmm350\_dut\_tcs\_s}}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_a2e791b7f98ea0fe590ced7006ec2a271}{dut\_tcs}};}
+\DoxyCodeLine{00537\ \ \ \ \ \textcolor{keywordtype}{float}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_ad89df45d86dc7325cf9dcd29ce34e9e2}{dut\_t0}};}
+\DoxyCodeLine{00539\ \ \ \ \ \mbox{\hyperlink{structbmm350__cross__axis__s}{bmm350\_cross\_axis\_s}}\ \mbox{\hyperlink{structbmm350__mag__compensate__s_ac396a8323258dac66c6d2e6dd1d65304}{cross\_axis}};}
+\DoxyCodeLine{00540\ \}\ \mbox{\hyperlink{structbmm350__mag__compensate__s}{bmm350\_mag\_compensate\_s}};}
+\DoxyCodeLine{00541\ }
+\DoxyCodeLine{00542\ }
+\DoxyCodeLine{00546\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00548\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_ad28e65074fd141aab61b3cd2e587cec7}{pmu\_cmd\_busy}};}
+\DoxyCodeLine{00550\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_af8edaec0347c7dc8b92e1a3bf3ec359a}{odr\_ovwr}};}
+\DoxyCodeLine{00552\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a49b8ec87975604a4cbfa87e5aa10aaa9}{avr\_ovwr}};}
+\DoxyCodeLine{00554\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a81a532ab5af848156cb018899a84369e}{pwr\_mode\_is\_normal}};}
+\DoxyCodeLine{00556\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_a01929700dca093932e8284d8d2ea459a}{cmd\_is\_illegal}};}
+\DoxyCodeLine{00558\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s_aefa23f97350f8b6204ce7781ca619ff9}{pmu\_cmd\_value}};}
+\DoxyCodeLine{00559\ \}\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s}{bmm350\_pmu\_cmd\_status\_0\_s}};}
+\DoxyCodeLine{00560\ }
+\DoxyCodeLine{00564\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00566\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s_ae1cb4419e7dbe31c1ee4aaee697d2dac}{pmu\_avg\_s}};}
+\DoxyCodeLine{00568\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s_acb7f34a4b2e56ecc7021074b6aac7af6}{pmu\_odr\_s}};}
+\DoxyCodeLine{00569\ }
+\DoxyCodeLine{00570\ \}\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s}{bmm350\_pmu\_cmd\_status\_1\_s}};}
+\DoxyCodeLine{00571\ }
+\DoxyCodeLine{00575\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00577\ \ \ \ \ \mbox{\hyperlink{structbmm350__pmu__cmd__status__0__s}{bmm350\_pmu\_cmd\_status\_0\_s}}\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a23c0e3e16bd43f7156723413f5c614dd}{status\_0}};}
+\DoxyCodeLine{00579\ \ \ \ \ \mbox{\hyperlink{structbmm350__pmu__cmd__status__1__s}{bmm350\_pmu\_cmd\_status\_1\_s}}\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s_a6a95555d99cf5cea774e8bc57c26b511}{status\_1}};}
+\DoxyCodeLine{00580\ }
+\DoxyCodeLine{00581\ \}\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\_pmu\_cmd\_status\_s}};}
+\DoxyCodeLine{00582\ }
+\DoxyCodeLine{00586\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\{}
+\DoxyCodeLine{00587\ }
+\DoxyCodeLine{00589\ \ \ \ \ I2C\_HandleTypeDef\ *\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}};}
+\DoxyCodeLine{00590\ }
+\DoxyCodeLine{00592\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structbmm350__dev__s_a44aed63e42aa9a73b4adb29b83df4140}{address}};}
+\DoxyCodeLine{00593\ }
+\DoxyCodeLine{00595\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__dev__s_a98df0840efc6dfe022c29ddd7784cd30}{chip\_id}};}
+\DoxyCodeLine{00596\ }
+\DoxyCodeLine{00598\ \ \ \ \ BMM350\_read\_fptr\ \mbox{\hyperlink{structbmm350__dev__s_a0846693c3c2c02f1c19a9ef8e24a8613}{read}};}
+\DoxyCodeLine{00599\ }
+\DoxyCodeLine{00601\ \ \ \ \ BMM350\_write\_fptr\ \mbox{\hyperlink{structbmm350__dev__s_a18a03193c0bb182268d3e3a3f1723273}{write}};}
+\DoxyCodeLine{00602\ }
+\DoxyCodeLine{00604\ \ \ \ \ delay\_us\_\ \mbox{\hyperlink{structbmm350__dev__s_a434f83b125840953dbd44ff52110948a}{delay\_us}};}
+\DoxyCodeLine{00605\ }
+\DoxyCodeLine{00607\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__dev__s_ae215c244068d73415601cb47ca3fb681}{axis\_en}};}
+\DoxyCodeLine{00608\ }
+\DoxyCodeLine{00610\ \ \ \ \ \mbox{\hyperlink{structbmm350__mag__compensate__s}{bmm350\_mag\_compensate\_s}}\ \mbox{\hyperlink{structbmm350__dev__s_a2188958f1ab9560604329fa65def6d77}{mag\_comp}};}
+\DoxyCodeLine{00611\ }
+\DoxyCodeLine{00613\ \ \ \ \ uint16\_t\ \mbox{\hyperlink{structbmm350__dev__s_a29e6a33de9b05fa5cb0dc47265cf3471}{otp\_data}}[BMM350\_OTP\_DATA\_LENGTH];}
+\DoxyCodeLine{00614\ }
+\DoxyCodeLine{00616\ \ \ \ \ uint8\_t\ \mbox{\hyperlink{structbmm350__dev__s_ab78ad0f146fc05cb5f48793353ab6607}{var\_id}};}
+\DoxyCodeLine{00617\ }
+\DoxyCodeLine{00619\ \ \ \ \ bmm350\_status\_e\ \mbox{\hyperlink{structbmm350__dev__s_ab9b434037285136484a66e1809944e11}{bmm350\_err}};}
+\DoxyCodeLine{00620\ }
+\DoxyCodeLine{00622\ \ \ \ \ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\_pmu\_cmd\_status\_s}}\ \mbox{\hyperlink{structbmm350__dev__s_a19ab0246093b8761a4667740d61b568d}{pmu\_cmd\_status}};}
+\DoxyCodeLine{00623\ }
+\DoxyCodeLine{00625\ \ \ \ \ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ \mbox{\hyperlink{structbmm350__dev__s_a98222b962168fbb7e946f6a896be6c90}{data}};}
+\DoxyCodeLine{00626\ }
+\DoxyCodeLine{00628\ \ \ \ \ \mbox{\hyperlink{structbmm350__intr__s}{bmm350\_intr\_s}}\ \mbox{\hyperlink{structbmm350__dev__s_a47d0dcc884d921354f6ab37309d0d89e}{intr\_setting}};}
+\DoxyCodeLine{00629\ }
+\DoxyCodeLine{00630\ \ \ \ \ \textcolor{keywordtype}{float}\ yaw[2];\ \textcolor{comment}{//\ [0]\ raw\_yaw,\ [1]\ filtered\ yaw}}
+\DoxyCodeLine{00631\ }
+\DoxyCodeLine{00632\ \}\ ;}
+\DoxyCodeLine{00633\ }
+\DoxyCodeLine{00634\ \textcolor{keyword}{typedef}\ \textcolor{keyword}{struct}\{}
+\DoxyCodeLine{00635\ \ \ \ \ \textcolor{keywordtype}{float}\ alpha;}
+\DoxyCodeLine{00636\ \ \ \ \ \textcolor{keywordtype}{float}\ max\_alpha;}
+\DoxyCodeLine{00637\ \ \ \ \ \textcolor{keywordtype}{float}\ min\_alpha;}
+\DoxyCodeLine{00638\ \ \ \ \ \textcolor{keywordtype}{float}\ ch\_thrshold;\ \ \textcolor{comment}{//\ Change\ threshold}}
+\DoxyCodeLine{00639\ \ \ \ \ \textcolor{keywordtype}{float}\ data;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Filtered\ data}}
+\DoxyCodeLine{00640\ }
+\DoxyCodeLine{00641\ \}\ \mbox{\hyperlink{structbmm350__filter}{bmm350\_filter}};}
+\DoxyCodeLine{00642\ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ BMM350;}
+\DoxyCodeLine{00643\ \mbox{\hyperlink{structbmm350__filter}{bmm350\_filter}}\ BMM350\_yaw\_f;}
+\DoxyCodeLine{00644\ }
+\DoxyCodeLine{00645\ \textcolor{comment}{/*************************************************************}}
+\DoxyCodeLine{00646\ \textcolor{comment}{\ ***********************\ Functions\ declaration****************}}
+\DoxyCodeLine{00647\ \textcolor{comment}{\ ************************************************************/}}
+\DoxyCodeLine{00648\ }
+\DoxyCodeLine{00649\ }
+\DoxyCodeLine{00650\ \textcolor{comment}{/************************\ USER\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{00651\ }
+\DoxyCodeLine{00652\ bmm350\_status\_e\ bmm350\_init(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *de,\ I2C\_HandleTypeDef\ *\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}});}
+\DoxyCodeLine{00653\ bmm350\_status\_e\ readout\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ *output\_data);}
+\DoxyCodeLine{00654\ bmm350\_status\_e\ read\_intr(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ *output\_data);}
+\DoxyCodeLine{00655\ \textcolor{keywordtype}{float}\ \ \ \ \ \ \ \ \ \ \ bmm350\_read\_yaw(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_ang\_unt\_rng\_e\ unit,\ bmm350\_ang\_unt\_rng\_e\ range);}
+\DoxyCodeLine{00656\ }
+\DoxyCodeLine{00657\ }
+\DoxyCodeLine{00658\ \textcolor{comment}{/************************\ USER\ \&\ INTERNAL\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{00659\ }
+\DoxyCodeLine{00660\ \textcolor{keywordtype}{float}\ adaptive\_filter(\mbox{\hyperlink{structbmm350__filter}{bmm350\_filter}}\ *filter,\ \textcolor{keywordtype}{float}\ raw\_data);}
+\DoxyCodeLine{00661\ bmm350\_status\_e\ check\_device(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00662\ bmm350\_status\_e\ bmm350\_I2C\_read(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ MemAddress,\ uint8\_t\ *pData,\ uint16\_t\ Size);}
+\DoxyCodeLine{00663\ bmm350\_status\_e\ bmm350\_I2C\_write(\mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ MemAddress,\ uint8\_t\ *pData,\ uint16\_t\ Size);}
+\DoxyCodeLine{00664\ bmm350\_status\_e\ bmm350\_get\_compensated\_mag\_xyz\_temp\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__mag__temp__data__s}{bmm350\_mag\_temp\_data\_s}}\ *mag\_temp\_data);}
+\DoxyCodeLine{00665\ bmm350\_status\_e\ bmm350\_get\_pmu\_cmd\_status(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__pmu__cmd__status__s}{bmm350\_pmu\_cmd\_status\_s}}\ *pmu\_cmd\_stat);}
+\DoxyCodeLine{00666\ bmm350\_status\_e\ bmm350\_set\_powermode(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_power\_modes\_e\ powermode);}
+\DoxyCodeLine{00667\ }
+\DoxyCodeLine{00668\ \textcolor{comment}{/************************\ INTERNAL\ FUNCTIONS\ ***********************/}}
+\DoxyCodeLine{00669\ }
+\DoxyCodeLine{00670\ bmm350\_status\_e\ bmm350\_init\_struct(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ I2C\_HandleTypeDef\ *\mbox{\hyperlink{structbmm350__dev__s_a12da1f9e2b7c65d0ba606f88a4a60c8a}{hi2c}});}
+\DoxyCodeLine{00671\ bmm350\_status\_e\ interrupt\_config(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00672\ bmm350\_status\_e\ bmm350\_read\_uncomp\_mag\_temp\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \mbox{\hyperlink{structbmm350__raw__mag__data__s}{bmm350\_raw\_mag\_data\_s}}\ *raw\_data);}
+\DoxyCodeLine{00673\ bmm350\_status\_e\ read\_out\_raw\_data(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ \textcolor{keywordtype}{float}\ *out\_data);}
+\DoxyCodeLine{00674\ bmm350\_status\_e\ bmm350\_odr\_avg\_config(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint16\_t\ odr,\ uint16\_t\ avg);}
+\DoxyCodeLine{00675\ bmm350\_status\_e\ set\_powermode(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_power\_modes\_e\ powermode);}
+\DoxyCodeLine{00676\ bmm350\_status\_e\ read\_otp\_word(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint8\_t\ addr,\ uint16\_t\ *lsb\_msb);}
+\DoxyCodeLine{00677\ bmm350\_status\_e\ bmm350\_enable\_interrupt(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ bmm350\_enable\_state\_e\ status);}
+\DoxyCodeLine{00678\ bmm350\_status\_e\ bmm350\_magnetic\_reset\_and\_wait(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00679\ bmm350\_status\_e\ otp\_dump\_after\_boot(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00680\ bmm350\_status\_e\ null\_ptr\_check(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00681\ int32\_t\ \ \ \ \ \ \ \ \ fix\_sign(uint32\_t\ inval,\ int8\_t\ number\_of\_bits);}
+\DoxyCodeLine{00682\ bmm350\_status\_e\ OTP\_E\_handler(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev,\ uint8\_t\ otp\_err);}
+\DoxyCodeLine{00683\ \textcolor{keywordtype}{void}\ update\_default\_coefiecents(\textcolor{keywordtype}{float}\ *lsb\_to\_ut\_degC);}
+\DoxyCodeLine{00684\ \textcolor{keywordtype}{void}\ update\_mag\_off\_sens(\textcolor{keyword}{struct}\ \mbox{\hyperlink{structbmm350__dev__s}{bmm350\_dev\_s}}\ *dev);}
+\DoxyCodeLine{00685\ \textcolor{keywordtype}{float}\ wrap\_360(\textcolor{keywordtype}{float}\ angle);}
+\DoxyCodeLine{00686\ \textcolor{keywordtype}{float}\ unwrap\_angle(\textcolor{keywordtype}{float}\ prev,\ \textcolor{keywordtype}{float}\ curr);}
+\DoxyCodeLine{00687\ }
+\DoxyCodeLine{00688\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{/*\ SRC\_BMM350\_IMU\_BMM350\_H\_\ */}\textcolor{preprocessor}{}}
+
+\end{DoxyCode}

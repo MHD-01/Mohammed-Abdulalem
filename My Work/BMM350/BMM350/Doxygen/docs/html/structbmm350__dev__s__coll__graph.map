@@ -1,0 +1,26 @@
+<map id="bmm350_dev_s" name="bmm350_dev_s">
+<area shape="rect" id="Node000001" title="bmm350 device main structure" alt="" coords="768,279,893,304"/>
+<area shape="poly" id="edge1_Node000001_Node000001" title=" " alt="" coords="802,264,811,256,831,252,847,254,858,261,860,270,855,280,851,277,855,270,853,264,846,259,831,257,813,260,806,268"/>
+<area shape="rect" id="Node000002" href="$structbmm350__mag__compensate__s.html" title="bmm350 compensation parameters for calculation" alt="" coords="387,129,604,155"/>
+<area shape="poly" id="edge2_Node000001_Node000002" title=" " alt="" coords="538,158,802,276,800,281,536,163"/>
+<area shape="rect" id="Node000003" href="$structbmm350__dut__offset__coef__s.html" title="bmm350 magnetometer offset compensation coefficients for the magnetic axes (X, Y, Z)" alt="" coords="18,5,219,31"/>
+<area shape="poly" id="edge3_Node000002_Node000003" title=" " alt="" coords="227,30,295,45,364,66,427,96,477,127,474,131,424,101,362,71,294,50,226,36"/>
+<area shape="rect" id="Node000004" href="$structbmm350__dut__sensit__coef__s.html" title="bmm350 magnetometer sensitivity coefficient structure" alt="" coords="17,55,220,80"/>
+<area shape="poly" id="edge4_Node000002_Node000004" title=" " alt="" coords="223,79,363,105,451,127,449,132,362,110,222,85"/>
+<area shape="rect" id="Node000005" href="$structbmm350__dut__tco__s.html" title="bmm350 temperature coefficient of offset (TCO). Magnetic offset error changes with temperature...." alt="" coords="44,104,193,129"/>
+<area shape="poly" id="edge5_Node000002_Node000005" title=" " alt="" coords="207,120,387,132,386,137,207,125"/>
+<area shape="rect" id="Node000006" href="$structbmm350__dut__tcs__s.html" title="bmm350 temperature coefficient of sensitivity (TCS). the sensitivity also drifts with temperature...." alt="" coords="45,153,193,179"/>
+<area shape="poly" id="edge6_Node000002_Node000006" title=" " alt="" coords="206,164,362,158,415,152,416,157,363,163,206,169"/>
+<area shape="rect" id="Node000007" href="$structbmm350__cross__axis__s.html" title="bmm350 cross&#45;axis sensitivity correction factors. Magnetic sensors are not perfectly aligned to ortho..." alt="" coords="34,203,203,228"/>
+<area shape="poly" id="edge7_Node000002_Node000007" title=" " alt="" coords="217,205,289,197,362,183,415,169,461,152,463,157,416,174,363,189,289,202,218,211"/>
+<area shape="rect" id="Node000008" href="$structbmm350__pmu__cmd__status__s.html" title="bmm350 structure that holds the contents of register 0x08" alt="" coords="389,252,601,277"/>
+<area shape="poly" id="edge8_Node000001_Node000008" title=" " alt="" coords="615,272,768,284,767,289,615,277"/>
+<area shape="rect" id="Node000009" href="$structbmm350__pmu__cmd__status__0__s.html" title="bmm350 structure that holds the contents of register 0x07" alt="" coords="5,252,232,277"/>
+<area shape="poly" id="edge9_Node000008_Node000009" title=" " alt="" coords="246,262,389,262,389,267,246,267"/>
+<area shape="rect" id="Node000010" href="$structbmm350__pmu__cmd__status__1__s.html" title="bmm350 structure that holds the contents of register 0x07" alt="" coords="5,301,232,327"/>
+<area shape="poly" id="edge10_Node000008_Node000010" title=" " alt="" coords="244,297,362,282,413,275,414,280,363,287,245,302"/>
+<area shape="rect" id="Node000011" href="$structbmm350__mag__temp__data__s.html" title="bmm350 compensated magnetometer data in Microtesla (µT) and Temperature in degrees Celsius (°C)" alt="" coords="392,301,599,327"/>
+<area shape="poly" id="edge11_Node000001_Node000011" title=" " alt="" coords="612,315,678,314,744,309,783,301,784,307,744,314,678,319,613,321"/>
+<area shape="rect" id="Node000012" href="$structbmm350__intr__s.html" title="bmm350 interrupt pin (INT) control parameters for register 0x2E" alt="" coords="434,351,557,376"/>
+<area shape="poly" id="edge12_Node000001_Node000012" title=" " alt="" coords="570,361,655,354,700,347,743,335,779,320,809,302,812,307,781,325,745,341,701,352,655,359,571,366"/>
+</map>

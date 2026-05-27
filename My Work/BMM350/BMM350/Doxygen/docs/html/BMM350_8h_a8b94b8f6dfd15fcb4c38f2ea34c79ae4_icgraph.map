@@ -1,0 +1,8 @@
+<map id="bmm350_get_pmu_cmd_status" name="bmm350_get_pmu_cmd_status">
+<area shape="rect" id="Node000001" title="This function gets the PMU command status 0 register (0x07) and PMU command status 1 register (0x08) ..." alt="" coords="397,5,576,45"/>
+<area shape="rect" id="Node000002" href="$BMM350_8c.html#adc0b3dcb4a399bb38273981b2d47e697" title="This function to initialize the BMM350 registers and enable Normal Mode." alt="" coords="5,13,113,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="384,25,349,24,161,24,114,26,113,20,161,19,349,19,384,19"/>
+<area shape="rect" id="Node000003" href="$BMM350_8c.html#ad144c7b4fcd5e9f22b261b1d3ee9b1fa" title="This function is used to perform the magnetic reset of the sensor which is necessary after a field sh..." alt="" coords="161,33,349,73"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="384,40,350,45,349,39,383,35"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="148,41,113,36,114,30,148,35"/>
+</map>

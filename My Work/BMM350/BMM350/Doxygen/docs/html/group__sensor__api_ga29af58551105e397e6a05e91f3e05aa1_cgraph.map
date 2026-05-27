@@ -1,0 +1,8 @@
+<map id="bmm350_set_powermode" name="bmm350_set_powermode">
+<area shape="rect" id="Node000001" title="This function is used to set the power mode of the sensor." alt="" coords="5,5,196,31"/>
+<area shape="rect" id="Node000002" href="$group__sensor__api.html#ga3fa3449c50ffe2d91fd5f1c127892356" title=": This internal function* is used to validate the device structure pointer for null conditions." alt="" coords="419,5,535,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="196,15,405,15,405,21,196,21"/>
+<area shape="rect" id="Node000003" href="$group__sensor__api.html#ga26a3e3d11b80083b5f72c060d931728b" title="This function is used to switch from suspend mode to normal mode or forced mode." alt="" coords="244,31,371,56"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="197,27,231,31,230,37,196,32"/>
+<area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="370,31,404,26,405,31,371,37"/>
+</map>

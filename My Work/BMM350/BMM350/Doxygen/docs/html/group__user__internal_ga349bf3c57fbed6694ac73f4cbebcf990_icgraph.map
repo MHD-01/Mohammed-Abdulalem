@@ -1,0 +1,5 @@
+<map id="adaptive_filter" name="adaptive_filter">
+<area shape="rect" id="Node000001" title="This function filters the data of angle got from magnetic readings." alt="" coords="204,5,320,31"/>
+<area shape="rect" id="Node000002" href="$group__user.html#gae1c1a63d4a6fe6c7804473250ac24eee" title="This function is used to get yaw value." alt="" coords="5,5,156,31"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,21,156,21,156,15,190,15"/>
+</map>

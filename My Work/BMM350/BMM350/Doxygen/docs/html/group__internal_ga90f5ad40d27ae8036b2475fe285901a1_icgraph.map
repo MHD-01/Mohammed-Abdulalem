@@ -1,0 +1,11 @@
+<map id="bmm350_read_uncomp_mag_temp_data" name="bmm350_read_uncomp_mag_temp_data">
+<area shape="rect" id="Node000001" title="This function is used to read (ADC) mag and temperature data." alt="" coords="777,5,952,45"/>
+<area shape="rect" id="Node000002" href="$group__internal.html#ga91a3a98a720e9061b94ed3fb0f75a05b" title="This internal function is used to read uncompensated raw magnetic x,y and z axis along with temperatu..." alt="" coords="583,13,729,38"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="764,28,729,28,729,23,764,23"/>
+<area shape="rect" id="Node000003" href="$group__user__internal.html#ga072f77061f2d28f8b93181aac9890a87" title="This internal function is used to perform compensation calculations for raw magnetometer and temperat..." alt="" coords="332,5,535,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="569,28,535,28,535,23,569,23"/>
+<area shape="rect" id="Node000004" href="$group__user.html#gae42e76e9e743d998bbdb637a03352b7d" title="this function checks the drdy_data_reg (0x30) data ready interrupt then returns the status of the reg..." alt="" coords="204,13,284,38"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="318,28,284,28,284,23,318,23"/>
+<area shape="rect" id="Node000005" href="$group__user.html#gae1c1a63d4a6fe6c7804473250ac24eee" title="This function is used to get yaw value." alt="" coords="5,13,156,38"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="190,28,156,28,156,23,190,23"/>
+</map>
