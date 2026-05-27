@@ -1,23 +1,32 @@
-
 ## About
-- H7_system module is the overall system core initialization, such as:
-	- System clock
-	- MPU
-	- Cache enable
-	- HAL
-	- DWT
-- The module: 
-	- provides an easier format for variable types.
-	- Holds state enum for all system and peripherals
-	- A special structure for system access and error handling.
+
+The `H7_system` module contains the STM32H7 system core initialization and shared system utilities for H7Lib1.0. It configures the CPU, clocks, caches, HAL, and runtime helpers.
+
+## Features
+
+- System clock configuration
+- Memory Protection Unit (MPU) setup
+- Cache enablement
+- HAL initialization
+- DWT / timing support
+- Short type aliases for consistent integer usage
+- Central system state enum shared across modules
+- Global `H7SYSTEM` structure for status and utility access
 
 ## Files
+
 ![H7 System Files](attachment/h7syste.png)
-- H7_system module is H7_system.c and H7_system.h files.
 
-## Overall structure
+The `H7_system` module uses `Platform/H7_system.c` and `Platform/H7_system.h`.
 
-### Special types
+## Overview
+
+`H7_system` initializes low-level platform settings and provides a shared foundation for the rest of the library.
+
+## Special Types
+
+The module defines compact signed and unsigned aliases to simplify code and improve consistency.
+
 ```c
 ///// Signed types /////
 typedef __int64_t s64;
@@ -55,15 +64,19 @@ typedef volatile __uint32_t vu32;
 typedef volatile __uint16_t vu16;
 typedef volatile __uint8_t vu8;
 ```
-- Shorter and faster to write.
 
-### State
+These type aliases make code shorter and more consistent across the library.
+
+## System State Enum
+
+The `H7_state_e` enum defines shared status and error values used by multiple modules.
+
 ```c
 typedef enum{
 /**************** System states ****************/
 H7_STATE_NULL,
-H7_OK, // for system and other things
-H7_PERIPH_OK, // For Peripherals
+H7_OK,
+H7_PERIPH_OK,
 /**************** GPIO states ****************/
 H7_GPIO_PORT_INV,
 /**************** UART states ****************/
@@ -105,8 +118,8 @@ H7_I2C_INIT_ERR,
 H7_I2C_DMA_INIT_ERR,
 H7_I2C_TIMEOUT_ERR,
 // Configuration Errors
-H7_I2C_AN_FILTER_CONFIG_ERR, // Analog filter
-H7_I2C_DG_FILTER_CONFIG_ERR, // Digital filter
+H7_I2C_AN_FILTER_CONFIG_ERR,
+H7_I2C_DG_FILTER_CONFIG_ERR,
 H7_I2C_START_IT_Failed,
 /**************** QEI states ****************/
 H7_QEI_INVALID_PORT,
@@ -116,110 +129,115 @@ H7_EXTI_NULL_PTR,
 H7_EXTI_INVALID_PIN
 } H7_state_e;
 ```
-- This enum is used in all modules, for error handling.
 
+This enum is reused across the library for consistent error handling.
 
-### Register Access
+## Register Access Types
+
+`H7_system` also defines structures for direct register bit access.
+
 ```c
 typedef struct{
-	union{
-		u32 reg_32; // A register container
-		struct{
-			unsigned bit0 : 1;
-			unsigned bit1 : 1;
-			unsigned bit2 : 1;
-			unsigned bit3 : 1;
-			unsigned bit4 : 1;
-			unsigned bit5 : 1;
-			unsigned bit6 : 1;
-			unsigned bit7 : 1;
-			unsigned bit8 : 1;
-			unsigned bit9 : 1;
-			unsigned bit10 : 1;
-			unsigned bit11 : 1;
-			unsigned bit12 : 1;
-			unsigned bit13 : 1;
-			unsigned bit14 : 1;
-			unsigned bit15 : 1;
-			unsigned bit16 : 1;
-			unsigned bit17 : 1;
-			unsigned bit18 : 1;
-			unsigned bit19 : 1;
-			unsigned bit20 : 1;
-			unsigned bit21 : 1;
-			unsigned bit22 : 1;
-			unsigned bit23 : 1;
-			unsigned bit24 : 1;
-			unsigned bit25 : 1;
-			unsigned bit26 : 1;
-			unsigned bit27 : 1;
-			unsigned bit28 : 1;
-			unsigned bit29 : 1;
-			unsigned bit30 : 1;
-			unsigned bit31 : 1;
-		};
-	};
+    union{
+        u32 reg_32;
+        struct{
+            unsigned bit0 : 1;
+            unsigned bit1 : 1;
+            unsigned bit2 : 1;
+            unsigned bit3 : 1;
+            unsigned bit4 : 1;
+            unsigned bit5 : 1;
+            unsigned bit6 : 1;
+            unsigned bit7 : 1;
+            unsigned bit8 : 1;
+            unsigned bit9 : 1;
+            unsigned bit10 : 1;
+            unsigned bit11 : 1;
+            unsigned bit12 : 1;
+            unsigned bit13 : 1;
+            unsigned bit14 : 1;
+            unsigned bit15 : 1;
+            unsigned bit16 : 1;
+            unsigned bit17 : 1;
+            unsigned bit18 : 1;
+            unsigned bit19 : 1;
+            unsigned bit20 : 1;
+            unsigned bit21 : 1;
+            unsigned bit22 : 1;
+            unsigned bit23 : 1;
+            unsigned bit24 : 1;
+            unsigned bit25 : 1;
+            unsigned bit26 : 1;
+            unsigned bit27 : 1;
+            unsigned bit28 : 1;
+            unsigned bit29 : 1;
+            unsigned bit30 : 1;
+            unsigned bit31 : 1;
+        };
+    };
 } H7_word_s;
 
 typedef struct{
-	union{
-		u16 reg_16; // A 16-bit register container
-		struct{
-			unsigned bit0 : 1;
-			unsigned bit1 : 1;
-			unsigned bit2 : 1;
-			unsigned bit3 : 1;
-			unsigned bit4 : 1;
-			unsigned bit5 : 1;
-			unsigned bit6 : 1;
-			unsigned bit7 : 1;
-			unsigned bit8 : 1;
-			unsigned bit9 : 1;
-			unsigned bit10 : 1;
-			unsigned bit11 : 1;
-			unsigned bit12 : 1;
-			unsigned bit13 : 1;
-			unsigned bit14 : 1;
-			unsigned bit15 : 1;
-		};
-	};
+    union{
+        u16 reg_16;
+        struct{
+            unsigned bit0 : 1;
+            unsigned bit1 : 1;
+            unsigned bit2 : 1;
+            unsigned bit3 : 1;
+            unsigned bit4 : 1;
+            unsigned bit5 : 1;
+            unsigned bit6 : 1;
+            unsigned bit7 : 1;
+            unsigned bit8 : 1;
+            unsigned bit9 : 1;
+            unsigned bit10 : 1;
+            unsigned bit11 : 1;
+            unsigned bit12 : 1;
+            unsigned bit13 : 1;
+            unsigned bit14 : 1;
+            unsigned bit15 : 1;
+        };
+    };
 } H7_half_word_s;
 ```
-- These structure can be used to access a specific bit of a register.
-- Can used for 32-bit and 16-bit registers.
 
-### System struct
+These structures allow bit-level access to 32-bit and 16-bit registers.
+
+## System Structure
+
+The `H7_System_s` structure provides centralized access to system state and helper functions.
+
 ```c
 typedef struct {
-//** System State **//
-	struct {
-		H7_state_e system; // Overall system state (H7_OK, H7_ERROR, etc.)
-		H7_state_e last_error; // Last error that occurred
-		u16 error_count; // Total errors since boot
-		float cpu_load; // CPU load percentage (0-100%)
-		u32 free_heap; // Available heap memory (bytes)
-	} status;
+    struct {
+        H7_state_e system;
+        H7_state_e last_error;
+        u16 error_count;
+        float cpu_load;
+        u32 free_heap;
+    } status;
 
-	struct {
-		vu32 (*get_tick_us)(void); // Microsecond timestamp, use only for micro seconds operations
-		u32 (*get_tick_ms)(void); // Millisecond timestamp
-		u32 (*get_tick_s)(void); // second timestamp
-		void (*delay_us)(u32); // Blocking microsecond delay
-		osStatus_t (*delay_ms)(u32); // Blocking millisecond delay
-	} time;
+    struct {
+        vu32 (*get_tick_us)(void);
+        u32 (*get_tick_ms)(void);
+        u32 (*get_tick_s)(void);
+        void (*delay_us)(u32);
+        osStatus_t (*delay_ms)(u32);
+    } time;
 
-// Function related to core
-	void (*reset)(void); // Function pointer to soft reset
+    void (*reset)(void);
 } H7_System_s;
 
 extern H7_System_s H7SYSTEM;
 ```
-- This structure will make:
-	- Debugging for system error easier.
-	- More accessibility for repeated used functions.
 
-## Error handling
-- The library uses enums to indicate the errors, and in case of a configuration or critical error, *Error_Handler()* will be called, hence the board will stop. To identify the error the macro *H7_ERR_HANDLE()* is used to store the last error happened in the *H7SYSTEM* structure, inside *last_error* member.
+This structure makes system diagnostics and utility functions easy to access from any module.
 
-### H7_system_init()
-- In this function core system configuration happens, along with defining the system structure user functions in the structure *H7SYSTEM*.
+## Error Handling
+
+`H7_system` uses `H7_state_e` values for status and error reporting. When a fatal or configuration error occurs, `Error_Handler()` is called and execution stops. The macro `H7_ERR_HANDLE()` saves the most recent error to `H7SYSTEM.last_error`.
+
+### `H7_system_init()`
+
+This function performs core system configuration and initializes the `H7SYSTEM` object, including timing functions and reset callbacks.
