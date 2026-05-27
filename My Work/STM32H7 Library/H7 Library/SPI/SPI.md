@@ -98,8 +98,8 @@ HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 
 ## Clock Configuration and speed
 
-- Equation for calculating SPI speed
-$ SPI Speed(MHz) = ((((8 / PLL3M) * PLL3N) / PLL3P) / SPI_BAUDRATEPRESCALER)$
+- Equation for calculating SPI speed:
+- $ SPI Speed(MHz) = ((((8 / PLL3M) * PLL3N) / PLL3P) / SPI_BAUDRATEPRESCALER)$
 
 - Clock Configuration of SPI is in H7_MSP.c file
 ```c
@@ -107,7 +107,7 @@ PeriphClkInitStruct.PLL3.PLL3M = 4;
 PeriphClkInitStruct.PLL3.PLL3N = 100;
 PeriphClkInitStruct.PLL3.PLL3P = 1;
 ```
-- SPI_BAUDRATEPRESCALER, is set inside [H7_SPIx_Init](### Initialization) and configured by <mark>_H7_SPI_speed_e_</mark> enum.
+- SPI_BAUDRATEPRESCALER, is set inside [H7_SPIx_Init](#Initialization) and configured by <mark>_H7_SPI_speed_e_</mark> enum.
 ```c
 typedef enum{
 	SPI_SLAVE			= SPI_BAUDRATEPRESCALER_2,	// Speed is ignored in slave mode
