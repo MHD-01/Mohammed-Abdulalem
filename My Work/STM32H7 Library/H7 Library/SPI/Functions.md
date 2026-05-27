@@ -5,60 +5,63 @@ This document describes the main functions available for SPI communication in H7
 ## Initialization Functions
 
 ### `H7_state_e H7_struct_init(H7_SPIHandler_s *spi, SPI_HandleTypeDef *hspi)`
-Initializes the H7_SPI handler structure.
+Initializes the `H7_SPIHandler_s` structure and links it to the HAL SPI handle.
 
 **Parameters:**
-- `spi`: Pointer to H7_SPI handler structure, it is already declared in the Header file
-- `hspi`: Pointer to HAL SPI handle, it is already declared in the Header file
+- `spi`: Pointer to `H7_SPIHandler_s` (declared in the header file)
+- `hspi`: Pointer to HAL `SPI_HandleTypeDef` (declared in the header file)
 
 **Returns:** None
 
 ---
 
 ### `H7_state_e H7_SPIx_Init(H7_SPIHandler_s *spi, u32 spiMode, H7_SPI_speed_e spiSpeed, H7_SPI_dataSize_e dataSize)`
-Initializes the SPI peripheral.
+Initializes the SPI peripheral according to the specified mode, speed, and data size.
 
 **Parameters:**
-- `spi`: Pointer to H7_SPI handler structure, it is already declared in the Header file
-- `spiMode`: To indicate whether to be a Master or a slave, can find Macro in spi.h
-- `spiSpeed`: To indicate spped of the communication, argument should be a member of @H7_SPI_speed_e
-- `dataSize`: To indicate the size of the data in the communication, argument should be a member of @H7_SPI_dataSize_e
+- `spi`: Pointer to `H7_SPIHandler_s` (declared in the header file)
+- `spiMode`: Master or Slave selection; see macros in `spi.h`
+- `spiSpeed`: Communication speed; use a value from `H7_SPI_speed_e`
+- `dataSize`: Data width; use a value from `H7_SPI_dataSize_e`
 
-![NOTE] H7_struct_init function  must be called before calling this function
-**Returns:** H7_SPI State
+[!NOTE] `H7_struct_init` must be called before using this function.
+
+**Returns:** `H7_state_e` (current SPI state)
 
 ---
 
 ## DMA initialization
 
 ### `H7_state_e H7_SPIx_rx_DMA_init(H7_SPIHandler_s *spi, u32 spiMode, u32 DMA_mode, u32 priority, H7_SPI_speed_e spiSpeed, H7_SPI_dataSize_e dataSize)`
-Initialize the SPI peripheral with DMA Receiving.
+Initialize the SPI peripheral for DMA-based reception.
 
 **Parameters:**
-- `spi`: Pointer to H7_SPI handler structure, it is already declared in the Header file
-- `spiMode`: To indicate whether to be a Master or a slave, can find Macro in spi.h
-- `DMA_mode`: To indicate how the DMA stores the data, for continuous receiving @DMA_CIRCULAR
-- `priority`: To indicate the priority of the stream inside DMA controller, macros can be found in spi.h
-- `spiSpeed`: To indicate spped of the communication, argument should be a member of @H7_SPI_speed_e
-- `dataSize`: To indicate the size of the data in the communication, argument should be a member of @H7_SPI_dataSize_e
+- `spi`: Pointer to `H7_SPIHandler_s` (declared in the header file)
+- `spiMode`: Master or Slave selection; see macros in `spi.h`
+- `DMA_mode`: DMA transfer mode (e.g., `DMA_CIRCULAR` for continuous reception)
+- `priority`: DMA stream priority macro
+- `spiSpeed`: Communication speed; use a value from `H7_SPI_speed_e`
+- `dataSize`: Data width; use a value from `H7_SPI_dataSize_e`
 
-![NOTE] H7_struct_init function  must be called before calling this function
-**Returns:** H7_SPI State
+[!NOTE] `H7_struct_init` must be called before using this function.
+
+**Returns:** `H7_state_e` (current SPI state)
 ---
 
 ### `H7_state_e H7_SPIx_tx_DMA_init(H7_SPIHandler_s *spi, u32 spiMode, u32 DMA_mode, u32 priority, H7_SPI_speed_e spiSpeed, H7_SPI_dataSize_e dataSize)`
-Initialize the SPI peripheral with DMA Transmitting.
+Initialize the SPI peripheral for DMA-based transmission.
 
 **Parameters:**
-- `spi`: Pointer to H7_SPI handler structure, it is already declared in the Header file
-- `spiMode`: To indicate whether to be a Master or a slave, can find Macro in spi.h
-- `DMA_mode`: To indicate how the DMA stores the data, for continuous receiving @DMA_CIRCULAR
-- `priority`: To indicate the priority of the stream inside DMA controller, macros can be found in spi.h
-- `spiSpeed`: To indicate spped of the communication, argument should be a member of @H7_SPI_speed_e
-- `dataSize`: To indicate the size of the data in the communication, argument should be a member of @H7_SPI_dataSize_e
+- `spi`: Pointer to `H7_SPIHandler_s` (declared in the header file)
+- `spiMode`: Master or Slave selection; see macros in `spi.h`
+- `DMA_mode`: DMA transfer mode
+- `priority`: DMA stream priority macro
+- `spiSpeed`: Communication speed; use a value from `H7_SPI_speed_e`
+- `dataSize`: Data width; use a value from `H7_SPI_dataSize_e`
 
-![NOTE] H7_struct_init function  must be called before calling this function
-**Returns:** H7_SPI State
+[!NOTE] `H7_struct_init` must be called before using this function.
+
+**Returns:** `H7_state_e` (current SPI state)
 
 ---
 

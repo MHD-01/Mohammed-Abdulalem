@@ -6,14 +6,12 @@ Generally in H7Lib1.0, most peripherals (if not all), have their own ==Periphera
 
 ![UART Physical Ports](../attachment/uart_ports.jpg)
 
-- USART1: PA9 (TX), PA10 (RX)
-- USART2: PA2 (TX), PA3 (RX)
-- USART3: PB10 (TX), PB11 (RX)
-- UART4: PA0 (TX), PA1 (RX)
-- UART5: PC12 (TX), PD2 (RX)
-- USART6: PC6 (TX), PC7 (RX)
-- UART7: PE8 (TX), PE7 (RX)
-- UART8: PE1 (TX), PE0 (RX)
+
+- UART4: PD1 (TX), PD0 (RX), Port UART3
+- UART5: PC12 (TX), PD2 (RX), Port UART1
+- UART7: PE8 (TX), PE7 (RX), Port UART2
+- UART9: PD15 (TX), PD14  (RX), Port UART4
+- [!NOTE] UART ports labeling in the PCB is different from actual peripheral number
 
 ## Files
 
