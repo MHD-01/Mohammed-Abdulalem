@@ -26,8 +26,8 @@ typedef struct{
 	u8 rxData[SPI_RX_BUF_SIZE];
 	u8 txData[SPI_TX_BUF_SIZE];
 	// DMA Buffers
-	DMA_BUFFER u8 rxData_DMA[SPI_RX_BUF_SIZE];
-	DMA_BUFFER u8 txData_DMA[SPI_TX_BUF_SIZE];
+	u8 *rxData_DMA;
+	u8 *txData_DMA;
 
 	H7_state_e status;
 } H7_SPIHandler_s;
@@ -37,7 +37,8 @@ typedef struct{
 - *txData/rxData*: Transmit and receive data buffers
 - *txData_DMA/rxData_DMA*: Transmit and receive data buffers for DMA use
 - *SPI_RX_BUF_SIZE/SPI_TX_BUF_SIZE*: Macro to indicate size of data to be transmitted or received
-- [!warning] In case of using DMA, You have to use the <mark>_DMA_BUFFER_</mark> macro before initializing or defining the variable as this will allocate memory in RAM_D2 which is 32Kb size reserved for DMA.
+- [!NOTE] DMA buffers inside `H7_SPIHandler_s`, should be pointing into global `_DMA_BUFFER_` buffers, if user want to use the structure's buffers.
+- [!WARNING] In case of using DMA, You have to use the <mark>_DMA_BUFFER_</mark> macro before initializing or defining the variable as this will allocate memory in RAM_D2 which is 32Kb size reserved for DMA.
 
 ## How to Use SPI
 
@@ -66,7 +67,7 @@ H7_SPIx_Init(&h7spi2, SPI_MODE_SLAVE, SPI_SPEED_25MHZ, SPI_DATA_SIZE_8B);
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| Mode | Configurable | Master Slave |
+| Mode | Configurable | Master or Slave |
 | Direction | Full Duplex | Default mode |
 | Clock Polarity (CPOL) | SPI_POLARITY_LOW | SCK idle low |
 | Clock Phase (CPHA) | SPI_PHASE_1EDGE | Data sampled on first edge |
