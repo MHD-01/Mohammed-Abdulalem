@@ -6,106 +6,85 @@ Generally in H7Lib1.0, most peripherals (if not all), have their own ==Periphera
 
 ![SPI Physical Ports](../attachment/spi_ports.jpg)
 
-- SPI1: PA5 (SCK), PA6 (MISO), PA7 (MOSI), PA4 (NSS)
-- SPI2: PB10 (SCK), PC2 (MISO), PC3 (MOSI), PB9 (NSS)
-- SPI3: PC10 (SCK), PC11 (MISO), PC12 (MOSI), PA15 (NSS)
-- SPI4: PE2 (SCK), PE5 (MISO), PE6 (MOSI), PE4 (NSS)
-- SPI5: PF7 (SCK), PF8 (MISO), PF9 (MOSI), PF6 (NSS)
-- SPI6: PG13 (SCK), PG12 (MISO), PG14 (MOSI), PG8 (NSS)
+- SPI2: PD3 (SCK), PB14 (MISO), PB15 (MOSI), PB9 (NSS)
+
 
 ## Files
 
-![SPI Files Diagram](../attachment/spi.png)
+- spi.c
+- spi.h
 
 ## Peripheral Handle Structure
 
 ```c
 typedef struct{
 	SPI_HandleTypeDef *hspi;
-	u8 txData[512];
-	u8 rxData[512];
-	uint16_t txSize;
-	uint16_t rxSize;
-	uint8_t cs_pin;
-	GPIO_TypeDef *cs_port;
+
+	DMA_HandleTypeDef hdma_spi_rx;
+	DMA_HandleTypeDef hdma_spi_tx;
+
+	u8 rxData[SPI_RX_BUF_SIZE];
+	u8 txData[SPI_TX_BUF_SIZE];
+	// DMA Buffers
+	DMA_BUFFER u8 rxData_DMA[SPI_RX_BUF_SIZE];
+	DMA_BUFFER u8 txData_DMA[SPI_TX_BUF_SIZE];
+
 	H7_state_e status;
 } H7_SPIHandler_s;
 ```
 
-- The user is recommended to use the handler for any use of the SPI peripheral, to ensure smooth functionality.
+- The user must use the handler for any use of the SPI peripheral, to ensure smooth functionality and traceability.
 - *txData/rxData*: Transmit and receive data buffers
-- *txSize/rxSize*: Size of data to be transmitted or received
-- *cs_pin/cs_port*: Chip Select pin and port configuration
-- [!warning] These variables should be used for debugging purposes only and should not be modified directly.
+- *txData_DMA/rxData_DMA*: Transmit and receive data buffers for DMA use
+- *SPI_RX_BUF_SIZE/SPI_TX_BUF_SIZE*: Macro to indicate size of data to be transmitted or received
+- [!warning] In case of using DMA, You have to use the <mark>_DMA_BUFFER_</mark> macro before initializing or defining the variable as this will allocate memory in RAM_D2 which is 32Kb size reserved for DMA.
 
 ## How to Use SPI
 
-### Enable the SPI Port
+### Initialization
 
-- First thing is to define the SPI port we are going to use.
-- This can be done in SPI.h, by uncommenting the macro.
+- Initialize the structure
 
+- Example 
 ```c
-#define SPI_PORT 1  // or 2, 3, 4, 5, 6
+H7_struct_init(&h7spi2, &spi2);
+```
+
+- Initialize the peripheral
+
+- Example, Master SPI
+```c
+H7_SPIx_Init(&h7spi2, SPI_MODE_SLAVE, SPI_SPEED_25MHZ, SPI_DATA_SIZE_8B);
 ```
 
 ### SPI Initialization in adapter.c
 
 - The initialization function should be called during the adapter module initialization phase.
-- Ensure that SPI clock is enabled and GPIO pins are configured properly for the required mode.
 
-### SPI Communication
-
-#### Polling Mode
-```c
-// Transmit
-HAL_SPI_Transmit(&hspi, txData, size, timeout);
-
-// Receive
-HAL_SPI_Receive(&hspi, rxData, size, timeout);
-
-// Transmit and Receive (Full Duplex)
-HAL_SPI_TransmitReceive(&hspi, txData, rxData, size, timeout);
-```
-
-#### Interrupt Mode
-```c
-// Transmit with interrupts
-HAL_SPI_Transmit_IT(&hspi, txData, size);
-
-// Receive with interrupts
-HAL_SPI_Receive_IT(&hspi, rxData, size);
-
-// Full duplex with interrupts
-HAL_SPI_TransmitReceive_IT(&hspi, txData, rxData, size);
-```
-
-#### DMA Mode
-
-- If using DMA with SPI, declare your buffers with the *DMA_BUFFER* macro from [H7_system] header file.
-- This ensures DMA has access to RAM_D2 for proper data transfer.
-
-```c
-DMA_BUFFER u8 spiTxBuffer[512];
-DMA_BUFFER u8 spiRxBuffer[512];
-```
-
-## Common SPI Configurations
+### Characteristics of H7_SPIx_Init
+- Inturrupts is Enabled.
 
 | Parameter | Value | Notes |
 |-----------|-------|-------|
-| Clock Polarity (CPOL) | 0 | SCK idle low |
-| Clock Polarity (CPOL) | 1 | SCK idle high |
-| Clock Phase (CPHA) | 0 | Data sampled on first edge |
-| Clock Phase (CPHA) | 1 | Data sampled on second edge |
-| Baud Rate | Configurable | Up to 45 MHz for SPI1/2/3/4/5/6 |
-| Data Size | 4-16 bits | Commonly 8 bits |
+| Mode | Configurable | Master Slave |
 | Direction | Full Duplex | Default mode |
-| Direction | Half Duplex | RX or TX only |
+| Clock Polarity (CPOL) | SPI_POLARITY_LOW | SCK idle low |
+| Clock Phase (CPHA) | SPI_PHASE_1EDGE | Data sampled on first edge |
+| Baud Rate | Configurable | Up to 100MHz, devided by half as you go down until 781.25 KHz |
+| Data Size | Configurable | Commonly 8 bits |
+
+### SPI DMA
+
+- The library supports the use of DMA for Tx and Rx.
+- Remember to use <mark>_DMA_BUFFER_</mark> as the attribute of your buffers, or use the peripheral handler structre's buffers.
+```c
+H7_state_e H7_SPIx_rx_DMA_init(H7_SPIHandler_s *spi, u32 spiMode, u32 DMA_mode, u32 priority, H7_SPI_speed_e spiSpeed, H7_SPI_dataSize_e dataSize);
+H7_state_e H7_SPIx_tx_DMA_init(H7_SPIHandler_s *spi, u32 spiMode, u32 DMA_mode, u32 priority, H7_SPI_speed_e spiSpeed, H7_SPI_dataSize_e dataSize);
+```
 
 ## Chip Select (CS) Management
 
-- Manual CS handling:
+- [!NOTE] Chip select should be handled by user, example:
 ```c
 // Pull CS low
 HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
@@ -117,13 +96,38 @@ HAL_SPI_Transmit(&hspi, data, size, timeout);
 HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 ```
 
+## Clock Configuration and speed
+
+- Equation for calculating SPI speed
+$ SPI Speed(MHz) = ((((8 / PLL3M) * PLL3N) / PLL3P) / SPI_BAUDRATEPRESCALER)$
+
+- Clock Configuration of SPI is in H7_MSP.c file
+```c
+PeriphClkInitStruct.PLL3.PLL3M = 4;
+PeriphClkInitStruct.PLL3.PLL3N = 100;
+PeriphClkInitStruct.PLL3.PLL3P = 1;
+```
+- SPI_BAUDRATEPRESCALER, is set inside [H7_SPIx_Init](### Initialization) and configured by <mark>_H7_SPI_speed_e_</mark> enum.
+```c
+typedef enum{
+	SPI_SLAVE			= SPI_BAUDRATEPRESCALER_2,	// Speed is ignored in slave mode
+	SPI_SPEED_100MHZ 	= SPI_BAUDRATEPRESCALER_2,
+	SPI_SPEED_50MHZ		= SPI_BAUDRATEPRESCALER_4,
+	SPI_SPEED_25MHZ		= SPI_BAUDRATEPRESCALER_8,
+	SPI_SPEED_12_5MHZ	= SPI_BAUDRATEPRESCALER_16,	// 12.5 MHz
+	SPI_SPEED_6_25MHZ	= SPI_BAUDRATEPRESCALER_32,	// 6.25 MHz
+	SPI_SPEED_3_125MHZ	= SPI_BAUDRATEPRESCALER_64,	// 3.125 MHz
+	SPI_SPEED_1_5625MHZ	= SPI_BAUDRATEPRESCALER_128,// 1.1625 MHz
+	SPI_SPEED_781_25KHZ	= SPI_BAUDRATEPRESCALER_256	// 781.25 KHz
+} H7_SPI_speed_e;
+```
+
 ## Notes and Warnings
 
-- [!note] NSS (CS) line should be managed by software for most applications
-- [!note] Ensure proper matching of CPOL and CPHA with slave device
-- [!warning] Do not perform complex processing in SPI interrupt callbacks
-- [!warning] Keep SPI transmission line as short as possible to minimize EMI
-- [!warning] Terminate unused MOSI line if operating in receive-only mode
+- [!NOTE] Chip select should be handled by user
+- [!WARNING] Use <mark>_DMA_BUFFER_</mark> as the attribute of your buffers, in case you are using DMA
+- [!WARNING] Do not perform complex processing in SPI interrupt callbacks
+
 
 ## Common Issues and Solutions
 
@@ -136,4 +140,3 @@ HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 - Reduce SPI clock speed if noise is present
 - Add decoupling capacitors near SPI device
 - Check PCB routing and shielding
-
